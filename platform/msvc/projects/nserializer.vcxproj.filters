@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="color">
+      <UniqueIdentifier>{42d5ab54-8fcd-4790-b3c6-420e9d8eabb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mesh">
+      <UniqueIdentifier>{b4896b09-cef5-4f2f-a652-ed2b90508435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geo">
+      <UniqueIdentifier>{65787996-3317-4aa3-b30d-7a094f9a7901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="editor">
+      <UniqueIdentifier>{30828894-6af6-4e95-a5be-f859e3fc2ab4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\CompColorCommon.cpp">
+      <Filter>color</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompColorMap.cpp">
+      <Filter>color</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
+    <ClCompile Include="..\..\..\source\CompTransform.cpp">
+      <Filter>geo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompImage.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompNodeEditor.cpp">
+      <Filter>editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompBoundingBox.cpp">
+      <Filter>geo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\ns\CompColorCommon.h">
+      <Filter>color</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
+    <ClInclude Include="..\..\..\include\ns\CompType.h" />
+    <ClInclude Include="..\..\..\include\ns\CompColorMap.h">
+      <Filter>color</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\RegistCallback.h" />
+    <ClInclude Include="..\..\..\include\ns\CompTransform.h">
+      <Filter>geo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompImage.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompNodeEditor.h">
+      <Filter>editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompBoundingBox.h">
+      <Filter>geo</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
