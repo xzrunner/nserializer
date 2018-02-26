@@ -2,15 +2,15 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n2 { class CompColorCommon; }
+namespace n2 { class CompTransform; }
 
 namespace ns
 {
 
-class CompColorCommon : public NodeComponent
+class N2CompTransform : public NodeComponent
 {
 public:
-	CompColorCommon();
+	N2CompTransform();
 
 	//
 	// bin
@@ -28,13 +28,15 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompColorCommon& comp) const;
-	void LoadFromMem(const n2::CompColorCommon& comp);
+	void StoreToMem(n2::CompTransform& comp) const;
+	void LoadFromMem(const n2::CompTransform& comp);
 
 private:
-	uint32_t m_mul;
-	uint32_t m_add;
+	float m_pos_x, m_pos_y;
+	float m_angle;
+	float m_scale_x, m_scale_y;
+	float m_shear_x, m_shear_y;
 
-}; // CompColorCommon
+}; // N2CompTransform
 
 }

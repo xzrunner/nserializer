@@ -1,4 +1,4 @@
-#include "ns/CompTransform.h"
+#include "ns/N2CompTransform.h"
 #include "ns/CompType.h"
 
 #include <bs/ExportStream.h>
@@ -9,7 +9,7 @@
 namespace ns
 {
 
-CompTransform::CompTransform()
+N2CompTransform::N2CompTransform()
 {
 	m_pos_x = m_pos_y = 0;
 	m_angle = 0;
@@ -17,7 +17,7 @@ CompTransform::CompTransform()
 	m_shear_x = m_shear_y = 0;
 }
 
-size_t CompTransform::GetBinSize(const std::string& dir) const
+size_t N2CompTransform::GetBinSize(const std::string& dir) const
 {
 	size_t sz = 0;
 
@@ -31,7 +31,7 @@ size_t CompTransform::GetBinSize(const std::string& dir) const
 	return sz;
 }
 
-void CompTransform::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompTransform::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	es.Write(static_cast<uint8_t>(COMP_TRANSFORM)); // type
 
@@ -47,7 +47,7 @@ void CompTransform::StoreToBin(const std::string& dir, bs::ExportStream& es) con
 	es.Write(static_cast<float>(m_shear_y));
 }
 
-void CompTransform::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompTransform::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	m_pos_x = is.Float();
 	m_pos_y = is.Float();
@@ -61,7 +61,7 @@ void CompTransform::LoadFromBin(mm::LinearAllocator& alloc, const std::string& d
 	m_shear_y = is.Float();
 }
 
-void CompTransform::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompTransform::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -77,7 +77,7 @@ void CompTransform::StoreToJson(const std::string& dir, rapidjson::Value& val, r
 	val.AddMember("shear_y", m_shear_y, alloc);
 }
 
-void CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_pos_x = val["pos_x"].GetFloat();
 	m_pos_y = val["pos_y"].GetFloat();
@@ -91,7 +91,7 @@ void CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	m_shear_y = val["shear_y"].GetFloat();
 }
 
-void CompTransform::StoreToMem(n2::CompTransform& comp) const
+void N2CompTransform::StoreToMem(n2::CompTransform& comp) const
 {
 	pt2::SRT srt;
 	srt.position.Set(m_pos_x, m_pos_y);
@@ -103,7 +103,7 @@ void CompTransform::StoreToMem(n2::CompTransform& comp) const
 	comp.GetTrans().SetSRT(srt);
 }
 
-void CompTransform::LoadFromMem(const n2::CompTransform& comp)
+void N2CompTransform::LoadFromMem(const n2::CompTransform& comp)
 {
 	auto& srt = comp.GetTrans().GetSRT();
 

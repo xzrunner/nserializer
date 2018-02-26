@@ -2,15 +2,15 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n2 { class CompColorMap; }
+namespace n2 { class CompBoundingBox; }
 
 namespace ns
 {
 
-class CompColorMap : public NodeComponent
+class N2CompBoundingBox : public NodeComponent
 {
 public:
-	CompColorMap();
+	N2CompBoundingBox();
 
 	//
 	// bin
@@ -28,14 +28,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompColorMap& comp) const;
-	void LoadFromMem(const n2::CompColorMap& comp);
+	void StoreToMem(n2::CompBoundingBox& comp) const;
+	void LoadFromMem(const n2::CompBoundingBox& comp);
 
 private:
-	uint32_t m_rmap;
-	uint32_t m_gmap;
-	uint32_t m_bmap;
+	float m_xmin, m_ymin, m_xmax, m_ymax;
 
-}; // CompColorMap
+}; // N2CompBoundingBox
 
 }

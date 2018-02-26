@@ -1,4 +1,4 @@
-#include "ns/CompColorMap.h"
+#include "ns/N2CompColorMap.h"
 #include "ns/CompType.h"
 
 #include <bs/ExportStream.h>
@@ -9,14 +9,14 @@
 namespace ns
 {
 
-CompColorMap::CompColorMap()
+N2CompColorMap::N2CompColorMap()
 	: m_rmap(0)
 	, m_gmap(0)
 	, m_bmap(0)
 {
 }
 
-size_t CompColorMap::GetBinSize(const std::string& dir) const
+size_t N2CompColorMap::GetBinSize(const std::string& dir) const
 {
 	size_t sz = 0;
 
@@ -29,7 +29,7 @@ size_t CompColorMap::GetBinSize(const std::string& dir) const
 	return sz;
 }
 
-void CompColorMap::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompColorMap::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	es.Write(static_cast<uint8_t>(COMP_COLOR_MAP)); // type
 
@@ -38,14 +38,14 @@ void CompColorMap::StoreToBin(const std::string& dir, bs::ExportStream& es) cons
 	es.Write(static_cast<uint32_t>(m_bmap));        // bmap
 }
 
-void CompColorMap::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompColorMap::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	m_rmap = is.UInt32();
 	m_gmap = is.UInt32();
 	m_bmap = is.UInt32();
 }
 
-void CompColorMap::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompColorMap::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -54,14 +54,14 @@ void CompColorMap::StoreToJson(const std::string& dir, rapidjson::Value& val, ra
 	val.AddMember("bmap", m_bmap, alloc);
 }
 
-void CompColorMap::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompColorMap::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_rmap = val["rmap"].GetUint();
 	m_gmap = val["gmap"].GetUint();
 	m_bmap = val["bmap"].GetUint();
 }
 
-void CompColorMap::StoreToMem(n2::CompColorMap& comp) const
+void N2CompColorMap::StoreToMem(n2::CompColorMap& comp) const
 {
 	pt2::RenderColorMap col;
 	col.rmap.FromRGBA(m_rmap);
@@ -71,7 +71,7 @@ void CompColorMap::StoreToMem(n2::CompColorMap& comp) const
 	comp.SetColor(col);
 }
 
-void CompColorMap::LoadFromMem(const n2::CompColorMap& comp)
+void N2CompColorMap::LoadFromMem(const n2::CompColorMap& comp)
 {
 	auto& col = comp.GetColor();
 	m_rmap = col.rmap.ToRGBA();

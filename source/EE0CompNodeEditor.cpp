@@ -1,4 +1,4 @@
-#include <ns/CompNodeEditor.h>
+#include <ns/EE0CompNodeEditor.h>
 
 #include <ee0/CompNodeEditor.h>
 
@@ -7,29 +7,29 @@
 namespace ns
 {
 
-CompNodeEditor::CompNodeEditor()
+EE0CompNodeEditor::EE0CompNodeEditor()
 	: m_visible(true)
 	, m_editable(true)
 {
 }
 
-size_t CompNodeEditor::GetBinSize(const std::string& dir) const
+size_t EE0CompNodeEditor::GetBinSize(const std::string& dir) const
 {
 	// tood
 	return 0;
 }
 
-void CompNodeEditor::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void EE0CompNodeEditor::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	// todo
 }
 
-void CompNodeEditor::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void EE0CompNodeEditor::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
 
-void CompNodeEditor::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void EE0CompNodeEditor::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -42,7 +42,7 @@ void CompNodeEditor::StoreToJson(const std::string& dir, rapidjson::Value& val, 
 	val.AddMember("editable", m_editable, alloc);
 }
 
-void CompNodeEditor::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void EE0CompNodeEditor::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto filepath = val["filepath"].GetString();
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
@@ -53,7 +53,7 @@ void CompNodeEditor::LoadFromJson(mm::LinearAllocator& alloc, const std::string&
 	m_editable = val["editable"].GetBool();
 }
 
-void CompNodeEditor::StoreToMem(ee0::CompNodeEditor& comp) const
+void EE0CompNodeEditor::StoreToMem(ee0::CompNodeEditor& comp) const
 {
 	comp.SetFilepath(m_filepath);
 	comp.SetName(m_name);
@@ -61,7 +61,7 @@ void CompNodeEditor::StoreToMem(ee0::CompNodeEditor& comp) const
 	comp.SetEditable(m_editable);
 }
 
-void CompNodeEditor::LoadFromMem(const ee0::CompNodeEditor& comp)
+void EE0CompNodeEditor::LoadFromMem(const ee0::CompNodeEditor& comp)
 {
 	m_filepath = comp.GetFilepath();
 	m_name     = comp.GetName();

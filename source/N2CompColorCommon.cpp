@@ -1,4 +1,4 @@
-#include "ns/CompColorCommon.h"
+#include "ns/N2CompColorCommon.h"
 #include "ns/CompType.h"
 
 #include <bs/ExportStream.h>
@@ -9,13 +9,13 @@
 namespace ns
 {
 
-CompColorCommon::CompColorCommon()
+N2CompColorCommon::N2CompColorCommon()
 	: m_mul(0)
 	, m_add(0)
 {
 }
 
-size_t CompColorCommon::GetBinSize(const std::string& dir) const
+size_t N2CompColorCommon::GetBinSize(const std::string& dir) const
 {
 	size_t sz = 0;
 
@@ -27,7 +27,7 @@ size_t CompColorCommon::GetBinSize(const std::string& dir) const
 	return sz;
 }
 
-void CompColorCommon::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompColorCommon::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	es.Write(static_cast<uint8_t>(COMP_COLOR_COMMON)); // type
 
@@ -35,13 +35,13 @@ void CompColorCommon::StoreToBin(const std::string& dir, bs::ExportStream& es) c
 	es.Write(static_cast<uint32_t>(m_add));            // add
 }
 
-void CompColorCommon::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompColorCommon::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	m_mul = is.UInt32();
 	m_add = is.UInt32();
 }
 
-void CompColorCommon::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompColorCommon::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -49,13 +49,13 @@ void CompColorCommon::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	val.AddMember("add", m_add, alloc);
 }
 
-void CompColorCommon::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompColorCommon::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_mul = val["mul"].GetUint();
 	m_add = val["add"].GetUint();
 }
 
-void CompColorCommon::StoreToMem(n2::CompColorCommon& comp) const
+void N2CompColorCommon::StoreToMem(n2::CompColorCommon& comp) const
 {
 	pt2::RenderColorCommon col;
 	col.mul.FromRGBA(m_mul);
@@ -64,7 +64,7 @@ void CompColorCommon::StoreToMem(n2::CompColorCommon& comp) const
 	comp.SetColor(col);
 }
 
-void CompColorCommon::LoadFromMem(const n2::CompColorCommon& comp)
+void N2CompColorCommon::LoadFromMem(const n2::CompColorCommon& comp)
 {
 	auto& col = comp.GetColor();
 	m_mul = col.mul.ToRGBA();

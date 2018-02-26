@@ -2,16 +2,14 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n2 { class CompBoundingBox; }
+namespace n2 { class CompImage; }
 
 namespace ns
 {
 
-class CompBoundingBox : public NodeComponent
+class N2CompImage : public NodeComponent
 {
 public:
-	CompBoundingBox();
-
 	//
 	// bin
 	//
@@ -28,12 +26,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompBoundingBox& comp) const;
-	void LoadFromMem(const n2::CompBoundingBox& comp);
+	void StoreToMem(n2::CompImage& comp) const;
+	void LoadFromMem(const n2::CompImage& comp);
 
 private:
-	float m_xmin, m_ymin, m_xmax, m_ymax;
+	std::string m_filepath;
 
-}; // CompBoundingBox
+}; // N2CompImage
 
 }

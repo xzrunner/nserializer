@@ -1,4 +1,4 @@
-#include "ns/CompBoundingBox.h"
+#include "ns/N2CompBoundingBox.h"
 #include "ns/CompType.h"
 
 #include <bs/ExportStream.h>
@@ -9,7 +9,7 @@
 namespace ns
 {
 
-CompBoundingBox::CompBoundingBox()
+N2CompBoundingBox::N2CompBoundingBox()
 	: m_xmin(0)
 	, m_ymin(0)
 	, m_xmax(0)
@@ -17,7 +17,7 @@ CompBoundingBox::CompBoundingBox()
 {
 }
 
-size_t CompBoundingBox::GetBinSize(const std::string& dir) const
+size_t N2CompBoundingBox::GetBinSize(const std::string& dir) const
 {
 	size_t sz = 0;
 
@@ -28,7 +28,7 @@ size_t CompBoundingBox::GetBinSize(const std::string& dir) const
 	return sz;
 }
 
-void CompBoundingBox::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompBoundingBox::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	es.Write(static_cast<uint8_t>(COMP_BOUNDING_BOX)); // type
 
@@ -39,7 +39,7 @@ void CompBoundingBox::StoreToBin(const std::string& dir, bs::ExportStream& es) c
 	es.Write(static_cast<float>(m_ymax));
 }
 
-void CompBoundingBox::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompBoundingBox::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	m_xmin = is.Float();
 	m_ymin = is.Float();
@@ -47,7 +47,7 @@ void CompBoundingBox::LoadFromBin(mm::LinearAllocator& alloc, const std::string&
 	m_ymax = is.Float();
 }
 
-void CompBoundingBox::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompBoundingBox::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -57,7 +57,7 @@ void CompBoundingBox::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	val.AddMember("ymax", m_ymax, alloc);
 }
 
-void CompBoundingBox::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompBoundingBox::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_xmin = val["xmin"].GetFloat();
 	m_ymin = val["ymin"].GetFloat();
@@ -65,7 +65,7 @@ void CompBoundingBox::LoadFromJson(mm::LinearAllocator& alloc, const std::string
 	m_ymax = val["ymax"].GetFloat();
 }
 
-void CompBoundingBox::StoreToMem(n2::CompBoundingBox& comp) const
+void N2CompBoundingBox::StoreToMem(n2::CompBoundingBox& comp) const
 {
 	sm::rect sz;
 	sz.xmin = m_xmin;
@@ -75,7 +75,7 @@ void CompBoundingBox::StoreToMem(n2::CompBoundingBox& comp) const
 	comp.SetSize(sz);
 }
 
-void CompBoundingBox::LoadFromMem(const n2::CompBoundingBox& comp)
+void N2CompBoundingBox::LoadFromMem(const n2::CompBoundingBox& comp)
 {
 	auto& sz = comp.GetSize();
 	m_xmin = sz.xmin;

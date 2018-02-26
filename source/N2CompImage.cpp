@@ -1,4 +1,4 @@
-#include "ns/CompImage.h"
+#include "ns/N2CompImage.h"
 #include "ns/CompType.h"
 
 #include <node2/CompImage.h>
@@ -11,23 +11,23 @@
 namespace ns
 {
 
-size_t CompImage::GetBinSize(const std::string& dir) const
+size_t N2CompImage::GetBinSize(const std::string& dir) const
 {
 	// tood
 	return 0;
 }
 
-void CompImage::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompImage::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	// todo
 }
 
-void CompImage::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompImage::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
 
-void CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -35,13 +35,13 @@ void CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rapid
 	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
 }
 
-void CompImage::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompImage::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto filepath = val["filepath"].GetString();
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void CompImage::StoreToMem(n2::CompImage& comp) const
+void N2CompImage::StoreToMem(n2::CompImage& comp) const
 {
 	comp.SetFilepath(m_filepath);
 
@@ -49,7 +49,7 @@ void CompImage::StoreToMem(n2::CompImage& comp) const
 	comp.SetTexture(img->GetTexture());
 }
 
-void CompImage::LoadFromMem(const n2::CompImage& comp)
+void N2CompImage::LoadFromMem(const n2::CompImage& comp)
 {
 	m_filepath = comp.GetFilepath();
 }

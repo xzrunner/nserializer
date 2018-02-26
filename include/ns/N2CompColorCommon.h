@@ -2,15 +2,15 @@
 
 #include "ns/NodeComponent.h"
 
-namespace ee0 { class CompNodeEditor; }
+namespace n2 { class CompColorCommon; }
 
 namespace ns
 {
 
-class CompNodeEditor : public NodeComponent
+class N2CompColorCommon : public NodeComponent
 {
 public:
-	CompNodeEditor();
+	N2CompColorCommon();
 
 	//
 	// bin
@@ -28,15 +28,13 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(ee0::CompNodeEditor& comp) const;
-	void LoadFromMem(const ee0::CompNodeEditor& comp);
+	void StoreToMem(n2::CompColorCommon& comp) const;
+	void LoadFromMem(const n2::CompColorCommon& comp);
 
 private:
-	std::string m_filepath;
-	std::string m_name;
+	uint32_t m_mul;
+	uint32_t m_add;
 
-	bool m_visible, m_editable;
-
-}; // CompNodeEditor
+}; // N2CompColorCommon
 
 }

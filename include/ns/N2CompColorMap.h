@@ -2,15 +2,15 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n2 { class CompTransform; }
+namespace n2 { class CompColorMap; }
 
 namespace ns
 {
 
-class CompTransform : public NodeComponent
+class N2CompColorMap : public NodeComponent
 {
 public:
-	CompTransform();
+	N2CompColorMap();
 
 	//
 	// bin
@@ -28,15 +28,14 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompTransform& comp) const;
-	void LoadFromMem(const n2::CompTransform& comp);
+	void StoreToMem(n2::CompColorMap& comp) const;
+	void LoadFromMem(const n2::CompColorMap& comp);
 
 private:
-	float m_pos_x, m_pos_y;
-	float m_angle;
-	float m_scale_x, m_scale_y;
-	float m_shear_x, m_shear_y;
+	uint32_t m_rmap;
+	uint32_t m_gmap;
+	uint32_t m_bmap;
 
-}; // CompTransform
+}; // N2CompColorMap
 
 }

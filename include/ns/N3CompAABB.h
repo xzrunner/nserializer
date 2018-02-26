@@ -2,12 +2,14 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n2 { class CompImage; }
+#include <painting3/AABB.h>
+
+namespace n3 { class CompAABB; }
 
 namespace ns
 {
 
-class CompImage : public NodeComponent
+class N3CompAABB : public NodeComponent
 {
 public:
 	//
@@ -26,12 +28,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompImage& comp) const;
-	void LoadFromMem(const n2::CompImage& comp);
+	void StoreToMem(n3::CompAABB& comp) const;
+	void LoadFromMem(const n3::CompAABB& comp);
 
 private:
-	std::string m_filepath;
+	pt3::AABB m_aabb;
 
-}; // CompImage
+}; // N3CompAABB
 
 }
