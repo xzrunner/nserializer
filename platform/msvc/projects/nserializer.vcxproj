@@ -26,7 +26,7 @@
     <ClInclude Include="..\..\..\include\ns\N3CompTransform.h" />
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\ns\RegistCallback.h" />
-    <ClInclude Include="..\..\..\include\ns\Tools.h" />
+    <ClInclude Include="..\..\..\include\ns\NodeFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\N2CompBoundingBox.cpp" />
@@ -42,7 +42,7 @@
     <ClCompile Include="..\..\..\source\N3CompModel.cpp" />
     <ClCompile Include="..\..\..\source\N3CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
-    <ClCompile Include="..\..\..\source\Tools.cpp" />
+    <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>1.nserializer</ProjectName>

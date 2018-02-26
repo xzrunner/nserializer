@@ -1,6 +1,6 @@
 #include "ns/N2CompMask.h"
 #include "ns/CompType.h"
-#include "ns/Tools.h"
+#include "ns/NodeFactory.h"
 
 #include <ee0/CompNodeEditor.h>
 
@@ -53,8 +53,8 @@ void N2CompMask::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 
 void N2CompMask::StoreToMem(n2::CompMask& comp) const
 {
-	comp.SetBaseNode(Tools::CreateNode(m_base_path));
-	comp.SetMaskNode(Tools::CreateNode(m_mask_path));
+	comp.SetBaseNode(NodeFactory::CreateNode(m_base_path));
+	comp.SetMaskNode(NodeFactory::CreateNode(m_mask_path));
 }
 
 void N2CompMask::LoadFromMem(const n2::CompMask& comp)

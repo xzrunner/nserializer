@@ -19,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
-    <ClCompile Include="..\..\..\source\Tools.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp">
       <Filter>color</Filter>
     </ClCompile>
@@ -58,14 +55,14 @@
     <ClCompile Include="..\..\..\source\N3CompModel.cpp">
       <Filter>mesh</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\NodeFactory.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\ns\CompType.h" />
     <ClInclude Include="..\..\..\include\ns\RegistCallback.h" />
-    <ClInclude Include="..\..\..\include\ns\Tools.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h">
       <Filter>color</Filter>
     </ClInclude>
@@ -101,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompModel.h">
       <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\NodeFactory.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
