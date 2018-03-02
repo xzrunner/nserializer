@@ -1,7 +1,7 @@
 #include "ns/NodeFactory.h"
 
 #include <js/RapidJsonHelper.h>
-#include <node0/SerializeSystem.h>
+#include <ns/NodeSerializer.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
@@ -21,7 +21,7 @@ namespace ns
 n0::SceneNodePtr NodeFactory::CreateNode(const std::string& dir, const rapidjson::Value& val)
 {
 	auto node = std::make_shared<n0::SceneNode>();
-	n0::SerializeSystem::LoadNodeFromJson(node, dir, val);
+	ns::NodeSerializer::LoadNodeFromJson(node, dir, val);
 
 	if (node->HasComponent<n2::CompBoundingBox>() &&
 		node->HasComponent<n2::CompTransform>())

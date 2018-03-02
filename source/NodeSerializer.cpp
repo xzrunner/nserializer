@@ -1,8 +1,7 @@
 #include "ns/NodeSerializer.h"
+#include "ns/CompSerializer.h"
 
 #include <node0/SceneNode.h>
-#include <node0/CompStorer.h>
-#include <node0/CompFactory.h>
 
 namespace ns
 {
@@ -18,7 +17,7 @@ bool NodeSerializer::StoreNodeToJson(const n0::SceneNodePtr& node, const std::st
 	for (auto& comp : components)
 	{
 		rapidjson::Value cval;
-		if (n0::CompStorer::Instance()->ToJson(*comp, dir, cval, alloc)) 
+		if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc)) 
 		{
 			cval.AddMember("type", rapidjson::StringRef(comp->Type()), alloc);
 			val.PushBack(cval, alloc);
@@ -35,7 +34,7 @@ bool NodeSerializer::LoadNodeFromJson(n0::SceneNodePtr& node,
 {
 	for (auto itr = val.Begin(); itr != val.End(); ++itr)
 	{
-		n0::CompFactory::Instance()->Create(
+		CompSerializer::Instance()->FromJson(
 			node, (*itr)["type"].GetString(), dir, *itr);
 	}
 	return !val.Empty();

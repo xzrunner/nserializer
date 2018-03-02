@@ -1,107 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="color">
-      <UniqueIdentifier>{42d5ab54-8fcd-4790-b3c6-420e9d8eabb5}</UniqueIdentifier>
+    <Filter Include="components">
+      <UniqueIdentifier>{cf98f06f-f8ed-421e-99cd-d997819288d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="geo">
-      <UniqueIdentifier>{65787996-3317-4aa3-b30d-7a094f9a7901}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="mesh">
+    <Filter Include="components\mesh">
       <UniqueIdentifier>{b4896b09-cef5-4f2f-a652-ed2b90508435}</UniqueIdentifier>
     </Filter>
-    <Filter Include="editor">
+    <Filter Include="components\color">
+      <UniqueIdentifier>{42d5ab54-8fcd-4790-b3c6-420e9d8eabb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\editor">
       <UniqueIdentifier>{b73ba6af-a1fb-404c-973f-21de955a678c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\geo">
+      <UniqueIdentifier>{65787996-3317-4aa3-b30d-7a094f9a7901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{f3b50370-c0ba-4181-8571-a46e39920ca5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp">
-      <Filter>color</Filter>
+      <Filter>components\color</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompColorMap.cpp">
-      <Filter>color</Filter>
+      <Filter>components\color</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompBoundingBox.cpp">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompTransform.cpp">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompImage.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompMask.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompSprite2.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompText.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\EE0CompNodeEditor.cpp">
-      <Filter>editor</Filter>
+      <Filter>components\editor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N3CompAABB.cpp">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N3CompTransform.cpp">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N3CompModel.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N0CompComplex.cpp">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
-    <ClCompile Include="..\..\..\source\NodeSerializer.cpp" />
+    <ClCompile Include="..\..\..\source\NodeFactory.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\NodeSerializer.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompSerializer.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\ns\CompType.h" />
     <ClInclude Include="..\..\..\include\ns\RegistCallback.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h">
-      <Filter>color</Filter>
+      <Filter>components\color</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompColorMap.h">
-      <Filter>color</Filter>
+      <Filter>components\color</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompBoundingBox.h">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompTransform.h">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompMask.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompSprite2.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompText.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\EE0CompNodeEditor.h">
-      <Filter>editor</Filter>
+      <Filter>components\editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompAABB.h">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompTransform.h">
-      <Filter>geo</Filter>
+      <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompModel.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N0CompComplex.h">
-      <Filter>mesh</Filter>
+      <Filter>components\mesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\NodeFactory.h" />
-    <ClInclude Include="..\..\..\include\ns\NodeSerializer.h" />
+    <ClInclude Include="..\..\..\include\ns\NodeFactory.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\NodeSerializer.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompSerializer.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

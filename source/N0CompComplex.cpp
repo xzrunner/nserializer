@@ -2,6 +2,7 @@
 #include "ns/NodeSerializer.h"
 
 #include <node0/CompComplex.h>
+#include <node0/SceneNode.h>
 
 namespace ns
 {

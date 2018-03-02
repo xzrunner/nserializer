@@ -1,4 +1,5 @@
 #include "ns/RegistCallback.h"
+#include "ns/CompSerializer.h"
 
 #include "ns/N2CompColorCommon.h"
 #include <node2/CompColorCommon.h>
@@ -29,14 +30,13 @@
 #include "ns/EE0CompNodeEditor.h"
 #include <ee0/CompNodeEditor.h>
 
-#include <node0/CompFactory.h>
-#include <node0/CompStorer.h>
 #include <node0/SceneNode.h>
 #include <memmgr/LinearAllocator.h>
 
 #define REGIST_CB(ori, here)                                                           \
-	n0::CompFactory::Instance()->AddCreator(ori::TYPE_NAME, [](                        \
-		n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val) { \
+	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
+		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
+        {                                                                              \
 			auto& comp = node->AddComponent<ori>();                                    \
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
@@ -44,7 +44,7 @@
 			ser.StoreToMem(comp);                                                      \
 		}                                                                              \
 	);                                                                                 \
-	n0::CompStorer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
+	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
 		[](const n0::NodeComponent& comp, const std::string& dir,                      \
            rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
 		{                                                                              \
@@ -61,7 +61,7 @@ namespace ns
 
 void RegistCallback::Init()
 {
-	//n0::CompFactory::Instance()->AddCreator(n2::CompColorCommon::TYPE_NAME, 
+	//CompSerializer::Instance()->AddCreator(n2::CompColorCommon::TYPE_NAME, 
 	//	[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val) 
 	//	{
 	//		auto& comp = node->AddComponent<n2::CompColorCommon>();
@@ -72,7 +72,7 @@ void RegistCallback::Init()
 	//	}
 	//);
 	//
-	//n0::CompStorer::Instance()->AddToJsonFunc(n2::CompColorCommon::TYPE_NAME, 
+	//CompSerializer::Instance()->AddToJsonFunc(n2::CompColorCommon::TYPE_NAME, 
 	//	[](const n0::NodeComponent& comp, const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
 	//	{
 	//		CompColorCommon seri;

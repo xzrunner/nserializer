@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\ns\CompSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\N0CompComplex.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompBoundingBox.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="..\..\..\include\ns\NodeFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
     <ClCompile Include="..\..\..\source\N0CompComplex.cpp" />
     <ClCompile Include="..\..\..\source\N2CompBoundingBox.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp" />
