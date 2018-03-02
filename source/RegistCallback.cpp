@@ -1,6 +1,9 @@
 #include "ns/RegistCallback.h"
 #include "ns/CompSerializer.h"
 
+#include "ns/N0CompComplex.h"
+#include <node0/CompComplex.h>
+
 #include "ns/N2CompColorCommon.h"
 #include <node2/CompColorCommon.h>
 #include "ns/N2CompColorMap.h"
@@ -81,6 +84,8 @@ void RegistCallback::Init()
 	//		return true;
 	//	}
 	//);
+
+	REGIST_CB(n0::CompComplex, N0CompComplex);
 
 	REGIST_CB(n2::CompColorCommon, N2CompColorCommon);
 	REGIST_CB(n2::CompColorMap, N2CompColorMap);
