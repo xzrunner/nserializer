@@ -32,8 +32,7 @@ bool CompSerializer::ToJson(const n0::NodeComponent& comp,
 	auto itr = m_to_json.find(comp.Type());
 	if (itr != m_to_json.end()) {
 		return itr->second(comp, dir, val, alloc);
-	}
-	else {
+	} else {
 		GD_REPORT_ASSERT("no comp creator");
 		return false;
 	}

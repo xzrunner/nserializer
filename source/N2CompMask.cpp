@@ -53,8 +53,8 @@ void N2CompMask::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 
 void N2CompMask::StoreToMem(n2::CompMask& comp) const
 {
-	comp.SetBaseNode(NodeFactory::CreateNode(m_base_path));
-	comp.SetMaskNode(NodeFactory::CreateNode(m_mask_path));
+	comp.SetBaseNode(NodeFactory::Create(m_base_path));
+	comp.SetMaskNode(NodeFactory::Create(m_mask_path));
 }
 
 void N2CompMask::LoadFromMem(const n2::CompMask& comp)

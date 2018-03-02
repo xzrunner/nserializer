@@ -1,5 +1,7 @@
 #include "ns/NodeFactory.h"
 
+#include <ee0/CompNodeEditor.h>
+
 #include <js/RapidJsonHelper.h>
 #include <ns/NodeSerializer.h>
 #include <node0/SceneNode.h>
@@ -9,7 +11,6 @@
 #include <gum/ResPool.h>
 #include <gum/Image.h>
 #include <gum/Texture.h>
-#include <ee0/CompNodeEditor.h>
 
 #include <boost/filesystem.hpp>
 
@@ -18,7 +19,7 @@
 namespace ns
 {
 
-n0::SceneNodePtr NodeFactory::CreateNode(const std::string& dir, const rapidjson::Value& val)
+n0::SceneNodePtr NodeFactory::Create(const std::string& dir, const rapidjson::Value& val)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 	ns::NodeSerializer::LoadNodeFromJson(node, dir, val);
@@ -34,22 +35,22 @@ n0::SceneNodePtr NodeFactory::CreateNode(const std::string& dir, const rapidjson
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateNode(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 {
 	n0::SceneNodePtr node = nullptr;
 
 	std::string ext = filepath.substr(filepath.rfind('.') + 1);
 	std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
 	if (ext == "png" || ext == "jpg" || ext == "bmp" || ext == "ppm" || ext == "pvr" || ext == "pkm") {
-		node = CreateNodeFromImage(filepath);
+		node = CreateFromImage(filepath);
 	} else if (ext == "json") {
-		node = CreateNodeFromJson(filepath);
+		node = CreateFromJson(filepath);
 	}
 
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateNodeFromImage(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
@@ -73,7 +74,7 @@ n0::SceneNodePtr NodeFactory::CreateNodeFromImage(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateNodeFromJson(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 {
 	rapidjson::Document doc;
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
@@ -81,7 +82,7 @@ n0::SceneNodePtr NodeFactory::CreateNodeFromJson(const std::string& filepath)
 	auto& nodes_val = doc["nodes"];
 	if (nodes_val.Size() == 1) {
 		auto dir = boost::filesystem::path(filepath).parent_path().string();
-		return CreateNode(dir, nodes_val[0]);
+		return Create(dir, nodes_val[0]);
 	} else {
 		return nullptr;
 	}
