@@ -40,7 +40,8 @@
 	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
 		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
         {                                                                              \
-			auto& comp = node->AddComponent<ori>();                                    \
+			auto& comp = node->HasComponent<ori>() ?                                   \
+				node->GetComponent<ori>() : node->AddComponent<ori>();                 \
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
