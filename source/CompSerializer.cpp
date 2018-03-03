@@ -30,20 +30,25 @@ bool CompSerializer::ToJson(const n0::NodeComponent& comp,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	auto itr = m_to_json.find(comp.Type());
-	if (itr != m_to_json.end()) {
-		return itr->second(comp, dir, val, alloc);
-	} else {
+	if (itr != m_to_json.end()) 
+	{
+		bool ret = itr->second(comp, dir, val, alloc);
+		val.AddMember("type", rapidjson::StringRef(comp.Type()), alloc);
+		return ret;
+	} 
+	else 
+	{
 		GD_REPORT_ASSERT("no comp creator");
 		return false;
 	}
 }
 
 void CompSerializer::FromJson(n0::SceneNodePtr& node,
-	                          const std::string& name, 
 	                          const std::string& dir,
 	                          const rapidjson::Value& val) const
 {
-	auto itr = m_creator.find(name);
+	auto type = val["type"].GetString();
+	auto itr = m_creator.find(type);
 	if (itr != m_creator.end()) {
 		itr->second(node, dir, val);
 	} else {

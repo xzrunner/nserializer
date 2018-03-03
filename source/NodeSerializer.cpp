@@ -19,7 +19,6 @@ bool NodeSerializer::StoreNodeToJson(const n0::SceneNodePtr& node, const std::st
 		rapidjson::Value cval;
 		if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc)) 
 		{
-			cval.AddMember("type", rapidjson::StringRef(comp->Type()), alloc);
 			val.PushBack(cval, alloc);
 			ret = true;
 		}
@@ -32,10 +31,8 @@ bool NodeSerializer::LoadNodeFromJson(n0::SceneNodePtr& node,
 	                                  const std::string& dir,
 	                                  const rapidjson::Value& val)
 {
-	for (auto itr = val.Begin(); itr != val.End(); ++itr)
-	{
-		CompSerializer::Instance()->FromJson(
-			node, (*itr)["type"].GetString(), dir, *itr);
+	for (auto itr = val.Begin(); itr != val.End(); ++itr) {
+		CompSerializer::Instance()->FromJson(node, dir, *itr);
 	}
 	return !val.Empty();
 }
