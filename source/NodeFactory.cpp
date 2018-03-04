@@ -4,6 +4,7 @@
 
 #include <js/RapidJsonHelper.h>
 #include <ns/NodeSerializer.h>
+#include <ns/CompSerializer.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
@@ -70,13 +71,22 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	rapidjson::Document doc;
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-	auto& nodes_val = doc["nodes"];
-	if (nodes_val.Size() == 1) {
-		auto dir = boost::filesystem::path(filepath).parent_path().string();
-		return Create(dir, nodes_val[0]);
-	} else {
-		return nullptr;
-	}
+	auto node = std::make_shared<n0::SceneNode>();
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
+	ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+
+	// transform
+	auto& ctrans = node->AddComponent<n2::CompTransform>();
+
+	// aabb
+	sm::rect sz(100, 100);
+	auto& cbounding = node->AddComponent<n2::CompBoundingBox>(sz);
+	cbounding.Build(ctrans.GetTrans().GetSRT());
+
+	// editor
+	node->AddComponent<ee0::CompNodeEditor>();
+
+	return node;
 }
 
 }
