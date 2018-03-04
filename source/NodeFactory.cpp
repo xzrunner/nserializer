@@ -23,15 +23,6 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& dir, const rapidjson::Va
 {
 	auto node = std::make_shared<n0::SceneNode>();
 	ns::NodeSerializer::LoadNodeFromJson(node, dir, val);
-
-	if (node->HasComponent<n2::CompBoundingBox>() &&
-		node->HasComponent<n2::CompTransform>())
-	{
-		auto& cbb = node->GetComponent<n2::CompBoundingBox>();
-		auto& ctrans = node->GetComponent<n2::CompTransform>();
-		cbb.Build(ctrans.GetTrans().GetSRT());
-	}
-
 	return node;
 }
 

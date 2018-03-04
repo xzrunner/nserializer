@@ -48,15 +48,6 @@ void N0CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	{
 		auto node = std::make_shared<n0::SceneNode>();
 		NodeSerializer::LoadNodeFromJson(node, dir, *itr);
-
-		if (node->HasComponent<n2::CompBoundingBox>() &&
-			node->HasComponent<n2::CompTransform>())
-		{
-			auto& cbb = node->GetComponent<n2::CompBoundingBox>();
-			auto& ctrans = node->GetComponent<n2::CompTransform>();
-			cbb.Build(ctrans.GetTrans().GetSRT());
-		}
-
 		m_nodes.push_back(node);
 	}
 }

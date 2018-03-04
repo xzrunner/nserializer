@@ -2,6 +2,8 @@
 #include "ns/CompSerializer.h"
 
 #include <node0/SceneNode.h>
+#include <node2/CompTransform.h>
+#include <node2/CompBoundingBox.h>
 
 namespace ns
 {
@@ -34,6 +36,15 @@ bool NodeSerializer::LoadNodeFromJson(n0::SceneNodePtr& node,
 	for (auto itr = val.Begin(); itr != val.End(); ++itr) {
 		CompSerializer::Instance()->FromJson(node, dir, *itr);
 	}
+
+	if (node->HasComponent<n2::CompBoundingBox>() &&
+		node->HasComponent<n2::CompTransform>())
+	{
+		auto& cbb = node->GetComponent<n2::CompBoundingBox>();
+		auto& ctrans = node->GetComponent<n2::CompTransform>();
+		cbb.Build(ctrans.GetTrans().GetSRT());
+	}
+
 	return !val.Empty();
 }
 
