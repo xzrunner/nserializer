@@ -70,6 +70,9 @@
     <ClCompile Include="..\..\..\source\CompSerializer.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompScale9.cpp">
+      <Filter>components\mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -122,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\CompSerializer.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompScale9.h">
+      <Filter>components\mesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

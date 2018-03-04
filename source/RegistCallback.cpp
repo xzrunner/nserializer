@@ -22,6 +22,8 @@
 #include <node2/CompSprite2.h>
 #include "ns/N2CompText.h"
 #include <node2/CompText.h>
+#include "ns/N2CompScale9.h"
+#include <node2/CompScale9.h>
 
 #include "ns/N3CompAABB.h"
 #include <node3/CompAABB.h>
@@ -98,6 +100,7 @@ void RegistCallback::Init()
 	REGIST_CB(n2::CompMask, N2CompMask);
 	REGIST_CB(n2::CompSprite2, N2CompSprite2);
 	REGIST_CB(n2::CompText, N2CompText);
+	REGIST_CB(n2::CompScale9, N2CompScale9);
 
 	REGIST_CB(n3::CompAABB, N3CompAABB);
 	REGIST_CB(n3::CompTransform, N3CompTransform);
