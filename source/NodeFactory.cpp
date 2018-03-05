@@ -12,6 +12,7 @@
 #include <gum/ResPool.h>
 #include <gum/Image.h>
 #include <gum/Texture.h>
+#include <gum/ResPool.h>
 
 #include <boost/filesystem.hpp>
 
@@ -72,8 +73,20 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
 	auto node = std::make_shared<n0::SceneNode>();
-	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+	auto casset = gum::ResPool::Instance().Query<n0::CompAsset>(filepath);
+	if (casset) 
+	{
+		node->AddSharedCompNoCreate<n0::CompAsset>(casset);
+	} 
+	else 
+	{
+		auto dir = boost::filesystem::path(filepath).parent_path().string();
+		ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+
+		auto casset = node->GetSharedCompPtr<n0::CompAsset>();
+		bool succ = gum::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
+		GD_ASSERT(succ, "exists");
+	}
 
 	// transform
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
