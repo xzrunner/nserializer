@@ -48,20 +48,20 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 
 	// image
 	auto img = gum::ResPool::Instance().Fetch<gum::Image>(filepath);
-	auto& cimage = node->AddComponent<n2::CompImage>();
+	auto& cimage = node->AddSharedComp<n2::CompImage>();
 	cimage.SetFilepath(filepath);
 	cimage.SetTexture(img->GetTexture());
 
 	// transform
-	auto& ctrans = node->AddComponent<n2::CompTransform>();
+	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
 	sm::rect sz(img->GetWidth(), img->GetHeight());
-	auto& cbounding = node->AddComponent<n2::CompBoundingBox>(sz);
+	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
 	cbounding.Build(ctrans.GetTrans().GetSRT());
 
 	// editor
-	node->AddComponent<ee0::CompNodeEditor>();
+	node->AddUniqueComp<ee0::CompNodeEditor>();
 
 	return node;
 }
@@ -76,15 +76,15 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	ns::CompSerializer::Instance()->FromJson(node, dir, doc);
 
 	// transform
-	auto& ctrans = node->AddComponent<n2::CompTransform>();
+	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
 	sm::rect sz(100, 100);
-	auto& cbounding = node->AddComponent<n2::CompBoundingBox>(sz);
+	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
 	cbounding.Build(ctrans.GetTrans().GetSRT());
 
 	// editor
-	node->AddComponent<ee0::CompNodeEditor>();
+	node->AddUniqueComp<ee0::CompNodeEditor>();
 
 	return node;
 }

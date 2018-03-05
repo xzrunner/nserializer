@@ -1,7 +1,8 @@
 #include "ns/CompSerializer.h"
 
 #include <guard/check.h>
-#include <node0/NodeComponent.h>
+#include <node0/NodeUniqueComp.h>
+#include <node0/NodeSharedComp.h>
 
 namespace ns
 {
@@ -12,9 +13,15 @@ CompSerializer::CompSerializer()
 {
 }
 
-void CompSerializer::AddToJsonFunc(const std::string& name, const ToJsonFunc& func)
+void CompSerializer::AddToJsonFunc(const std::string& name, const UniqueToJsonFunc& func)
 {
-	auto status = m_to_json.insert(std::make_pair(name, func));
+	auto status = m_unique_to_json.insert(std::make_pair(name, func));
+	GD_ASSERT(status.second, "duplicate.");
+}
+
+void CompSerializer::AddToJsonFunc(const std::string& name, const SharedToJsonFunc& func)
+{
+	auto status = m_shared_to_json.insert(std::make_pair(name, func));
 	GD_ASSERT(status.second, "duplicate.");
 }
 
@@ -24,13 +31,32 @@ void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc
 	GD_ASSERT(status.second, "duplicate.");
 }
 
-bool CompSerializer::ToJson(const n0::NodeComponent& comp, 
+bool CompSerializer::ToJson(const n0::NodeUniqueComp& comp,
 	                        const std::string& dir,
 	                        rapidjson::Value& val, 
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	auto itr = m_to_json.find(comp.Type());
-	if (itr != m_to_json.end()) 
+	auto itr = m_unique_to_json.find(comp.Type());
+	if (itr != m_unique_to_json.end())
+	{
+		bool ret = itr->second(comp, dir, val, alloc);
+		val.AddMember("type", rapidjson::StringRef(comp.Type()), alloc);
+		return ret;
+	} 
+	else 
+	{
+		GD_REPORT_ASSERT("no comp creator");
+		return false;
+	}
+}
+
+bool CompSerializer::ToJson(const n0::NodeSharedComp& comp, 
+	                        const std::string& dir, 
+	                        rapidjson::Value& val,
+	                        rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	auto itr = m_shared_to_json.find(comp.Type());
+	if (itr != m_shared_to_json.end())
 	{
 		bool ret = itr->second(comp, dir, val, alloc);
 		val.AddMember("type", rapidjson::StringRef(comp.Type()), alloc);

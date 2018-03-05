@@ -61,13 +61,13 @@ void N2CompMask::LoadFromMem(const n2::CompMask& comp)
 {
 	auto& base = comp.GetBaseNode();
 	if (base) {
-		auto& base_editor = base->GetComponent<ee0::CompNodeEditor>();
+		auto& base_editor = base->GetUniqueComp<ee0::CompNodeEditor>();
 		m_base_path = base_editor.GetFilepath();
 	}
 
 	auto& mask = comp.GetMaskNode();
 	if (mask) {
-		auto& mask_editor = mask->GetComponent<ee0::CompNodeEditor>();
+		auto& mask_editor = mask->GetUniqueComp<ee0::CompNodeEditor>();
 		m_mask_path = mask_editor.GetFilepath();
 	}
 

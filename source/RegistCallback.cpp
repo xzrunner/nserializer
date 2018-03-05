@@ -38,12 +38,12 @@
 #include <node0/SceneNode.h>
 #include <memmgr/LinearAllocator.h>
 
-#define REGIST_CB(ori, here)                                                           \
+#define REGIST_UNIQUE_CB(ori, here)                                                    \
 	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
 		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
         {                                                                              \
-			auto& comp = node->HasComponent<ori>() ?                                   \
-				node->GetComponent<ori>() : node->AddComponent<ori>();                 \
+			auto& comp = node->HasUniqueComp<ori>() ?                                  \
+				node->GetUniqueComp<ori>() : node->AddUniqueComp<ori>();               \
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
@@ -51,7 +51,7 @@
 		}                                                                              \
 	);                                                                                 \
 	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
-		[](const n0::NodeComponent& comp, const std::string& dir,                      \
+		[](const n0::NodeUniqueComp& comp, const std::string& dir,                     \
            rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
 		{                                                                              \
 			here seri;                                                                 \
@@ -61,52 +61,53 @@
 		}                                                                              \
 	);
 
+#define REGIST_SHARED_CB(ori, here)                                                    \
+	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
+		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
+        {                                                                              \
+			auto& comp = node->HasSharedComp<ori>() ?                                  \
+				node->GetSharedComp<ori>() : node->AddSharedComp<ori>();               \
+			here ser;                                                                  \
+			mm::LinearAllocator alloc;                                                 \
+			ser.LoadFromJson(alloc, dir, val);                                         \
+			ser.StoreToMem(comp);                                                      \
+		}                                                                              \
+	);                                                                                 \
+	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
+		[](const n0::NodeSharedComp& comp, const std::string& dir,                     \
+           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
+		{                                                                              \
+			here seri;                                                                 \
+			seri.LoadFromMem(static_cast<const ori&>(comp));                           \
+			seri.StoreToJson(dir, val, alloc);                                         \
+			return true;                                                               \
+		}                                                                              \
+	);
 
 namespace ns
 {
 
 void RegistCallback::Init()
 {
-	//CompSerializer::Instance()->AddCreator(n2::CompColorCommon::TYPE_NAME, 
-	//	[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val) 
-	//	{
-	//		auto& comp = node->AddComponent<n2::CompColorCommon>();
-	//		CompColorCommon seri;
-	//		mm::LinearAllocator alloc;
-	//		seri.LoadFromJson(alloc, dir, val);
-	//		seri.StoreToMem(comp);
-	//	}
-	//);
-	//
-	//CompSerializer::Instance()->AddToJsonFunc(n2::CompColorCommon::TYPE_NAME, 
-	//	[](const n0::NodeComponent& comp, const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
-	//	{
-	//		CompColorCommon seri;
-	//		seri.LoadFromMem(static_cast<const n2::CompColorCommon&>(comp));
-	//		seri.StoreToJson(dir, val, alloc);
-	//		return true;
-	//	}
-	//);
+	REGIST_SHARED_CB(n0::CompComplex, N0CompComplex);
 
-	REGIST_CB(n0::CompComplex, N0CompComplex);
+	REGIST_UNIQUE_CB(n2::CompColorCommon, N2CompColorCommon);
+	REGIST_UNIQUE_CB(n2::CompColorMap, N2CompColorMap);
 
-	REGIST_CB(n2::CompColorCommon, N2CompColorCommon);
-	REGIST_CB(n2::CompColorMap, N2CompColorMap);
+	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
+	REGIST_UNIQUE_CB(n2::CompBoundingBox, N2CompBoundingBox);
 
-	REGIST_CB(n2::CompTransform, N2CompTransform);
-	REGIST_CB(n2::CompBoundingBox, N2CompBoundingBox);
+	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
+	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
+	REGIST_SHARED_CB(n2::CompSprite2, N2CompSprite2);
+	REGIST_SHARED_CB(n2::CompText, N2CompText);
+	REGIST_SHARED_CB(n2::CompScale9, N2CompScale9);
 
-	REGIST_CB(n2::CompImage, N2CompImage);
-	REGIST_CB(n2::CompMask, N2CompMask);
-	REGIST_CB(n2::CompSprite2, N2CompSprite2);
-	REGIST_CB(n2::CompText, N2CompText);
-	REGIST_CB(n2::CompScale9, N2CompScale9);
+	REGIST_UNIQUE_CB(n3::CompAABB, N3CompAABB);
+	REGIST_UNIQUE_CB(n3::CompTransform, N3CompTransform);
+	REGIST_SHARED_CB(n3::CompModel, N3CompModel);
 
-	REGIST_CB(n3::CompAABB, N3CompAABB);
-	REGIST_CB(n3::CompTransform, N3CompTransform);
-	REGIST_CB(n3::CompModel, N3CompModel);
-
-	REGIST_CB(ee0::CompNodeEditor, EE0CompNodeEditor);
+	REGIST_UNIQUE_CB(ee0::CompNodeEditor, EE0CompNodeEditor);
 }
 
 }
