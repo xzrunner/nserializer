@@ -97,7 +97,8 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	cbounding.Build(ctrans.GetTrans().GetSRT());
 
 	// editor
-	node->AddUniqueComp<ee0::CompNodeEditor>();
+	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
+	ceditor.SetFilepath(filepath);
 
 	return node;
 }
