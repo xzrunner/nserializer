@@ -94,13 +94,13 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 
 	// asset
 	CreateNodeAssetComp(node, filepath);
+	auto& casset = node->GetSharedComp<n0::CompAsset>();
 
 	// transform
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	sm::rect sz(100, 100);
-	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
+	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
 	cbounding.Build(ctrans.GetTrans().GetSRT());
 
 	// editor
