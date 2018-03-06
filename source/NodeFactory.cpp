@@ -43,6 +43,27 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	return node;
 }
 
+void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string& filepath)
+{
+	auto casset = gum::ResPool::Instance().Query<n0::CompAsset>(filepath);
+	if (casset)
+	{
+		node->AddSharedCompNoCreate<n0::CompAsset>(casset);
+	}
+	else
+	{
+		rapidjson::Document doc;
+		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+		auto dir = boost::filesystem::path(filepath).parent_path().string();
+		ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+
+		auto casset = node->GetSharedCompPtr<n0::CompAsset>();
+		bool succ = gum::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
+		GD_ASSERT(succ, "exists");
+	}
+}
+
 n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
@@ -69,24 +90,10 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 
 n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 {
-	rapidjson::Document doc;
-	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-
 	auto node = std::make_shared<n0::SceneNode>();
-	auto casset = gum::ResPool::Instance().Query<n0::CompAsset>(filepath);
-	if (casset) 
-	{
-		node->AddSharedCompNoCreate<n0::CompAsset>(casset);
-	} 
-	else 
-	{
-		auto dir = boost::filesystem::path(filepath).parent_path().string();
-		ns::CompSerializer::Instance()->FromJson(node, dir, doc);
 
-		auto casset = node->GetSharedCompPtr<n0::CompAsset>();
-		bool succ = gum::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
-		GD_ASSERT(succ, "exists");
-	}
+	// asset
+	CreateNodeAssetComp(node, filepath);
 
 	// transform
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();

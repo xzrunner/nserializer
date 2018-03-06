@@ -31,11 +31,16 @@ bool NodeSerializer::StoreNodeToJson(const n0::SceneNodePtr& node, const std::st
 			auto& filepath = ceditor.GetFilepath();
 			if (!filepath.empty())
 			{
-				std::string relative = boost::filesystem::relative(ceditor.GetFilepath(), dir).string();
-				cval.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
-				val.PushBack(cval, alloc);
-				ret = true;
-				return true;
+				auto ext = boost::filesystem::extension(filepath);
+				if (ext == ".json")
+				{
+					std::string relative = boost::filesystem::relative(ceditor.GetFilepath(), dir).string();
+					cval.AddMember("comp_type", rapidjson::StringRef(comp->Type()), alloc);
+					cval.AddMember("comp_path", rapidjson::Value(relative.c_str(), alloc), alloc);
+					val.PushBack(cval, alloc);
+					ret = true;
+					return true;
+				}
 			}
 		}
 

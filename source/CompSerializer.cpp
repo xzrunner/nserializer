@@ -1,8 +1,11 @@
 #include "ns/CompSerializer.h"
+#include "ns/NodeFactory.h"
 
 #include <guard/check.h>
 #include <node0/NodeUniqueComp.h>
 #include <node0/NodeSharedComp.h>
+
+#include <boost/filesystem.hpp>
 
 namespace ns
 {
@@ -40,7 +43,7 @@ bool CompSerializer::ToJson(const n0::NodeUniqueComp& comp,
 	if (itr != m_unique_to_json.end())
 	{
 		bool ret = itr->second(comp, dir, val, alloc);
-		val.AddMember("type", rapidjson::StringRef(comp.Type()), alloc);
+		val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
 		return ret;
 	} 
 	else 
@@ -59,7 +62,7 @@ bool CompSerializer::ToJson(const n0::NodeSharedComp& comp,
 	if (itr != m_shared_to_json.end())
 	{
 		bool ret = itr->second(comp, dir, val, alloc);
-		val.AddMember("type", rapidjson::StringRef(comp.Type()), alloc);
+		val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
 		return ret;
 	} 
 	else 
@@ -73,7 +76,15 @@ void CompSerializer::FromJson(n0::SceneNodePtr& node,
 	                          const std::string& dir,
 	                          const rapidjson::Value& val) const
 {
-	auto type = val["type"].GetString();
+	if (val.HasMember("comp_path"))
+	{
+		auto comp_path = val["comp_path"].GetString();
+		auto absolute = boost::filesystem::absolute(comp_path, dir);
+		NodeFactory::CreateNodeAssetComp(node, absolute.string());
+		return;
+	}
+
+	auto type = val["comp_type"].GetString();
 	auto itr = m_creator.find(type);
 	if (itr != m_creator.end()) {
 		itr->second(node, dir, val);
