@@ -1,31 +1,31 @@
-#include "ns/N0CompComplex.h"
+#include "ns/N2CompComplex.h"
 #include "ns/NodeSerializer.h"
 
-#include <node0/CompComplex.h>
 #include <node0/SceneNode.h>
+#include <node2/CompComplex.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 
 namespace ns
 {
 
-size_t N0CompComplex::GetBinSize(const std::string& dir) const
+size_t N2CompComplex::GetBinSize(const std::string& dir) const
 {
 	// tood
 	return 0;
 }
 
-void N0CompComplex::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompComplex::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	// todo
 }
 
-void N0CompComplex::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompComplex::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
 
-void N0CompComplex::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompComplex::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -41,7 +41,7 @@ void N0CompComplex::StoreToJson(const std::string& dir, rapidjson::Value& val, r
 	val.AddMember("nodes", nodes_val, alloc);
 }
 
-void N0CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& nodes_val = val["nodes"];
 	for (auto itr = nodes_val.Begin(); itr != nodes_val.End(); ++itr)
@@ -52,12 +52,12 @@ void N0CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	}
 }
 
-void N0CompComplex::StoreToMem(n0::CompComplex& comp) const
+void N2CompComplex::StoreToMem(n2::CompComplex& comp) const
 {
 	comp.SetChildren(m_nodes);
 }
 
-void N0CompComplex::LoadFromMem(const n0::CompComplex& comp)
+void N2CompComplex::LoadFromMem(const n2::CompComplex& comp)
 {
 	m_nodes = comp.GetAllChildren();
 }

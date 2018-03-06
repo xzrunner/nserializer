@@ -4,9 +4,6 @@
     <Filter Include="components">
       <UniqueIdentifier>{cf98f06f-f8ed-421e-99cd-d997819288d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\mesh">
-      <UniqueIdentifier>{b4896b09-cef5-4f2f-a652-ed2b90508435}</UniqueIdentifier>
-    </Filter>
     <Filter Include="components\color">
       <UniqueIdentifier>{42d5ab54-8fcd-4790-b3c6-420e9d8eabb5}</UniqueIdentifier>
     </Filter>
@@ -18,6 +15,9 @@
     </Filter>
     <Filter Include="tools">
       <UniqueIdentifier>{f3b50370-c0ba-4181-8571-a46e39920ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\asset">
+      <UniqueIdentifier>{b4896b09-cef5-4f2f-a652-ed2b90508435}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,16 +35,16 @@
       <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompImage.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompMask.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompSprite2.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompText.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\EE0CompNodeEditor.cpp">
       <Filter>components\editor</Filter>
@@ -56,10 +56,7 @@
       <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N3CompModel.cpp">
-      <Filter>components\mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\N0CompComplex.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\NodeFactory.cpp">
       <Filter>tools</Filter>
@@ -71,7 +68,10 @@
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompScale9.cpp">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompComplex.cpp">
+      <Filter>components\asset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,16 +91,16 @@
       <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompMask.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompSprite2.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompText.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\EE0CompNodeEditor.h">
       <Filter>components\editor</Filter>
@@ -112,10 +112,7 @@
       <Filter>components\geo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompModel.h">
-      <Filter>components\mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\N0CompComplex.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\NodeFactory.h">
       <Filter>tools</Filter>
@@ -127,7 +124,10 @@
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompScale9.h">
-      <Filter>components\mesh</Filter>
+      <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompComplex.h">
+      <Filter>components\asset</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

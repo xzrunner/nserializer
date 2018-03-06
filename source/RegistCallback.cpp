@@ -1,9 +1,8 @@
 #include "ns/RegistCallback.h"
 #include "ns/CompSerializer.h"
 
-#include "ns/N0CompComplex.h"
-#include <node0/CompComplex.h>
-
+#include "ns/N2CompComplex.h"
+#include <node2/CompComplex.h>
 #include "ns/N2CompColorCommon.h"
 #include <node2/CompColorCommon.h>
 #include "ns/N2CompColorMap.h"
@@ -89,14 +88,13 @@ namespace ns
 
 void RegistCallback::Init()
 {
-	REGIST_SHARED_CB(n0::CompComplex, N0CompComplex);
-
 	REGIST_UNIQUE_CB(n2::CompColorCommon, N2CompColorCommon);
 	REGIST_UNIQUE_CB(n2::CompColorMap, N2CompColorMap);
 
 	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
 	REGIST_UNIQUE_CB(n2::CompBoundingBox, N2CompBoundingBox);
 
+	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
 	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
 	REGIST_SHARED_CB(n2::CompSprite2, N2CompSprite2);
