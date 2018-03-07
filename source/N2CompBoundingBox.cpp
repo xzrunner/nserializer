@@ -65,14 +65,14 @@ void N2CompBoundingBox::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	m_ymax = val["ymax"].GetFloat();
 }
 
-void N2CompBoundingBox::StoreToMem(n2::CompBoundingBox& comp) const
+void N2CompBoundingBox::StoreToMem(const n0::SceneNode& node, n2::CompBoundingBox& comp) const
 {
 	sm::rect sz;
 	sz.xmin = m_xmin;
 	sz.ymin = m_ymin;
 	sz.xmax = m_xmax;
 	sz.ymax = m_ymax;
-	comp.SetSize(sz);
+	comp.SetSize(node, sz);
 }
 
 void N2CompBoundingBox::LoadFromMem(const n2::CompBoundingBox& comp)

@@ -30,7 +30,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompComplex& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n2::CompComplex& comp) const;
 	void LoadFromMem(const n2::CompComplex& comp);
 
 private:

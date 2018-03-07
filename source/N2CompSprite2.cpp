@@ -39,7 +39,7 @@ void N2CompSprite2::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void N2CompSprite2::StoreToMem(n2::CompSprite2& comp) const
+void N2CompSprite2::StoreToMem(const n0::SceneNode& node, n2::CompSprite2& comp) const
 {
 	comp.SetFilepath(m_filepath);
 

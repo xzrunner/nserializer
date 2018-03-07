@@ -2,6 +2,7 @@
 
 #include "ns/NodeComponent.h"
 
+namespace n0 { class SceneNode; }
 namespace n2 { class CompSprite2; }
 
 namespace ns
@@ -26,7 +27,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompSprite2& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n2::CompSprite2& comp) const;
 	void LoadFromMem(const n2::CompSprite2& comp);
 
 private:

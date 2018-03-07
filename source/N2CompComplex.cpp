@@ -52,7 +52,7 @@ void N2CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	}
 }
 
-void N2CompComplex::StoreToMem(n2::CompComplex& comp) const
+void N2CompComplex::StoreToMem(const n0::SceneNode& node, n2::CompComplex& comp) const
 {
 	comp.SetChildren(m_nodes);
 }

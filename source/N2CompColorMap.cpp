@@ -61,7 +61,7 @@ void N2CompColorMap::LoadFromJson(mm::LinearAllocator& alloc, const std::string&
 	m_bmap = val["bmap"].GetUint();
 }
 
-void N2CompColorMap::StoreToMem(n2::CompColorMap& comp) const
+void N2CompColorMap::StoreToMem(const n0::SceneNode& node, n2::CompColorMap& comp) const
 {
 	pt2::RenderColorMap col;
 	col.rmap.FromRGBA(m_rmap);

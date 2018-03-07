@@ -32,7 +32,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompScale9& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n2::CompScale9& comp) const;
 	void LoadFromMem(const n2::CompScale9& comp);
 
 private:

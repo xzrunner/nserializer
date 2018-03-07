@@ -4,6 +4,7 @@
 
 #include <painting3/AABB.h>
 
+namespace n0 { class SceneNode; }
 namespace n3 { class CompAABB; }
 
 namespace ns
@@ -28,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n3::CompAABB& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n3::CompAABB& comp) const;
 	void LoadFromMem(const n3::CompAABB& comp);
 
 private:

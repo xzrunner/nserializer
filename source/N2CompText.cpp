@@ -41,7 +41,7 @@ void N2CompText::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	m_text.text = val["text"].GetString();
 }
 
-void N2CompText::StoreToMem(n2::CompText& comp) const
+void N2CompText::StoreToMem(const n0::SceneNode& node, n2::CompText& comp) const
 {
 	comp.SetText(m_text);
 }

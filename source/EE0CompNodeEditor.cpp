@@ -53,7 +53,7 @@ void EE0CompNodeEditor::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	m_editable = val["editable"].GetBool();
 }
 
-void EE0CompNodeEditor::StoreToMem(ee0::CompNodeEditor& comp) const
+void EE0CompNodeEditor::StoreToMem(const n0::SceneNode& node, ee0::CompNodeEditor& comp) const
 {
 	comp.SetFilepath(m_filepath);
 	comp.SetName(m_name);

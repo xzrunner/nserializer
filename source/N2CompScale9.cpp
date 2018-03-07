@@ -72,7 +72,7 @@ void N2CompScale9::LoadFromJson(mm::LinearAllocator& alloc, const std::string& d
 	m_height = val["height"].GetFloat();
 }
 
-void N2CompScale9::StoreToMem(n2::CompScale9& comp) const
+void N2CompScale9::StoreToMem(const n0::SceneNode& node, n2::CompScale9& comp) const
 {
 	n0::SceneNodePtr grids[9];
 

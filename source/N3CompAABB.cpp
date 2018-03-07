@@ -59,7 +59,7 @@ void N3CompAABB::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	m_aabb.Combine(max);
 }
 
-void N3CompAABB::StoreToMem(n3::CompAABB& comp) const
+void N3CompAABB::StoreToMem(const n0::SceneNode& node, n3::CompAABB& comp) const
 {
 	comp.SetAABB(m_aabb);
 }

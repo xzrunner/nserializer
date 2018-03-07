@@ -2,6 +2,7 @@
 
 #include "ns/NodeComponent.h"
 
+namespace n0 { class SceneNode; }
 namespace n2 { class CompTransform; }
 
 namespace ns
@@ -28,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompTransform& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n2::CompTransform& comp) const;
 	void LoadFromMem(const n2::CompTransform& comp);
 
 private:

@@ -4,6 +4,7 @@
 
 #include <painting2/Text.h>
 
+namespace n0 { class SceneNode; }
 namespace n2 { class CompText; }
 
 namespace ns
@@ -28,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompText& comp) const;
+	void StoreToMem(const n0::SceneNode& node, n2::CompText& comp) const;
 	void LoadFromMem(const n2::CompText& comp);
 
 private:
