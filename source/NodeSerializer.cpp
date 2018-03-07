@@ -6,8 +6,6 @@
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
 #include <node0/NodeSharedComp.h>
-#include <node2/CompTransform.h>
-#include <node2/CompBoundingBox.h>
 
 #include <boost/filesystem.hpp>
 
@@ -74,15 +72,6 @@ bool NodeSerializer::LoadNodeFromJson(n0::SceneNodePtr& node,
 	for (auto itr = val.Begin(); itr != val.End(); ++itr) {
 		CompSerializer::Instance()->FromJson(node, dir, *itr);
 	}
-
-	if (node->HasUniqueComp<n2::CompBoundingBox>() &&
-		node->HasUniqueComp<n2::CompTransform>())
-	{
-		auto& cbb = node->GetUniqueComp<n2::CompBoundingBox>();
-		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
-		cbb.Build(ctrans.GetTrans().GetSRT());
-	}
-
 	return !val.Empty();
 }
 

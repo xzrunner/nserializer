@@ -79,8 +79,7 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 
 	// aabb
 	sm::rect sz(img->GetWidth(), img->GetHeight());
-	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
-	cbounding.Build(ctrans.GetTrans().GetSRT());
+	node->AddUniqueComp<n2::CompBoundingBox>(sz);
 
 	// editor
 	node->AddUniqueComp<ee0::CompNodeEditor>();
@@ -100,8 +99,7 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
-	cbounding.Build(ctrans.GetTrans().GetSRT());
+	node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
