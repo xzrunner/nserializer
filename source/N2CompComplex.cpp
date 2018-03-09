@@ -47,7 +47,12 @@ void N2CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	for (auto itr = nodes_val.Begin(); itr != nodes_val.End(); ++itr)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
+
 		NodeSerializer::LoadNodeFromJson(node, dir, *itr);
+
+		auto& casset = node->GetSharedComp<n0::CompAsset>();
+		node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
+
 		m_nodes.push_back(node);
 	}
 }

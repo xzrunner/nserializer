@@ -43,7 +43,9 @@ bool CompSerializer::ToJson(const n0::NodeUniqueComp& comp,
 	if (itr != m_unique_to_json.end())
 	{
 		bool ret = itr->second(comp, dir, val, alloc);
-		val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
+		if (ret) {
+			val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
+		}
 		return ret;
 	} 
 	else 

@@ -83,6 +83,20 @@
 		}                                                                              \
 	);
 
+#define REGIST_UNIQUE_NULL_CB(ori, here)                                               \
+	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
+		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
+        {                                                                              \
+		}                                                                              \
+	);                                                                                 \
+	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
+		[](const n0::NodeUniqueComp& comp, const std::string& dir,                     \
+           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
+		{                                                                              \
+			return false;                                                              \
+		}                                                                              \
+	);
+
 namespace ns
 {
 
@@ -92,7 +106,7 @@ void RegistCallback::Init()
 	REGIST_UNIQUE_CB(n2::CompColorMap, N2CompColorMap);
 
 	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
-	REGIST_UNIQUE_CB(n2::CompBoundingBox, N2CompBoundingBox);
+	REGIST_UNIQUE_NULL_CB(n2::CompBoundingBox, N2CompBoundingBox);
 
 	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
