@@ -1,5 +1,6 @@
 #include "ns/RegistCallback.h"
 #include "ns/CompSerializer.h"
+#include "ns/CompNoSerialize.h"
 
 #include "ns/N2CompComplex.h"
 #include <node2/CompComplex.h>
@@ -10,7 +11,6 @@
 
 #include "ns/N2CompTransform.h"
 #include <node2/CompTransform.h>
-#include "ns/N2CompBoundingBox.h"
 #include <node2/CompBoundingBox.h>
 
 #include "ns/N2CompImage.h"
@@ -106,7 +106,7 @@ void RegistCallback::Init()
 	REGIST_UNIQUE_CB(n2::CompColorMap, N2CompColorMap);
 
 	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
-	REGIST_UNIQUE_NULL_CB(n2::CompBoundingBox, N2CompBoundingBox);
+	REGIST_UNIQUE_NULL_CB(n2::CompBoundingBox, CompNoSerialize);
 
 	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);

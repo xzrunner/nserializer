@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h" />
     <ClInclude Include="..\..\..\include\ns\CompSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompComplex.h" />
-    <ClInclude Include="..\..\..\include\ns\N2CompBoundingBox.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorMap.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h" />
@@ -35,7 +35,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
     <ClCompile Include="..\..\..\source\N2CompComplex.cpp" />
-    <ClCompile Include="..\..\..\source\N2CompBoundingBox.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorMap.cpp" />
     <ClCompile Include="..\..\..\source\N2CompImage.cpp" />

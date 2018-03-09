@@ -19,6 +19,9 @@
     <Filter Include="components\asset">
       <UniqueIdentifier>{b4896b09-cef5-4f2f-a652-ed2b90508435}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\default">
+      <UniqueIdentifier>{33b214e0-a3e4-45c8-9645-9bbf45504eb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
@@ -27,9 +30,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompColorMap.cpp">
       <Filter>components\color</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\N2CompBoundingBox.cpp">
-      <Filter>components\geo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompTransform.cpp">
       <Filter>components\geo</Filter>
@@ -84,9 +84,6 @@
     <ClInclude Include="..\..\..\include\ns\N2CompColorMap.h">
       <Filter>components\color</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\N2CompBoundingBox.h">
-      <Filter>components\geo</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompTransform.h">
       <Filter>components\geo</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompComplex.h">
       <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h">
+      <Filter>components\default</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
