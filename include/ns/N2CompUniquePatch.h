@@ -8,12 +8,12 @@
 #include <vector>
 
 namespace n0 { class SceneNode; }
-namespace n2 { class CompNodePatch; }
+namespace n2 { class CompUniquePatch; }
 
 namespace ns
 {
 
-class N2CompNodePatch : public NodeComponent
+class N2CompUniquePatch : public NodeComponent
 {
 public:
 	//
@@ -32,12 +32,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, n2::CompNodePatch& comp) const;
-	void LoadFromMem(const n2::CompNodePatch& comp);
+	void StoreToMem(const n0::SceneNode& node, n2::CompUniquePatch& comp) const;
+	void LoadFromMem(const n2::CompUniquePatch& comp);
 
 private:
-	std::vector<n2::EditOpList> m_unique_op;
+	std::vector<n2::EditOpList> m_operators;
 
-}; // N2CompNodePatch
+}; // N2CompUniquePatch
 
 }

@@ -82,7 +82,7 @@
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp">
       <Filter>editop</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\N2CompNodePatch.cpp">
+    <ClCompile Include="..\..\..\source\N2CompUniquePatch.cpp">
       <Filter>components\patch</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,7 +144,7 @@
     <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h">
       <Filter>editop</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\N2CompNodePatch.h">
+    <ClInclude Include="..\..\..\include\ns\N2CompUniquePatch.h">
       <Filter>components\patch</Filter>
     </ClInclude>
   </ItemGroup>
