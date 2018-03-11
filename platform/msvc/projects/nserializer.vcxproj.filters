@@ -22,6 +22,12 @@
     <Filter Include="components\default">
       <UniqueIdentifier>{33b214e0-a3e4-45c8-9645-9bbf45504eb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="editop">
+      <UniqueIdentifier>{21f1aebf-1c6e-4d3f-8b3b-c203f7bd21f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="components\patch">
+      <UniqueIdentifier>{5e9be663-6698-4cad-a50d-50a34715c18b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
@@ -72,6 +78,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompComplex.cpp">
       <Filter>components\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\EditOpSerializer.cpp">
+      <Filter>editop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompNodePatch.cpp">
+      <Filter>components\patch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h">
       <Filter>components\default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h">
+      <Filter>editop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompNodePatch.h">
+      <Filter>components\patch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
