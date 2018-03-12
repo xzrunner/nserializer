@@ -6,8 +6,6 @@
 
 #include <memory>
 
-namespace n2 { struct EditOp; }
-
 namespace ns
 {
 

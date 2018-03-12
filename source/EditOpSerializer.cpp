@@ -1,7 +1,6 @@
 #include "ns/EditOpSerializer.h"
 
 #include <guard/check.h>
-#include <node2/EditOp.h>
 
 namespace ns
 {

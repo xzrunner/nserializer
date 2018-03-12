@@ -16,6 +16,8 @@
 #include <node2/CompUniquePatch.h>
 #include "ns/N2CompSharedPatch.h"
 #include <node2/CompSharedPatch.h>
+
+// todo
 #include <node2/EditOp.h>
 
 #include "ns/N2CompImage.h"
