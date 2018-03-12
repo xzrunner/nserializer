@@ -1,28 +1,28 @@
-#include "ns/N2CompUniquePatch.h"
+#include "ns/N2CompSharedPatch.h"
 #include "ns/EditOpSerializer.h"
 
-#include <node2/CompUniquePatch.h>
+#include <node2/CompSharedPatch.h>
 
 namespace ns
 {
 
-size_t N2CompUniquePatch::GetBinSize(const std::string& dir) const
+size_t N2CompSharedPatch::GetBinSize(const std::string& dir) const
 {
 	// todo
 	return 0;
 }
 
-void N2CompUniquePatch::StoreToBin(const std::string& dir, bs::ExportStream& es) const
+void N2CompSharedPatch::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
 	// todo
 }
 
-void N2CompUniquePatch::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompSharedPatch::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
 
-void N2CompUniquePatch::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
+void N2CompSharedPatch::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
 
@@ -51,7 +51,7 @@ void N2CompUniquePatch::StoreToJson(const std::string& dir, rapidjson::Value& va
 	val.AddMember("operators", unique_val, alloc);
 }
 
-void N2CompUniquePatch::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompSharedPatch::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& op_array = val["operators"].GetArray();
 	m_operators.reserve(op_array.Size());
@@ -69,12 +69,12 @@ void N2CompUniquePatch::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	}
 }
 
-void N2CompUniquePatch::StoreToMem(const n0::SceneNode& node, n2::CompUniquePatch& comp) const
+void N2CompSharedPatch::StoreToMem(const n0::SceneNode& node, n2::CompSharedPatch& comp) const
 {
 	comp.SetAllEditOp(m_operators);
 }
 
-void N2CompUniquePatch::LoadFromMem(const n2::CompUniquePatch& comp)
+void N2CompSharedPatch::LoadFromMem(const n2::CompSharedPatch& comp)
 {
 	m_operators = comp.GetAllEditOp();
 }

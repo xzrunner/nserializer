@@ -14,6 +14,8 @@
 #include <node2/CompBoundingBox.h>
 #include "ns/N2CompUniquePatch.h"
 #include <node2/CompUniquePatch.h>
+#include "ns/N2CompSharedPatch.h"
+#include <node2/CompSharedPatch.h>
 #include <node2/EditOp.h>
 
 #include "ns/N2CompImage.h"
@@ -111,6 +113,7 @@ void RegistCallback::Init()
 	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
 	REGIST_UNIQUE_NULL_CB(n2::CompBoundingBox, CompNoSerialize);
 	REGIST_UNIQUE_CB(n2::CompUniquePatch, N2CompUniquePatch);
+	REGIST_UNIQUE_CB(n2::CompSharedPatch, N2CompSharedPatch);
 
 	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);

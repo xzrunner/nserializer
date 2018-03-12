@@ -85,6 +85,9 @@
     <ClCompile Include="..\..\..\source\N2CompUniquePatch.cpp">
       <Filter>components\patch</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp">
+      <Filter>components\patch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -145,6 +148,9 @@
       <Filter>editop</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompUniquePatch.h">
+      <Filter>components\patch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h">
       <Filter>components\patch</Filter>
     </ClInclude>
   </ItemGroup>

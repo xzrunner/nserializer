@@ -20,6 +20,7 @@
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompMask.h" />
     <ClInclude Include="..\..\..\include\ns\EE0CompNodeEditor.h" />
+    <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompUniquePatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScale9.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompSprite2.h" />
@@ -43,6 +44,7 @@
     <ClCompile Include="..\..\..\source\N2CompImage.cpp" />
     <ClCompile Include="..\..\..\source\N2CompMask.cpp" />
     <ClCompile Include="..\..\..\source\EE0CompNodeEditor.cpp" />
+    <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompUniquePatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScale9.cpp" />
     <ClCompile Include="..\..\..\source\N2CompSprite2.cpp" />
