@@ -5,6 +5,7 @@
 #include <node2/CompComplex.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
+#include <node2/CompSharedPatch.h>
 
 namespace ns
 {
@@ -52,6 +53,12 @@ void N2CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 
 		auto& casset = node->GetSharedComp<n0::CompAsset>();
 		node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
+
+		if (node->HasUniqueComp<n2::CompSharedPatch>())
+		{
+			auto& cpatch = node->GetUniqueComp<n2::CompSharedPatch>();
+			cpatch.PatchToNode(node);
+		}
 
 		m_nodes.push_back(node);
 	}
