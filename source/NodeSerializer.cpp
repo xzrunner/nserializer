@@ -6,6 +6,7 @@
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
 #include <node0/NodeSharedComp.h>
+#include <js/RapidJsonHelper.h>
 
 #include <boost/filesystem.hpp>
 
@@ -37,6 +38,9 @@ bool NodeSerializer::StoreNodeToJson(const n0::SceneNodePtr& node, const std::st
 					cval.AddMember("comp_path", rapidjson::Value(relative.c_str(), alloc), alloc);
 					val.PushBack(cval, alloc);
 					ret = true;
+
+					StoreNodeAssetComp(*comp, ceditor.GetFilepath());
+
 					return true;
 				}
 			}
@@ -73,6 +77,18 @@ bool NodeSerializer::LoadNodeFromJson(n0::SceneNodePtr& node,
 		CompSerializer::Instance()->FromJson(node, dir, *itr);
 	}
 	return !val.Empty();
+}
+
+bool NodeSerializer::StoreNodeAssetComp(const n0::NodeSharedComp& comp, const std::string& filepath)
+{
+	rapidjson::Document doc;
+
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
+	bool ret = CompSerializer::Instance()->ToJson(comp, dir, doc, doc.GetAllocator());
+
+	js::RapidJsonHelper::WriteToFile(filepath.c_str(), doc);
+
+	return ret;
 }
 
 }
