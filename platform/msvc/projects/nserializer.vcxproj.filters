@@ -28,6 +28,9 @@
     <Filter Include="components\patch">
       <UniqueIdentifier>{5e9be663-6698-4cad-a50d-50a34715c18b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\render">
+      <UniqueIdentifier>{de0c22de-fb36-42d7-8c08-726451a7ecfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
@@ -87,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp">
       <Filter>components\patch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompScissor.cpp">
+      <Filter>components\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h">
       <Filter>components\patch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompScissor.h">
+      <Filter>components\render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
