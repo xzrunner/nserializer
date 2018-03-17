@@ -31,6 +31,9 @@
     <Filter Include="components\render">
       <UniqueIdentifier>{de0c22de-fb36-42d7-8c08-726451a7ecfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\script">
+      <UniqueIdentifier>{19283582-55cc-481c-a57c-c5e04ba09c0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompScissor.cpp">
       <Filter>components\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N2CompScript.cpp">
+      <Filter>components\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompScissor.h">
       <Filter>components\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N2CompScript.h">
+      <Filter>components\script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
