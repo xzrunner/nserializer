@@ -87,7 +87,7 @@ void N3CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string
 	}
 }
 
-void N3CompTransform::StoreToMem(const n0::SceneNode& node, n3::CompTransform& comp) const
+void N3CompTransform::StoreToMem(const n0::SceneNodePtr& node, n3::CompTransform& comp) const
 {
 	comp.SetPosition(m_position);
 	comp.SetAngle(m_angle);

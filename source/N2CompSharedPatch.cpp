@@ -69,7 +69,7 @@ void N2CompSharedPatch::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	}
 }
 
-void N2CompSharedPatch::StoreToMem(const n0::SceneNode& node, n2::CompSharedPatch& comp) const
+void N2CompSharedPatch::StoreToMem(const n0::SceneNodePtr& node, n2::CompSharedPatch& comp) const
 {
 	comp.SetAllEditOp(m_operators);
 }

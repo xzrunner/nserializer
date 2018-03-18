@@ -91,7 +91,7 @@ void N2CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string
 	m_shear_y = val["shear_y"].GetFloat();
 }
 
-void N2CompTransform::StoreToMem(const n0::SceneNode& node, n2::CompTransform& comp) const
+void N2CompTransform::StoreToMem(const n0::SceneNodePtr& node, n2::CompTransform& comp) const
 {
 	pt2::SRT srt;
 	srt.position.Set(m_pos_x, m_pos_y);
@@ -99,8 +99,7 @@ void N2CompTransform::StoreToMem(const n0::SceneNode& node, n2::CompTransform& c
 	srt.scale.Set(m_scale_x, m_scale_y);
 	srt.shear.Set(m_shear_x, m_shear_y);
 	srt.Update();
-
-	comp.SetSRT(node, srt);
+	comp.SetSRT(*node, srt);
 }
 
 void N2CompTransform::LoadFromMem(const n2::CompTransform& comp)

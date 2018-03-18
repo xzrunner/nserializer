@@ -58,7 +58,7 @@
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(*node, comp);                                               \
+			ser.StoreToMem(node, comp);                                                \
 		}                                                                              \
 	);                                                                                 \
 	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
@@ -81,7 +81,7 @@
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(*node, comp);                                               \
+			ser.StoreToMem(node, comp);                                                \
 		}                                                                              \
 	);                                                                                 \
 	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \

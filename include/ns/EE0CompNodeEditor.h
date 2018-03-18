@@ -2,7 +2,8 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n0 { class SceneNode; }
+#include <node0/typedef.h>
+
 namespace ee0 { class CompNodeEditor; }
 
 namespace ns
@@ -29,7 +30,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, ee0::CompNodeEditor& comp) const;
+	void StoreToMem(const n0::SceneNodePtr& node, ee0::CompNodeEditor& comp) const;
 	void LoadFromMem(const ee0::CompNodeEditor& comp);
 
 private:

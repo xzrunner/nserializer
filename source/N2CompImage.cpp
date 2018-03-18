@@ -41,7 +41,7 @@ void N2CompImage::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void N2CompImage::StoreToMem(const n0::SceneNode& node, n2::CompImage& comp) const
+void N2CompImage::StoreToMem(const n0::SceneNodePtr& node, n2::CompImage& comp) const
 {
 	comp.SetFilepath(m_filepath);
 

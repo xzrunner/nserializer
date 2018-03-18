@@ -2,12 +2,12 @@
 
 #include "ns/NodeComponent.h"
 
+#include <node0/typedef.h>
 #include <node2/EditOpList.h>
 
 #include <string>
 #include <vector>
 
-namespace n0 { class SceneNode; }
 namespace n2 { class CompSharedPatch; }
 
 namespace ns
@@ -32,7 +32,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, n2::CompSharedPatch& comp) const;
+	void StoreToMem(const n0::SceneNodePtr& node, n2::CompSharedPatch& comp) const;
 	void LoadFromMem(const n2::CompSharedPatch& comp);
 
 private:

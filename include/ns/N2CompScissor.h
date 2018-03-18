@@ -3,8 +3,8 @@
 #include "ns/NodeComponent.h"
 
 #include <SM_Rect.h>
+#include <node0/typedef.h>
 
-namespace n0 { class SceneNode; }
 namespace n2 { class CompScissor; }
 
 namespace ns
@@ -29,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, n2::CompScissor& comp) const;
+	void StoreToMem(const n0::SceneNodePtr& node, n2::CompScissor& comp) const;
 	void LoadFromMem(const n2::CompScissor& comp);
 
 private:

@@ -2,9 +2,9 @@
 
 #include "ns/NodeComponent.h"
 
+#include <node0/typedef.h>
 #include <painting3/AABB.h>
 
-namespace n0 { class SceneNode; }
 namespace n3 { class CompModel; }
 
 namespace ns
@@ -29,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, n3::CompModel& comp) const;
+	void StoreToMem(const n0::SceneNodePtr& node, n3::CompModel& comp) const;
 	void LoadFromMem(const n3::CompModel& comp);
 
 private:

@@ -55,7 +55,7 @@ void N2CompColorCommon::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	m_add = val["add"].GetUint();
 }
 
-void N2CompColorCommon::StoreToMem(const n0::SceneNode& node, n2::CompColorCommon& comp) const
+void N2CompColorCommon::StoreToMem(const n0::SceneNodePtr& node, n2::CompColorCommon& comp) const
 {
 	pt2::RenderColorCommon col;
 	col.mul.FromRGBA(m_mul);

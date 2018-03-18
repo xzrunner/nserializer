@@ -2,7 +2,8 @@
 
 #include "ns/NodeComponent.h"
 
-namespace n0 { class SceneNode; }
+#include <node0/typedef.h>
+
 namespace n2 { class CompColorMap; }
 
 namespace ns
@@ -29,7 +30,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNode& node, n2::CompColorMap& comp) const;
+	void StoreToMem(const n0::SceneNodePtr& node, n2::CompColorMap& comp) const;
 	void LoadFromMem(const n2::CompColorMap& comp);
 
 private:
