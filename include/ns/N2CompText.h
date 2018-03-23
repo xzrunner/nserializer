@@ -36,6 +36,9 @@ private:
 	static void StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc);
 	static void LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, const rapidjson::Value& val);
 
+	static void StoreColorToJson(const pt2::GradientColor& col, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc);
+	static void LoadColorFromJson(pt2::GradientColor& col, mm::LinearAllocator& alloc, const rapidjson::Value& val);
+
 private:
 	pt2::Text m_text;
 

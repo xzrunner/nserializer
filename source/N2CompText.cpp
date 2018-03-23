@@ -58,11 +58,11 @@ void N2CompText::StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, ra
 
 	val.AddMember("font_type", tb.font_type, alloc);
 	val.AddMember("font_size", tb.font_size, alloc);
-	val.AddMember("font_color", tb.font_color.ToRGBA(), alloc);
+	StoreColorToJson(tb.font_color, val["font_color"], alloc);
 
 	val.AddMember("has_edge", tb.has_edge, alloc);
 	val.AddMember("edge_size", tb.edge_size, alloc);
-	val.AddMember("edge_color", tb.edge_color.ToRGBA(), alloc);
+	StoreColorToJson(tb.edge_color, val["edge_color"], alloc);
 
 	val.AddMember("align_hori", tb.align_hori, alloc);
 	val.AddMember("align_vert", tb.align_vert, alloc);
@@ -82,11 +82,11 @@ void N2CompText::LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, co
 
 	tb.font_type  = val["font_type"].GetInt();
 	tb.font_size  = val["font_size"].GetInt();
-	tb.font_color.FromRGBA(val["font_color"].GetUint());
+	LoadColorFromJson(tb.font_color, alloc, val["font_color"]);
 
 	tb.has_edge   = val["has_edge"].GetBool();
 	tb.edge_size  = val["edge_size"].GetFloat();
-	tb.edge_color.FromRGBA(val["edge_color"].GetUint());
+	LoadColorFromJson(tb.edge_color, alloc, val["edge_color"]);
 
 	tb.align_hori = static_cast<pt2::Textbox::HoriAlign>(val["align_hori"].GetInt());
 	tb.align_vert = static_cast<pt2::Textbox::VertAlign>(val["align_vert"].GetInt());
@@ -97,6 +97,38 @@ void N2CompText::LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, co
 	tb.overflow = val["overflow"].GetBool();
 
 	tb.richtext = val["richtext"].GetBool();
+}
+
+void N2CompText::StoreColorToJson(const pt2::GradientColor& col, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
+{
+	val.SetObject();
+	val.AddMember("num", col.items.size(), alloc);
+	val.AddMember("angle", col.angle, alloc);
+	rapidjson::Value val_items;
+	val_items.SetArray();
+	for (auto& item : col.items) 
+	{
+		rapidjson::Value ival;
+		ival.SetObject();
+		ival.AddMember("col", item.col.ToRGBA(), alloc);
+		ival.AddMember("pos", item.pos, alloc);
+		val_items.PushBack(ival, alloc);
+	}
+	val.AddMember("items", val_items, alloc);
+}
+
+void N2CompText::LoadColorFromJson(pt2::GradientColor& col, mm::LinearAllocator& alloc, const rapidjson::Value& val)
+{
+	int num = val["num"].GetUint();
+	col.items.reserve(num);
+	col.angle = val["angle"].GetInt();
+	for (auto& src : val["items"].GetArray())
+	{
+		pt2::GradientColor::Item dst;
+		dst.col.FromRGBA(src["col"].GetUint());
+		dst.pos = src["pos"].GetFloat();
+		col.items.push_back(dst);
+	}
 }
 
 }
