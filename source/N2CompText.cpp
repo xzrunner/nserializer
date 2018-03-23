@@ -121,7 +121,7 @@ void N2CompText::LoadColorFromJson(pt2::GradientColor& col, mm::LinearAllocator&
 {
 	int num = val["num"].GetUint();
 	col.items.reserve(num);
-	col.angle = val["angle"].GetInt();
+	col.angle = val["angle"].GetFloat();
 	for (auto& src : val["items"].GetArray())
 	{
 		pt2::GradientColor::Item dst;
