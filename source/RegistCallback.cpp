@@ -4,6 +4,8 @@
 
 #include "ns/N2CompComplex.h"
 #include <node2/CompComplex.h>
+#include "ns/N2CompAnim.h"
+#include <node2/CompAnim.h>
 #include "ns/N2CompColorCommon.h"
 #include <node2/CompColorCommon.h>
 #include "ns/N2CompColorMap.h"
@@ -48,6 +50,8 @@
 
 #include <node0/SceneNode.h>
 #include <memmgr/LinearAllocator.h>
+#include <anim/Layer.h>
+#include <anim/KeyFrame.h>
 
 #define REGIST_UNIQUE_CB(ori, here)                                                    \
 	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
@@ -125,6 +129,7 @@ void RegistCallback::Init()
 	REGIST_UNIQUE_CB(n2::CompScript, N2CompScript);
 
 	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
+	REGIST_SHARED_CB(n2::CompAnim, N2CompAnim);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
 	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
 	REGIST_SHARED_CB(n2::CompSprite2, N2CompSprite2);
