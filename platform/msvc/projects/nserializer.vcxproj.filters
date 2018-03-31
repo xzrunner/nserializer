@@ -52,9 +52,6 @@
     <ClCompile Include="..\..\..\source\N2CompMask.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\N2CompSprite2.cpp">
-      <Filter>components\asset</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\N2CompText.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
       <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompMask.h">
-      <Filter>components\asset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\N2CompSprite2.h">
       <Filter>components\asset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompText.h">

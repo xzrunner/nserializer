@@ -9,10 +9,9 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <node2/CompImage.h>
-#include <gum/ResPool.h>
-#include <gum/Image.h>
-#include <gum/Texture.h>
-#include <gum/ResPool.h>
+#include <facade/ResPool.h>
+#include <facade/Image.h>
+#include <facade/Texture.h>
 
 #include <boost/filesystem.hpp>
 
@@ -45,7 +44,7 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 
 void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string& filepath)
 {
-	auto casset = gum::ResPool::Instance().Query<n0::CompAsset>(filepath);
+	auto casset = facade::ResPool::Instance().Query<n0::CompAsset>(filepath);
 	if (casset)
 	{
 		node->AddSharedCompNoCreate<n0::CompAsset>(casset);
@@ -59,7 +58,7 @@ void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string&
 		ns::CompSerializer::Instance()->FromJson(node, dir, doc);
 
 		auto casset = node->GetSharedCompPtr<n0::CompAsset>();
-		bool succ = gum::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
+		bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
 		GD_ASSERT(succ, "exists");
 	}
 }
@@ -69,7 +68,7 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// image
-	auto img = gum::ResPool::Instance().Fetch<gum::Image>(filepath);
+	auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 	auto& cimage = node->AddSharedComp<n2::CompImage>();
 	cimage.SetFilepath(filepath);
 	cimage.SetTexture(img->GetTexture());

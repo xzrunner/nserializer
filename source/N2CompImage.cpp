@@ -2,9 +2,9 @@
 #include "ns/CompType.h"
 
 #include <node2/CompImage.h>
-#include <gum/ResPool.h>
-#include <gum/Image.h>
-#include <gum/Texture.h>
+#include <facade/ResPool.h>
+#include <facade/Image.h>
+#include <facade/Texture.h>
 
 #include <boost/filesystem.hpp>
 
@@ -45,7 +45,7 @@ void N2CompImage::StoreToMem(const n0::SceneNodePtr& node, n2::CompImage& comp) 
 {
 	comp.SetFilepath(m_filepath);
 
-	auto img = gum::ResPool::Instance().Fetch<gum::Image>(m_filepath);
+	auto img = facade::ResPool::Instance().Fetch<facade::Image>(m_filepath);
 	comp.SetTexture(img->GetTexture());
 }
 

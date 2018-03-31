@@ -6,9 +6,6 @@
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
-#include <gum/ResPool.h>
-#include <gum/Image.h>
-#include <gum/Texture.h>
 
 #include <boost/filesystem.hpp>
 

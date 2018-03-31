@@ -26,7 +26,6 @@
     <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompUniquePatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScale9.h" />
-    <ClInclude Include="..\..\..\include\ns\N2CompSprite2.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompText.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompTransform.h" />
     <ClInclude Include="..\..\..\include\ns\CompType.h" />
@@ -53,7 +52,6 @@
     <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompUniquePatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScale9.cpp" />
-    <ClCompile Include="..\..\..\source\N2CompSprite2.cpp" />
     <ClCompile Include="..\..\..\source\N2CompText.cpp" />
     <ClCompile Include="..\..\..\source\N2CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\N3CompAABB.cpp" />
@@ -106,7 +104,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\bimp\include;..\..\..\..\sprite2\include;..\..\..\..\gum\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\bimp\include;..\..\..\..\sprite2\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -121,7 +119,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\bimp\include;..\..\..\..\sprite2\include;..\..\..\..\gum\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\bimp\include;..\..\..\..\sprite2\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\easyeditor0\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

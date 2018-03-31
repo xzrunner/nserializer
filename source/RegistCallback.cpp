@@ -31,8 +31,6 @@
 #include <node2/CompImage.h>
 #include "ns/N2CompMask.h"
 #include <node2/CompMask.h>
-#include "ns/N2CompSprite2.h"
-#include <node2/CompSprite2.h>
 #include "ns/N2CompText.h"
 #include <node2/CompText.h>
 #include "ns/N2CompScale9.h"
@@ -132,7 +130,6 @@ void RegistCallback::Init()
 	REGIST_SHARED_CB(n2::CompAnim, N2CompAnim);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
 	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
-	REGIST_SHARED_CB(n2::CompSprite2, N2CompSprite2);
 	REGIST_SHARED_CB(n2::CompText, N2CompText);
 	REGIST_SHARED_CB(n2::CompScale9, N2CompScale9);
 
