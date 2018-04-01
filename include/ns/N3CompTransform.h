@@ -29,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, n3::CompTransform& comp) const;
+	void StoreToMem(n3::CompTransform& comp) const;
 	void LoadFromMem(const n3::CompTransform& comp);
 
 private:

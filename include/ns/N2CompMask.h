@@ -28,7 +28,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, n2::CompMask& comp) const;
+	void StoreToMem(n2::CompMask& comp) const;
 	void LoadFromMem(const n2::CompMask& comp);
 
 private:

@@ -32,7 +32,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, n2::CompUniquePatch& comp) const;
+	void StoreToMem(n2::CompUniquePatch& comp) const;
 	void LoadFromMem(const n2::CompUniquePatch& comp);
 
 private:

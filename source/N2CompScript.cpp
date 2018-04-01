@@ -38,9 +38,9 @@ void N2CompScript::LoadFromJson(mm::LinearAllocator& alloc, const std::string& d
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void N2CompScript::StoreToMem(const n0::SceneNodePtr& node, n2::CompScript& comp) const
+void N2CompScript::StoreToMem(n2::CompScript& comp) const
 {
-	comp.SetFilepath(m_filepath, node);
+	comp.SetFilepath(m_filepath);
 }
 
 void N2CompScript::LoadFromMem(const n2::CompScript& comp)

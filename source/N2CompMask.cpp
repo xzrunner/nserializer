@@ -48,7 +48,7 @@ void N2CompMask::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	m_mask_path = boost::filesystem::absolute(mask_filepath, dir).string();
 }
 
-void N2CompMask::StoreToMem(const n0::SceneNodePtr& node, n2::CompMask& comp) const
+void N2CompMask::StoreToMem(n2::CompMask& comp) const
 {
 	comp.SetBaseNode(NodeFactory::Create(m_base_path));
 	comp.SetMaskNode(NodeFactory::Create(m_mask_path));

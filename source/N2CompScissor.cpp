@@ -40,7 +40,7 @@ void N2CompScissor::LoadFromJson(mm::LinearAllocator& alloc, const std::string& 
 	m_rect.ymax = val["ymax"].GetFloat();
 }
 
-void N2CompScissor::StoreToMem(const n0::SceneNodePtr& node, n2::CompScissor& comp) const
+void N2CompScissor::StoreToMem(n2::CompScissor& comp) const
 {
 	comp.SetRect(m_rect);
 }

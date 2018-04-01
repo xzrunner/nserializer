@@ -29,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, n2::CompScissor& comp) const;
+	void StoreToMem(n2::CompScissor& comp) const;
 	void LoadFromMem(const n2::CompScissor& comp);
 
 private:

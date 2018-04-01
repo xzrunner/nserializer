@@ -30,7 +30,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, ee0::CompNodeEditor& comp) const;
+	void StoreToMem(ee0::CompNodeEditor& comp) const;
 	void LoadFromMem(const ee0::CompNodeEditor& comp);
 
 private:

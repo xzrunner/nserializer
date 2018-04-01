@@ -29,7 +29,7 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(const n0::SceneNodePtr& node, n2::CompText& comp) const;
+	void StoreToMem(n2::CompText& comp) const;
 	void LoadFromMem(const n2::CompText& comp);
 
 private:

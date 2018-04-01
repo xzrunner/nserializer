@@ -103,7 +103,7 @@ void N2CompAnim::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	}
 }
 
-void N2CompAnim::StoreToMem(const n0::SceneNodePtr& node, n2::CompAnim& comp) const
+void N2CompAnim::StoreToMem(n2::CompAnim& comp) const
 {
 	for (auto& layer : m_layers) {
 		comp.AddLayer(std::make_unique<anim::Layer>(*layer));

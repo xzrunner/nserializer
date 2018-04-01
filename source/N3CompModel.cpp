@@ -43,7 +43,7 @@ void N3CompModel::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void N3CompModel::StoreToMem(const n0::SceneNodePtr& node, n3::CompModel& comp) const
+void N3CompModel::StoreToMem(n3::CompModel& comp) const
 {
 	auto model = n3::ModelFactory::Create(m_filepath);
 	// todo
