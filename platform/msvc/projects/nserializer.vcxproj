@@ -36,6 +36,7 @@
     <ClInclude Include="..\..\..\include\ns\NodeSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\RegistCallback.h" />
     <ClInclude Include="..\..\..\include\ns\NodeFactory.h" />
+    <ClInclude Include="..\..\..\include\ns\ResFileHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="..\..\..\source\NodeSerializer.cpp" />
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
     <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
+    <ClCompile Include="..\..\..\source\ResFileHelper.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>1.nserializer</ProjectName>
