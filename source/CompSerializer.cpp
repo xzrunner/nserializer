@@ -34,6 +34,12 @@ void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc
 	GD_ASSERT(status.second, "duplicate.");
 }
 
+void CompSerializer::AddAssetFromJsonFunc(const std::string& name, const AssetFromJsonFunc& func)
+{
+	auto status = m_asset_creator.insert(std::make_pair(name, func));
+	GD_ASSERT(status.second, "duplicate.");
+}
+
 bool CompSerializer::ToJson(const n0::NodeUniqueComp& comp,
 	                        const std::string& dir,
 	                        rapidjson::Value& val, 
@@ -92,6 +98,25 @@ void CompSerializer::FromJson(n0::SceneNodePtr& node,
 		itr->second(node, dir, val);
 	} else {
 		GD_REPORT_ASSERT("no comp creator");
+	}
+}
+
+n0::CompAssetPtr CompSerializer::AssetFromJson(const std::string& dir, const rapidjson::Value& val) const
+{
+	if (val.HasMember("comp_path"))
+	{
+		auto comp_path = val["comp_path"].GetString();
+		auto absolute = boost::filesystem::absolute(comp_path, dir);
+		return NodeFactory::CreateAssetComp(absolute.string());
+	}
+
+	auto type = val["comp_type"].GetString();
+	auto itr = m_asset_creator.find(type);
+	if (itr != m_asset_creator.end()) {
+		return itr->second(dir, val);
+	} else {
+		GD_REPORT_ASSERT("no comp creator");
+		return nullptr;
 	}
 }
 

@@ -1,10 +1,11 @@
 #include "ns/NodeFactory.h"
+#include "ns/NodeSerializer.h"
+#include "ns/CompSerializer.h"
+#include "ns/ResFileHelper.h"
 
 #include <ee0/CompNodeEditor.h>
 
 #include <js/RapidJsonHelper.h>
-#include <ns/NodeSerializer.h>
-#include <ns/CompSerializer.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
@@ -30,15 +31,16 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& dir, const rapidjson::Va
 n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 {
 	n0::SceneNodePtr node = nullptr;
-
-	std::string ext = filepath.substr(filepath.rfind('.') + 1);
-	std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
-	if (ext == "png" || ext == "jpg" || ext == "bmp" || ext == "ppm" || ext == "pvr" || ext == "pkm") {
+	auto type = ns::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case ns::FILE_IMAGE:
 		node = CreateFromImage(filepath);
-	} else if (ext == "json") {
+		break;
+	case ns::FIME_JSON:
 		node = CreateFromJson(filepath);
+		break;
 	}
-
 	return node;
 }
 
@@ -61,6 +63,39 @@ void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string&
 		bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
 		GD_ASSERT(succ, "exists");
 	}
+}
+
+n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
+{
+	auto casset = facade::ResPool::Instance().Query<n0::CompAsset>(filepath);
+	if (casset) {
+		return casset;
+	}
+
+	auto type = ns::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case ns::FILE_IMAGE:
+		{
+			auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+			auto cimage = std::make_shared<n2::CompImage>();
+			cimage->SetFilepath(filepath);
+			cimage->SetTexture(img->GetTexture());
+			casset = cimage;
+		}
+		break;
+	case ns::FIME_JSON:
+		{
+			rapidjson::Document doc;
+			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+			auto dir = boost::filesystem::path(filepath).parent_path().string();
+			casset = ns::CompSerializer::Instance()->AssetFromJson(dir, doc);
+			facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
+		}
+		break;
+	}
+	return casset;
 }
 
 n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)

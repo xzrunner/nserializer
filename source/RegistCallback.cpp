@@ -60,7 +60,7 @@
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(node, comp);                                                \
+			ser.StoreToMem(comp);                                                      \
 		}                                                                              \
 	);                                                                                 \
 	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
@@ -83,7 +83,7 @@
 			here ser;                                                                  \
 			mm::LinearAllocator alloc;                                                 \
 			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(node, comp);                                                \
+			ser.StoreToMem(comp);                                                      \
 		}                                                                              \
 	);                                                                                 \
 	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
@@ -111,6 +111,19 @@
 		}                                                                              \
 	);
 
+#define REGIST_ASSET_CB(ori, here)                                                     \
+	CompSerializer::Instance()->AddAssetFromJsonFunc(ori::TYPE_NAME,                   \
+		[](const std::string& dir, const rapidjson::Value& val) -> n0::CompAssetPtr    \
+        {                                                                              \
+			auto comp = std::make_shared<ori>();                                       \
+			here ser;                                                                  \
+			mm::LinearAllocator alloc;                                                 \
+			ser.LoadFromJson(alloc, dir, val);                                         \
+			ser.StoreToMem(*comp);                                                     \
+			return comp;                                                               \
+		}                                                                              \
+	);                                                                                 \
+
 namespace ns
 {
 
@@ -132,6 +145,13 @@ void RegistCallback::Init()
 	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
 	REGIST_SHARED_CB(n2::CompText, N2CompText);
 	REGIST_SHARED_CB(n2::CompScale9, N2CompScale9);
+
+	REGIST_ASSET_CB(n2::CompComplex, N2CompComplex);
+	REGIST_ASSET_CB(n2::CompAnim, N2CompAnim);
+	REGIST_ASSET_CB(n2::CompImage, N2CompImage);
+	REGIST_ASSET_CB(n2::CompMask, N2CompMask);
+	REGIST_ASSET_CB(n2::CompText, N2CompText);
+	REGIST_ASSET_CB(n2::CompScale9, N2CompScale9);
 
 	REGIST_UNIQUE_CB(n3::CompAABB, N3CompAABB);
 	REGIST_UNIQUE_CB(n3::CompTransform, N3CompTransform);
