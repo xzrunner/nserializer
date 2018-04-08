@@ -1,10 +1,10 @@
 #include "ns/NodeFactory.h"
 #include "ns/NodeSerializer.h"
 #include "ns/CompSerializer.h"
-#include "ns/ResFileHelper.h"
 
 #include <ee0/CompNodeEditor.h>
 
+#include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
@@ -31,13 +31,13 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& dir, const rapidjson::Va
 n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 {
 	n0::SceneNodePtr node = nullptr;
-	auto type = ns::ResFileHelper::Type(filepath);
+	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
-	case ns::FILE_IMAGE:
+	case sx::FILE_IMAGE:
 		node = CreateFromImage(filepath);
 		break;
-	case ns::FIME_JSON:
+	case sx::FILE_JSON:
 		node = CreateFromJson(filepath);
 		break;
 	}
@@ -72,10 +72,10 @@ n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
 		return casset;
 	}
 
-	auto type = ns::ResFileHelper::Type(filepath);
+	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
-	case ns::FILE_IMAGE:
+	case sx::FILE_IMAGE:
 		{
 			auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
 			auto cimage = std::make_shared<n2::CompImage>();
@@ -84,7 +84,7 @@ n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
 			casset = cimage;
 		}
 		break;
-	case ns::FIME_JSON:
+	case sx::FILE_JSON:
 		{
 			rapidjson::Document doc;
 			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);

@@ -100,9 +100,6 @@
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\ResFileHelper.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -173,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompAnim.h">
       <Filter>components\asset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\ResFileHelper.h">
-      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
