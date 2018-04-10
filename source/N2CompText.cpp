@@ -53,16 +53,22 @@ void N2CompText::LoadFromMem(const n2::CompText& comp)
 
 void N2CompText::StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
 {
+	val.SetObject();
+
 	val.AddMember("width", tb.width, alloc);
 	val.AddMember("height", tb.height, alloc);
 
 	val.AddMember("font_type", tb.font_type, alloc);
 	val.AddMember("font_size", tb.font_size, alloc);
-	StoreColorToJson(tb.font_color, val["font_color"], alloc);
+	rapidjson::Value fcol_val;
+	StoreColorToJson(tb.font_color, fcol_val, alloc);
+	val.AddMember("font_color", fcol_val, alloc);
 
 	val.AddMember("has_edge", tb.has_edge, alloc);
 	val.AddMember("edge_size", tb.edge_size, alloc);
-	StoreColorToJson(tb.edge_color, val["edge_color"], alloc);
+	rapidjson::Value ecol_val;
+	StoreColorToJson(tb.edge_color, ecol_val, alloc);
+	val.AddMember("edge_color", ecol_val, alloc);
 
 	val.AddMember("align_hori", tb.align_hori, alloc);
 	val.AddMember("align_vert", tb.align_vert, alloc);
