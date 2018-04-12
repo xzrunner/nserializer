@@ -126,6 +126,7 @@ void N2CompText::StoreColorToJson(const pt2::GradientColor& col, rapidjson::Valu
 void N2CompText::LoadColorFromJson(pt2::GradientColor& col, mm::LinearAllocator& alloc, const rapidjson::Value& val)
 {
 	int num = val["num"].GetUint();
+	col.items.clear();
 	col.items.reserve(num);
 	col.angle = val["angle"].GetFloat();
 	for (auto& src : val["items"].GetArray())
