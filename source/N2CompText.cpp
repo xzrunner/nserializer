@@ -76,7 +76,7 @@ void N2CompText::StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, ra
 	val.AddMember("space_hori", tb.space_hori, alloc);
 	val.AddMember("space_vert", tb.space_vert, alloc);
 
-	val.AddMember("overflow", tb.overflow, alloc);
+	val.AddMember("overlabel", tb.overlabel, alloc);
 
 	val.AddMember("richtext", tb.richtext, alloc);
 }
@@ -100,7 +100,7 @@ void N2CompText::LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, co
 	tb.space_hori = val["space_hori"].GetFloat();
 	tb.space_vert = val["space_vert"].GetFloat();
 
-	tb.overflow = val["overflow"].GetBool();
+	tb.overlabel = static_cast<pt2::Textbox::OverLabel>(val["overlabel"].GetInt());
 
 	tb.richtext = val["richtext"].GetBool();
 }
