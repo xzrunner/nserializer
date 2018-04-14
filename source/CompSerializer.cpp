@@ -69,6 +69,7 @@ bool CompSerializer::ToJson(const n0::NodeSharedComp& comp,
 	auto itr = m_shared_to_json.find(comp.Type());
 	if (itr != m_shared_to_json.end())
 	{
+		val.SetObject();
 		bool ret = itr->second(comp, dir, val, alloc);
 		val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
 		return ret;

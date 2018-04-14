@@ -5,8 +5,8 @@
 #include <bs/ImportStream.h>
 #include <bs/FixedPointNum.h>
 #include <node3/CompModel.h>
-#include <node3/ModelFactory.h>
-#include <node3/Model.h>
+#include <model/ModelFactory.h>
+#include <model/Model.h>
 
 #include <boost/filesystem.hpp>
 
@@ -45,7 +45,7 @@ void N3CompModel::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
 
 void N3CompModel::StoreToMem(n3::CompModel& comp) const
 {
-	auto model = n3::ModelFactory::Create(m_filepath);
+	auto model = model::ModelFactory::Create(m_filepath);
 	// todo
 	// m_model->LoadFromJson(val);
 	comp.SetModel(model);
