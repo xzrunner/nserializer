@@ -8,7 +8,8 @@ namespace ns
 {
 
 EE0CompNodeEditor::EE0CompNodeEditor()
-	: m_visible(true)
+	: m_id(0)
+	, m_visible(true)
 	, m_editable(true)
 {
 }
@@ -37,6 +38,7 @@ void EE0CompNodeEditor::StoreToJson(const std::string& dir, rapidjson::Value& va
 	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
 
 	val.AddMember("name", rapidjson::Value(m_name.c_str(), alloc), alloc);
+	val.AddMember("id", m_id, alloc);
 
 	val.AddMember("visible", m_visible, alloc);
 	val.AddMember("editable", m_editable, alloc);
@@ -48,6 +50,7 @@ void EE0CompNodeEditor::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 
 	m_name = val["name"].GetString();
+	m_id   = val["id"].GetUint();
 
 	m_visible  = val["visible"].GetBool();
 	m_editable = val["editable"].GetBool();
@@ -57,6 +60,7 @@ void EE0CompNodeEditor::StoreToMem(ee0::CompNodeEditor& comp) const
 {
 	comp.SetFilepath(m_filepath);
 	comp.SetName(m_name);
+	comp.SetID(m_id);
 	comp.SetVisible(m_visible);
 	comp.SetEditable(m_editable);
 }
@@ -65,6 +69,7 @@ void EE0CompNodeEditor::LoadFromMem(const ee0::CompNodeEditor& comp)
 {
 	m_filepath = comp.GetFilepath();
 	m_name     = comp.GetName();
+	m_id       = comp.GetID();
 	m_visible  = comp.IsVisible();
 	m_editable = comp.IsEditable();
 }

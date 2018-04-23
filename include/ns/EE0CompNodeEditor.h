@@ -36,6 +36,7 @@ public:
 private:
 	std::string m_filepath;
 	std::string m_name;
+	uint32_t    m_id;
 
 	bool m_visible, m_editable;
 
