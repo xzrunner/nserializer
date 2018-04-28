@@ -14,6 +14,7 @@
     <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h" />
     <ClInclude Include="..\..\..\include\ns\CompSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h" />
+    <ClInclude Include="..\..\..\include\ns\EE0CompCustomProperties.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompAnim.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompComplex.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp" />
+    <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp" />
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp" />
     <ClCompile Include="..\..\..\source\N2CompComplex.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp" />

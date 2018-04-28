@@ -45,6 +45,8 @@
 
 #include "ns/EE0CompNodeEditor.h"
 #include <ee0/CompNodeEditor.h>
+#include "ns/EE0CompCustomProperties.h"
+#include <ee0/CompCustomProperties.h>
 
 #include <node0/SceneNode.h>
 #include <memmgr/LinearAllocator.h>
@@ -158,6 +160,7 @@ void RegistCallback::Init()
 	REGIST_SHARED_CB(n3::CompModel, N3CompModel);
 
 	REGIST_UNIQUE_CB(ee0::CompNodeEditor, EE0CompNodeEditor);
+	REGIST_UNIQUE_CB(ee0::CompCustomProperties, EE0CompCustomProperties);
 }
 
 }

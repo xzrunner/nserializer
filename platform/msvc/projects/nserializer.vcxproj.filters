@@ -100,6 +100,9 @@
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp">
+      <Filter>components\editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompAnim.h">
       <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\EE0CompCustomProperties.h">
+      <Filter>components\editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
