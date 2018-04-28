@@ -4,6 +4,8 @@
 
 #include <rapidjson/document.h>
 
+namespace ee0 { class CompNodeEditor; }
+
 namespace ns
 {
 
@@ -19,6 +21,8 @@ public:
 private:
 	static n0::SceneNodePtr CreateFromImage(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromJson(const std::string& filepath);
+
+	static void InitCompEditor(ee0::CompNodeEditor& ceditor, const std::string& filepath);
 
 }; // NodeFactory
 

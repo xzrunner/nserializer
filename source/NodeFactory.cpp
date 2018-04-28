@@ -1,6 +1,7 @@
 #include "ns/NodeFactory.h"
 #include "ns/NodeSerializer.h"
 #include "ns/CompSerializer.h"
+#include "ns/Blackboard.h"
 
 #include <ee0/CompNodeEditor.h>
 
@@ -116,7 +117,8 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	node->AddUniqueComp<n2::CompBoundingBox>(sz);
 
 	// editor
-	node->AddUniqueComp<ee0::CompNodeEditor>();
+	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
+	InitCompEditor(ceditor, filepath);
 
 	return node;
 }
@@ -137,9 +139,17 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
-	ceditor.SetFilepath(filepath);
+	InitCompEditor(ceditor, filepath);
 
 	return node;
+}
+
+void NodeFactory::InitCompEditor(ee0::CompNodeEditor& ceditor, const std::string& filepath)
+{
+	ceditor.SetFilepath(filepath);
+	auto id = Blackboard::Instance()->GenNodeId();
+	ceditor.SetID(id);
+	ceditor.SetName("_obj" + std::to_string(id));
 }
 
 }

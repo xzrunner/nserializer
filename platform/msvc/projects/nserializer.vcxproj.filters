@@ -103,6 +103,9 @@
     <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp">
       <Filter>components\editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\Blackboard.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\EE0CompCustomProperties.h">
       <Filter>components\editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\Blackboard.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

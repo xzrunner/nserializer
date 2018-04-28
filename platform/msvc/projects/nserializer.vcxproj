@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\ns\Blackboard.h" />
     <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h" />
     <ClInclude Include="..\..\..\include\ns\CompSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="..\..\..\include\ns\NodeFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\Blackboard.cpp" />
     <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp" />
     <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp" />
