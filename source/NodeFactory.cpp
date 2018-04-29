@@ -11,6 +11,7 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <node2/CompImage.h>
+#include <node2/AABBSystem.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 #include <facade/Texture.h>
@@ -135,7 +136,8 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
+	auto aabb = n2::AABBSystem::GetBounding(casset);
+	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();

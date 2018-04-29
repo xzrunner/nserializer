@@ -6,6 +6,7 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <node2/CompSharedPatch.h>
+#include <node2/AABBSystem.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
 
@@ -85,8 +86,8 @@ void N2CompAnim::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 
 				NodeSerializer::LoadNodeFromJson(node, dir, src_node);
 
-				auto& casset = node->GetSharedComp<n0::CompAsset>();
-				node->AddUniqueComp<n2::CompBoundingBox>(casset.GetBounding());
+				auto aabb = n2::AABBSystem::GetBounding(node->GetSharedComp<n0::CompAsset>());
+				node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
 				if (node->HasUniqueComp<n2::CompSharedPatch>())
 				{
