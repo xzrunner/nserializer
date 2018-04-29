@@ -79,9 +79,6 @@
     <ClCompile Include="..\..\..\source\N2CompScale9.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\N2CompComplex.cpp">
-      <Filter>components\asset</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp">
       <Filter>editop</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\Blackboard.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N0CompComplex.cpp">
+      <Filter>components\asset</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +153,6 @@
     <ClInclude Include="..\..\..\include\ns\N2CompScale9.h">
       <Filter>components\asset</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\N2CompComplex.h">
-      <Filter>components\asset</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h">
       <Filter>components\default</Filter>
     </ClInclude>
@@ -182,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\Blackboard.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N0CompComplex.h">
+      <Filter>components\asset</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

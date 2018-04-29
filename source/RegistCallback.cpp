@@ -2,8 +2,9 @@
 #include "ns/CompSerializer.h"
 #include "ns/CompNoSerialize.h"
 
-#include "ns/N2CompComplex.h"
-#include <node2/CompComplex.h>
+#include "ns/N0CompComplex.h"
+#include <node0/CompComplex.h>
+
 #include "ns/N2CompAnim.h"
 #include <node2/CompAnim.h>
 #include "ns/N2CompColorCommon.h"
@@ -26,6 +27,9 @@
 
 // todo
 #include <node2/EditOp.h>
+
+#include "ns/N0CompComplex.h"
+#include <node0/CompComplex.h>
 
 #include "ns/N2CompImage.h"
 #include <node2/CompImage.h>
@@ -141,14 +145,14 @@ void RegistCallback::Init()
 	REGIST_UNIQUE_CB(n2::CompScissor, N2CompScissor);
 	REGIST_UNIQUE_CB(n2::CompScript, N2CompScript);
 
-	REGIST_SHARED_CB(n2::CompComplex, N2CompComplex);
+	REGIST_SHARED_CB(n0::CompComplex, N0CompComplex);
 	REGIST_SHARED_CB(n2::CompAnim, N2CompAnim);
 	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
 	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
 	REGIST_SHARED_CB(n2::CompText, N2CompText);
 	REGIST_SHARED_CB(n2::CompScale9, N2CompScale9);
 
-	REGIST_ASSET_CB(n2::CompComplex, N2CompComplex);
+	REGIST_ASSET_CB(n0::CompComplex, N0CompComplex);
 	REGIST_ASSET_CB(n2::CompAnim, N2CompAnim);
 	REGIST_ASSET_CB(n2::CompImage, N2CompImage);
 	REGIST_ASSET_CB(n2::CompMask, N2CompMask);

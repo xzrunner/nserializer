@@ -6,12 +6,12 @@
 
 #include <vector>
 
-namespace n2 { class CompComplex; }
+namespace n0 { class CompComplex; }
 
 namespace ns
 {
 
-class N2CompComplex : public NodeComponent
+class N0CompComplex : public NodeComponent
 {
 public:
 	//
@@ -30,12 +30,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompComplex& comp) const;
-	void LoadFromMem(const n2::CompComplex& comp);
+	void StoreToMem(n0::CompComplex& comp) const;
+	void LoadFromMem(const n0::CompComplex& comp);
 
 private:
 	std::vector<n0::SceneNodePtr> m_nodes;
 
-}; // N2CompComplex
+}; // N0CompComplex
 
 }

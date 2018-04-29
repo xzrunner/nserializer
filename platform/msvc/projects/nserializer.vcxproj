@@ -17,7 +17,7 @@
     <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\EE0CompCustomProperties.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompAnim.h" />
-    <ClInclude Include="..\..\..\include\ns\N2CompComplex.h" />
+    <ClInclude Include="..\..\..\include\ns\N0CompComplex.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorCommon.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompColorMap.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h" />
@@ -45,7 +45,7 @@
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp" />
     <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp" />
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp" />
-    <ClCompile Include="..\..\..\source\N2CompComplex.cpp" />
+    <ClCompile Include="..\..\..\source\N0CompComplex.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorCommon.cpp" />
     <ClCompile Include="..\..\..\source\N2CompColorMap.cpp" />
     <ClCompile Include="..\..\..\source\N2CompImage.cpp" />
