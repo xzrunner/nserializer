@@ -15,7 +15,6 @@
 #include <node3/CompModel.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
-#include <node3/AABBSystem.h>
 #include <model/ModelParametric.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
@@ -167,8 +166,8 @@ n0::SceneNodePtr NodeFactory::CreateFromParam(const std::string& filepath)
 	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
 
 	// aabb
-	auto aabb = n3::AABBSystem::GetBounding(cmodel);
-	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(aabb));
+	auto& aabb = model->GetAABB();
+	auto& caabb = node->AddUniqueComp<n3::CompAABB>(pt3::AABB(aabb));
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
