@@ -12,6 +12,11 @@
 #include <node2/CompTransform.h>
 #include <node2/CompImage.h>
 #include <node2/AABBSystem.h>
+#include <node3/CompModel.h>
+#include <node3/CompTransform.h>
+#include <node3/CompAABB.h>
+#include <node3/AABBSystem.h>
+#include <model/ModelParametric.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 #include <facade/Texture.h>
@@ -41,6 +46,9 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 		break;
 	case sx::FILE_JSON:
 		node = CreateFromJson(filepath);
+		break;
+	case sx::FILE_PARAM:
+		node = CreateFromParam(filepath);
 		break;
 	}
 	return node;
@@ -138,6 +146,29 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	// aabb
 	auto aabb = n2::AABBSystem::GetBounding(casset);
 	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
+
+	// editor
+	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
+	InitCompEditor(ceditor, filepath);
+
+	return node;
+}
+
+n0::SceneNodePtr NodeFactory::CreateFromParam(const std::string& filepath)
+{
+	auto node = std::make_shared<n0::SceneNode>();
+
+	// model
+	auto model = facade::ResPool::Instance().Fetch<model::ModelParametric>(filepath);
+	auto& cmodel = node->AddSharedComp<n3::CompModel>();
+	cmodel.SetModel(model);
+
+	// transform
+	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
+
+	// aabb
+	auto aabb = n3::AABBSystem::GetBounding(cmodel);
+	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(aabb));
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();

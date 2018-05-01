@@ -2,6 +2,7 @@
 
 #include "ns/NodeComponent.h"
 
+#include <SM_Quaternion.h>
 #include <node0/typedef.h>
 #include <painting3/AABB.h>
 

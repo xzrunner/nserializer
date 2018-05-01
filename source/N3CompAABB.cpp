@@ -30,19 +30,17 @@ void N3CompAABB::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.SetObject();
 	
 	rapidjson::Value val_min;
-	auto& min = m_aabb.Min();
 	val_min.SetArray();
-	val_min.PushBack(min.x, alloc);
-	val_min.PushBack(min.y, alloc);
-	val_min.PushBack(min.z, alloc);
+	for (int i = 0; i < 3; ++i) {
+		val_min.PushBack(m_aabb.Min()[i], alloc);
+	}
 	val.AddMember("min", val_min, alloc);
 	
 	rapidjson::Value val_max;
-	auto& max = m_aabb.Max();
 	val_max.SetArray();
-	val_max.PushBack(max.x, alloc);
-	val_max.PushBack(max.y, alloc);
-	val_max.PushBack(max.z, alloc);
+	for (int i = 0; i < 3; ++i) {
+		val_max.PushBack(m_aabb.Max()[i], alloc);
+	}
 	val.AddMember("max", val_max, alloc);
 }
 
