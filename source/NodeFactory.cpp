@@ -15,7 +15,7 @@
 #include <node3/CompModel.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
-#include <model/ModelParametric.h>
+#include <model/Model.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 #include <facade/Texture.h>
@@ -46,8 +46,8 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	case sx::FILE_JSON:
 		node = CreateFromJson(filepath);
 		break;
-	case sx::FILE_PARAM:
-		node = CreateFromParam(filepath);
+	case sx::FILE_MODEL:
+		node = CreateFromModel(filepath);
 		break;
 	}
 	return node;
@@ -153,13 +153,13 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromParam(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// model
-	auto model = facade::ResPool::Instance().Fetch<model::ModelParametric>(filepath);
 	auto& cmodel = node->AddSharedComp<n3::CompModel>();
+	auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
 	cmodel.SetModel(model);
 
 	// transform
