@@ -9,6 +9,11 @@
 namespace ns
 {
 
+N3CompTransform::N3CompTransform()
+{
+	m_scale.Set(1, 1, 1);
+}
+
 size_t N3CompTransform::GetBinSize(const std::string& dir) const
 {
 	// todo

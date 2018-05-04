@@ -14,6 +14,8 @@ namespace ns
 class N3CompTransform : public NodeComponent
 {
 public:
+	N3CompTransform();
+
 	//
 	// bin
 	//
