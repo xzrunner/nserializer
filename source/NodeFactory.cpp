@@ -161,6 +161,7 @@ n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 	auto& cmodel = node->AddSharedComp<n3::CompModel>();
 	auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
 	cmodel.SetModel(model);
+	cmodel.SetFilepath(filepath);
 
 	// transform
 	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();

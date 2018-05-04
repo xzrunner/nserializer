@@ -5,8 +5,8 @@
 #include <bs/ImportStream.h>
 #include <bs/FixedPointNum.h>
 #include <node3/CompModel.h>
-#include <model/ModelFactory.h>
 #include <model/Model.h>
+#include <facade/ResPool.h>
 
 #include <boost/filesystem.hpp>
 
@@ -33,8 +33,12 @@ void N3CompModel::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 {
 	val.SetObject();
 
-	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
-	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
+	if (boost::filesystem::exists(m_filepath)) {
+		std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+		val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
+	} else {
+		val.AddMember("filepath", rapidjson::Value(m_filepath.c_str(), alloc), alloc);
+	}
 }
 
 void N3CompModel::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
@@ -45,15 +49,14 @@ void N3CompModel::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
 
 void N3CompModel::StoreToMem(n3::CompModel& comp) const
 {
-	auto model = model::ModelFactory::Create(m_filepath);
-	// todo
-	// m_model->LoadFromJson(val);
+	auto model = facade::ResPool::Instance().Fetch<model::Model>(m_filepath);
 	comp.SetModel(model);
+	comp.SetFilepath(m_filepath);
 }
 
 void N3CompModel::LoadFromMem(const n3::CompModel& comp)
 {
-	m_filepath = comp.GetModel()->Type();
+	m_filepath = comp.GetFilepath();
 }
 
 }
