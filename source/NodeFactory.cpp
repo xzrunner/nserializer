@@ -15,7 +15,7 @@
 #include <node3/CompModel.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
-#include <model/Scene.h>
+#include <model/Model.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 #include <facade/Texture.h>
@@ -80,13 +80,13 @@ void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string&
 			break;
 		case sx::RES_FILE_MODEL:
 			{
-				auto scene = facade::ResPool::Instance().Fetch<model::Scene>(filepath);
+				auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
 				if (!node->HasSharedComp<n3::CompModel>()) {
 					node->AddSharedComp<n3::CompModel>();
 				}
 				auto cmodel = node->GetSharedCompPtr<n3::CompModel>();
 				cmodel->SetFilepath(filepath);
-				cmodel->SetScene(scene);
+				cmodel->SetModel(model);
 				bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, cmodel);
 				GD_ASSERT(succ, "exists");
 			}
@@ -125,10 +125,10 @@ n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
 		break;
 	case sx::RES_FILE_MODEL:
 		{
-			auto scene = facade::ResPool::Instance().Fetch<model::Scene>(filepath);
+			auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
 			auto cmodel = std::make_shared<n3::CompModel>();
 			cmodel->SetFilepath(filepath);
-			cmodel->SetScene(scene);
+			cmodel->SetModel(model);
 			casset = cmodel;
 		}
 		break;
@@ -193,15 +193,15 @@ n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 
 	// model
 	auto& cmodel = node->AddSharedComp<n3::CompModel>();
-	auto scene = facade::ResPool::Instance().Fetch<model::Scene>(filepath);
-	cmodel.SetScene(scene);
+	auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
+	cmodel.SetModel(model);
 	cmodel.SetFilepath(filepath);
 
 	// transform
 	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
 
 	// aabb
-	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(scene->aabb));
+	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(model->aabb));
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
