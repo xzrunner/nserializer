@@ -5,7 +5,7 @@
 #include <bs/ImportStream.h>
 #include <bs/FixedPointNum.h>
 #include <node3/CompModel.h>
-#include <model/Model.h>
+#include <model/Scene.h>
 #include <facade/ResPool.h>
 
 #include <boost/filesystem.hpp>
@@ -49,8 +49,8 @@ void N3CompModel::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
 
 void N3CompModel::StoreToMem(n3::CompModel& comp) const
 {
-	auto model = facade::ResPool::Instance().Fetch<model::Model>(m_filepath);
-	comp.SetModel(model);
+	auto scene = facade::ResPool::Instance().Fetch<model::Scene>(m_filepath);
+	comp.SetScene(scene);
 	comp.SetFilepath(m_filepath);
 }
 
