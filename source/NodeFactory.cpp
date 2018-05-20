@@ -17,6 +17,7 @@
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
 #include <model/Model.h>
+#include <model/ModelInstance.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
 #include <facade/Texture.h>
@@ -88,7 +89,12 @@ void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string&
 				auto cmodel = node->GetSharedCompPtr<n3::CompModel>();
 				cmodel->SetFilepath(filepath);
 				cmodel->SetModel(model);
-				node->AddUniqueComp<n3::CompModelInst>(model, 0);
+				if (node->HasUniqueComp<n3::CompModelInst>()) {
+					auto& inst = node->GetUniqueComp<n3::CompModelInst>();
+					inst.SetModel(model, 0);
+				} else {
+					node->AddUniqueComp<n3::CompModelInst>(model, 0);
+				}
 				bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, cmodel);
 				GD_ASSERT(succ, "exists");
 			}
