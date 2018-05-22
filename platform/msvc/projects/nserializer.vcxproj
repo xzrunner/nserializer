@@ -67,6 +67,9 @@
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
     <ClCompile Include="..\..\..\source\NodeFactory.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\ns\RegistCallback.inl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>2.nserializer</ProjectName>
     <ProjectGuid>{8B91994C-018B-4664-B615-A1EAC669CA5C}</ProjectGuid>

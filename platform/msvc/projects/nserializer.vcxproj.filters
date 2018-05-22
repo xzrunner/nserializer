@@ -7,9 +7,6 @@
     <Filter Include="components\color">
       <UniqueIdentifier>{42d5ab54-8fcd-4790-b3c6-420e9d8eabb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="components\editor">
-      <UniqueIdentifier>{b73ba6af-a1fb-404c-973f-21de955a678c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="components\geo">
       <UniqueIdentifier>{65787996-3317-4aa3-b30d-7a094f9a7901}</UniqueIdentifier>
     </Filter>
@@ -192,5 +189,8 @@
     <ClInclude Include="..\..\..\include\ns\N0CompFlags.h">
       <Filter>components\base</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\include\ns\RegistCallback.inl" />
   </ItemGroup>
 </Project>

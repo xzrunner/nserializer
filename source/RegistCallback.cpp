@@ -53,125 +53,49 @@
 
 #include "ns/N0CompFlags.h"
 #include <node0/CompFlags.h>
-#include "ns/EE0CompCustomProperties.h"
-#include <ee0/CompCustomProperties.h>
 
 #include <node0/SceneNode.h>
 #include <memmgr/LinearAllocator.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
 
-#define REGIST_UNIQUE_CB(ori, here)                                                    \
-	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
-		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
-        {                                                                              \
-			auto& comp = node->HasUniqueComp<ori>() ?                                  \
-				node->GetUniqueComp<ori>() : node->AddUniqueComp<ori>();               \
-			here ser;                                                                  \
-			mm::LinearAllocator alloc;                                                 \
-			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(comp);                                                      \
-		}                                                                              \
-	);                                                                                 \
-	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
-		[](const n0::NodeUniqueComp& comp, const std::string& dir,                     \
-           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
-		{                                                                              \
-			here seri;                                                                 \
-			seri.LoadFromMem(static_cast<const ori&>(comp));                           \
-			seri.StoreToJson(dir, val, alloc);                                         \
-			return true;                                                               \
-		}                                                                              \
-	);
-
-#define REGIST_SHARED_CB(ori, here)                                                    \
-	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
-		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
-        {                                                                              \
-			auto& comp = node->HasSharedComp<ori>() ?                                  \
-				node->GetSharedComp<ori>() : node->AddSharedComp<ori>();               \
-			here ser;                                                                  \
-			mm::LinearAllocator alloc;                                                 \
-			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(comp);                                                      \
-		}                                                                              \
-	);                                                                                 \
-	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
-		[](const n0::NodeSharedComp& comp, const std::string& dir,                     \
-           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
-		{                                                                              \
-			here seri;                                                                 \
-			seri.LoadFromMem(static_cast<const ori&>(comp));                           \
-			seri.StoreToJson(dir, val, alloc);                                         \
-			return true;                                                               \
-		}                                                                              \
-	);
-
-#define REGIST_UNIQUE_NULL_CB(ori, here)                                               \
-	CompSerializer::Instance()->AddFromJsonFunc(ori::TYPE_NAME,                        \
-		[](n0::SceneNodePtr& node, const std::string& dir, const rapidjson::Value& val)\
-        {                                                                              \
-		}                                                                              \
-	);                                                                                 \
-	CompSerializer::Instance()->AddToJsonFunc(ori::TYPE_NAME,                          \
-		[](const n0::NodeUniqueComp& comp, const std::string& dir,                     \
-           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool       \
-		{                                                                              \
-			return false;                                                              \
-		}                                                                              \
-	);
-
-#define REGIST_ASSET_CB(ori, here)                                                     \
-	CompSerializer::Instance()->AddAssetFromJsonFunc(ori::TYPE_NAME,                   \
-		[](const std::string& dir, const rapidjson::Value& val) -> n0::CompAssetPtr    \
-        {                                                                              \
-			auto comp = std::make_shared<ori>();                                       \
-			here ser;                                                                  \
-			mm::LinearAllocator alloc;                                                 \
-			ser.LoadFromJson(alloc, dir, val);                                         \
-			ser.StoreToMem(*comp);                                                     \
-			return comp;                                                               \
-		}                                                                              \
-	);                                                                                 \
-
 namespace ns
 {
 
 void RegistCallback::Init()
 {
-	REGIST_UNIQUE_CB(n0::CompIdentity, N0CompIdentity);
+	AddUniqueCB<n0::CompIdentity, N0CompIdentity>();
 
-	REGIST_UNIQUE_CB(n2::CompColorCommon, N2CompColorCommon);
-	REGIST_UNIQUE_CB(n2::CompColorMap, N2CompColorMap);
+	AddUniqueCB<n2::CompColorCommon, N2CompColorCommon>();
+	AddUniqueCB<n2::CompColorMap, N2CompColorMap>();
 
-	REGIST_UNIQUE_CB(n2::CompTransform, N2CompTransform);
-	REGIST_UNIQUE_NULL_CB(n2::CompBoundingBox, CompNoSerialize);
-	REGIST_UNIQUE_CB(n2::CompUniquePatch, N2CompUniquePatch);
-	REGIST_UNIQUE_CB(n2::CompSharedPatch, N2CompSharedPatch);
-	REGIST_UNIQUE_CB(n2::CompScissor, N2CompScissor);
-	REGIST_UNIQUE_CB(n2::CompScript, N2CompScript);
+	AddUniqueCB<n2::CompTransform, N2CompTransform>();
+	AddUniqueNullCB<n2::CompBoundingBox, CompNoSerialize>();
+	AddUniqueCB<n2::CompUniquePatch, N2CompUniquePatch>();
+	AddUniqueCB<n2::CompSharedPatch, N2CompSharedPatch>();
+	AddUniqueCB<n2::CompScissor, N2CompScissor>();
+	AddUniqueCB<n2::CompScript, N2CompScript>();
 
-	REGIST_SHARED_CB(n0::CompComplex, N0CompComplex);
-	REGIST_SHARED_CB(n2::CompAnim, N2CompAnim);
-	REGIST_SHARED_CB(n2::CompImage, N2CompImage);
-	REGIST_SHARED_CB(n2::CompMask, N2CompMask);
-	REGIST_SHARED_CB(n2::CompText, N2CompText);
-	REGIST_SHARED_CB(n2::CompScale9, N2CompScale9);
+	AddSharedCB<n0::CompComplex, N0CompComplex>();
+	AddSharedCB<n2::CompAnim, N2CompAnim>();
+	AddSharedCB<n2::CompImage, N2CompImage>();
+	AddSharedCB<n2::CompMask, N2CompMask>();
+	AddSharedCB<n2::CompText, N2CompText>();
+	AddSharedCB<n2::CompScale9, N2CompScale9>();
 
-	REGIST_ASSET_CB(n0::CompComplex, N0CompComplex);
-	REGIST_ASSET_CB(n2::CompAnim, N2CompAnim);
-	REGIST_ASSET_CB(n2::CompImage, N2CompImage);
-	REGIST_ASSET_CB(n2::CompMask, N2CompMask);
-	REGIST_ASSET_CB(n2::CompText, N2CompText);
-	REGIST_ASSET_CB(n2::CompScale9, N2CompScale9);
+	AddAssetCB<n0::CompComplex, N0CompComplex>();
+	AddAssetCB<n2::CompAnim, N2CompAnim>();
+	AddAssetCB<n2::CompImage, N2CompImage>();
+	AddAssetCB<n2::CompMask, N2CompMask>();
+	AddAssetCB<n2::CompText, N2CompText>();
+	AddAssetCB<n2::CompScale9, N2CompScale9>();
 
-	REGIST_UNIQUE_CB(n3::CompAABB, N3CompAABB);
-	REGIST_UNIQUE_CB(n3::CompTransform, N3CompTransform);
-	REGIST_SHARED_CB(n3::CompModel, N3CompModel);
-	REGIST_UNIQUE_CB(n3::CompModelInst, N3CompModelInst);
+	AddUniqueCB<n3::CompAABB, N3CompAABB>();
+	AddUniqueCB<n3::CompTransform, N3CompTransform>();
+	AddSharedCB<n3::CompModel, N3CompModel>();
+	AddUniqueCB<n3::CompModelInst, N3CompModelInst>();
 
-	REGIST_UNIQUE_CB(n0::CompFlags, N0CompFlags);
-	REGIST_UNIQUE_CB(ee0::CompCustomProperties, EE0CompCustomProperties);
+	AddUniqueCB<n0::CompFlags, N0CompFlags>();
 }
 
 }
