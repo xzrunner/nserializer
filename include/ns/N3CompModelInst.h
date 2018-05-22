@@ -3,17 +3,16 @@
 #include "ns/NodeComponent.h"
 
 #include <node0/typedef.h>
+#include <painting3/AABB.h>
 
-namespace ee0 { class CompNodeEditor; }
+namespace n3 { class CompModelInst; }
 
 namespace ns
 {
 
-class EE0CompNodeEditor : public NodeComponent
+class N3CompModelInst : public NodeComponent
 {
 public:
-	EE0CompNodeEditor();
-
 	//
 	// bin
 	//
@@ -30,12 +29,13 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(ee0::CompNodeEditor& comp) const;
-	void LoadFromMem(const ee0::CompNodeEditor& comp);
+	void StoreToMem(n3::CompModelInst& comp) const;
+	void LoadFromMem(const n3::CompModelInst& comp);
 
 private:
-	bool m_visible, m_editable;
+	std::string m_filepath;
+	std::string m_anim_name;
 
-}; // EE0CompNodeEditor
+}; // N3CompModelInst
 
 }

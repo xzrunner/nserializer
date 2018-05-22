@@ -8,6 +8,7 @@
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
+#include <node0/CompIdentity.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <node2/CompImage.h>
@@ -168,7 +169,6 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
-	InitCompEditor(ceditor, filepath);
 
 	return node;
 }
@@ -188,9 +188,12 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	auto aabb = n2::AABBSystem::GetBounding(casset);
 	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
+
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
-	InitCompEditor(ceditor, filepath);
 
 	return node;
 }
@@ -212,19 +215,22 @@ n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 	// aabb
 	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(model->aabb));
 
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
+
 	// editor
 	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
-	InitCompEditor(ceditor, filepath);
 
 	return node;
 }
 
-void NodeFactory::InitCompEditor(ee0::CompNodeEditor& ceditor, const std::string& filepath)
+void NodeFactory::InitCompId(n0::CompIdentity& cid, const std::string& filepath)
 {
- 	ceditor.SetFilepath(filepath);
+	cid.SetFilepath(filepath);
 	auto id = Blackboard::Instance()->GenNodeId();
-	ceditor.SetID(id);
-	ceditor.SetName("_obj" + std::to_string(id));
+	cid.SetID(id);
+	cid.SetName("_obj" + std::to_string(id));
 }
 
 }

@@ -2,9 +2,8 @@
 #include "ns/CompType.h"
 #include "ns/NodeFactory.h"
 
-#include <ee0/CompNodeEditor.h>
-
 #include <node0/SceneNode.h>
+#include <node0/CompIdentity.h>
 #include <node2/CompMask.h>
 
 #include <boost/filesystem.hpp>
@@ -58,14 +57,14 @@ void N2CompMask::LoadFromMem(const n2::CompMask& comp)
 {
 	auto& base = comp.GetBaseNode();
 	if (base) {
-		auto& base_editor = base->GetUniqueComp<ee0::CompNodeEditor>();
-		m_base_path = base_editor.GetFilepath();
+		auto& cid = base->GetUniqueComp<n0::CompIdentity>();
+		m_base_path = cid.GetFilepath();
 	}
 
 	auto& mask = comp.GetMaskNode();
 	if (mask) {
-		auto& mask_editor = mask->GetUniqueComp<ee0::CompNodeEditor>();
-		m_mask_path = mask_editor.GetFilepath();
+		auto& cid = mask->GetUniqueComp<n0::CompIdentity>();
+		m_mask_path = cid.GetFilepath();
 	}
 
 }

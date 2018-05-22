@@ -34,6 +34,9 @@
     <Filter Include="components\script">
       <UniqueIdentifier>{19283582-55cc-481c-a57c-c5e04ba09c0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="components\base">
+      <UniqueIdentifier>{40a59b49-67b6-4720-b75b-fd0a00c300ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />
@@ -104,6 +107,12 @@
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\N0CompComplex.cpp">
+      <Filter>components\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\include\ns\N0CompIdentity.cpp">
+      <Filter>components\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\N3CompModelInst.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
   </ItemGroup>
@@ -181,6 +190,12 @@
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N0CompComplex.h">
+      <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N0CompIdentity.h">
+      <Filter>components\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N3CompModelInst.h">
       <Filter>components\asset</Filter>
     </ClInclude>
   </ItemGroup>
