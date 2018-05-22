@@ -97,9 +97,6 @@
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\EE0CompCustomProperties.cpp">
-      <Filter>components\editor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\Blackboard.cpp">
       <Filter>tools</Filter>
     </ClCompile>
@@ -179,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompAnim.h">
       <Filter>components\asset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\EE0CompCustomProperties.h">
-      <Filter>components\editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\Blackboard.h">
       <Filter>tools</Filter>
