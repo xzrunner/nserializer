@@ -4,15 +4,15 @@
 
 #include <node0/typedef.h>
 
-namespace ee0 { class CompNodeEditor; }
+namespace n0 { class CompFlags; }
 
 namespace ns
 {
 
-class EE0CompNodeEditor : public NodeComponent
+class N0CompFlags : public NodeComponent
 {
 public:
-	EE0CompNodeEditor();
+	N0CompFlags();
 
 	//
 	// bin
@@ -30,12 +30,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(ee0::CompNodeEditor& comp) const;
-	void LoadFromMem(const ee0::CompNodeEditor& comp);
+	void StoreToMem(n0::CompFlags& comp) const;
+	void LoadFromMem(const n0::CompFlags& comp);
 
 private:
 	bool m_visible, m_editable;
 
-}; // EE0CompNodeEditor
+}; // N0CompFlags
 
 }

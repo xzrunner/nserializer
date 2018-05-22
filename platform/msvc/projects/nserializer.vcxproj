@@ -23,7 +23,7 @@
     <ClInclude Include="..\..\..\include\ns\N2CompColorMap.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompImage.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompMask.h" />
-    <ClInclude Include="..\..\..\include\ns\EE0CompNodeEditor.h" />
+    <ClInclude Include="..\..\..\include\ns\N0CompFlags.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScissor.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScript.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h" />
@@ -53,7 +53,7 @@
     <ClCompile Include="..\..\..\source\N2CompColorMap.cpp" />
     <ClCompile Include="..\..\..\source\N2CompImage.cpp" />
     <ClCompile Include="..\..\..\source\N2CompMask.cpp" />
-    <ClCompile Include="..\..\..\source\EE0CompNodeEditor.cpp" />
+    <ClCompile Include="..\..\..\source\N0CompFlags.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScissor.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScript.cpp" />
     <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp" />

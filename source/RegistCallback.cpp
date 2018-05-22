@@ -51,8 +51,8 @@
 #include "ns/N3CompModelInst.h"
 #include <node3/CompModelInst.h>
 
-#include "ns/EE0CompNodeEditor.h"
-#include <ee0/CompNodeEditor.h>
+#include "ns/N0CompFlags.h"
+#include <node0/CompFlags.h>
 #include "ns/EE0CompCustomProperties.h"
 #include <ee0/CompCustomProperties.h>
 
@@ -170,7 +170,7 @@ void RegistCallback::Init()
 	REGIST_SHARED_CB(n3::CompModel, N3CompModel);
 	REGIST_UNIQUE_CB(n3::CompModelInst, N3CompModelInst);
 
-	REGIST_UNIQUE_CB(ee0::CompNodeEditor, EE0CompNodeEditor);
+	REGIST_UNIQUE_CB(n0::CompFlags, N0CompFlags);
 	REGIST_UNIQUE_CB(ee0::CompCustomProperties, EE0CompCustomProperties);
 }
 

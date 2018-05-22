@@ -3,8 +3,6 @@
 #include "ns/CompSerializer.h"
 #include "ns/Blackboard.h"
 
-#include <ee0/CompNodeEditor.h>
-
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
@@ -167,8 +165,9 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	sm::rect sz(img->GetWidth(), img->GetHeight());
 	node->AddUniqueComp<n2::CompBoundingBox>(sz);
 
-	// editor
-	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
 
 	return node;
 }
@@ -191,9 +190,6 @@ n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
 	InitCompId(cid, filepath);
-
-	// editor
-	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
 
 	return node;
 }
@@ -218,9 +214,6 @@ n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
 	InitCompId(cid, filepath);
-
-	// editor
-	auto& ceditor = node->AddUniqueComp<ee0::CompNodeEditor>();
 
 	return node;
 }

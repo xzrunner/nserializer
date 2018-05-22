@@ -58,9 +58,6 @@
     <ClCompile Include="..\..\..\source\N2CompText.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\EE0CompNodeEditor.cpp">
-      <Filter>components\editor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\N3CompAABB.cpp">
       <Filter>components\geo</Filter>
     </ClCompile>
@@ -115,6 +112,9 @@
     <ClCompile Include="..\..\..\source\N3CompModelInst.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\N0CompFlags.cpp">
+      <Filter>components\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -137,9 +137,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompText.h">
       <Filter>components\asset</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ns\EE0CompNodeEditor.h">
-      <Filter>components\editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompAABB.h">
       <Filter>components\geo</Filter>
@@ -197,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N3CompModelInst.h">
       <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N0CompFlags.h">
+      <Filter>components\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
