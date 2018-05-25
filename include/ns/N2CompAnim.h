@@ -20,7 +20,7 @@ public:
 	//
 	virtual size_t GetBinSize(const std::string& dir) const override;
 	virtual void   StoreToBin(const std::string& dir, bs::ExportStream& es) const override;
-	virtual void   LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is) override;
+	virtual void   LoadFromBin(const std::string& dir, bs::ImportStream& is) override;
 
 	//
 	// json
@@ -33,6 +33,9 @@ public:
 	//
 	void StoreToMem(n2::CompAnim& comp) const;
 	void LoadFromMem(const n2::CompAnim& comp);
+
+private:
+	void AddNode(const n0::SceneNodePtr& node, anim::KeyFramePtr& frame);
 
 private:
 	std::vector<anim::LayerPtr> m_layers;

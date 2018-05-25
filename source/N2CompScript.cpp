@@ -19,7 +19,7 @@ void N2CompScript::StoreToBin(const std::string& dir, bs::ExportStream& es) cons
 	// todo
 }
 
-void N2CompScript::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompScript::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }

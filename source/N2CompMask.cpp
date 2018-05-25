@@ -2,6 +2,8 @@
 #include "ns/CompType.h"
 #include "ns/NodeFactory.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
 #include <node2/CompMask.h>
@@ -13,18 +15,30 @@ namespace ns
 
 size_t N2CompMask::GetBinSize(const std::string& dir) const
 {
-	// tood
-	return 0;
+	size_t sz = 0;
+	std::string base_relative = boost::filesystem::relative(m_base_path, dir).string();
+	sz += bs::pack_size(base_relative);
+	std::string mask_relative = boost::filesystem::relative(m_mask_path, dir).string();
+	sz += bs::pack_size(mask_relative);
+	return sz;
 }
 
 void N2CompMask::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	std::string base_relative = boost::filesystem::relative(m_base_path, dir).string();
+	es.Write(base_relative);
+
+	std::string mask_relative = boost::filesystem::relative(m_mask_path, dir).string();
+	es.Write(mask_relative);
 }
 
-void N2CompMask::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompMask::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	auto base_filepath = is.String();
+	m_base_path = boost::filesystem::absolute(base_filepath, dir).string();
+
+	auto mask_filepath = is.String();
+	m_mask_path = boost::filesystem::absolute(mask_filepath, dir).string();
 }
 
 void N2CompMask::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const

@@ -11,31 +11,44 @@ namespace ns
 
 size_t N3CompAABB::GetBinSize(const std::string& dir) const
 {
-	// todo
-	return 0;
+	return sizeof(float) * 6;
 }
 
 void N3CompAABB::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	for (int i = 0; i < 3; ++i) {
+		es.Write(static_cast<float>(m_aabb.Min()[i]));
+	}
+	for (int i = 0; i < 3; ++i) {
+		es.Write(static_cast<float>(m_aabb.Max()[i]));
+	}
 }
 
-void N3CompAABB::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N3CompAABB::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	sm::vec3 min, max;
+	for (int i = 0; i < 3; ++i) {
+		min.xyz[i] = is.Float();
+	}
+	for (int i = 0; i < 3; ++i) {
+		max.xyz[i] = is.Float();
+	}
+
+	m_aabb.Combine(min);
+	m_aabb.Combine(max);
 }
 
 void N3CompAABB::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.SetObject();
-	
+
 	rapidjson::Value val_min;
 	val_min.SetArray();
 	for (int i = 0; i < 3; ++i) {
 		val_min.PushBack(m_aabb.Min()[i], alloc);
 	}
 	val.AddMember("min", val_min, alloc);
-	
+
 	rapidjson::Value val_max;
 	val_max.SetArray();
 	for (int i = 0; i < 3; ++i) {

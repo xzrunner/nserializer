@@ -17,7 +17,7 @@ void N2CompUniquePatch::StoreToBin(const std::string& dir, bs::ExportStream& es)
 	// todo
 }
 
-void N2CompUniquePatch::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompUniquePatch::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }

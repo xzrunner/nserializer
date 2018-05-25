@@ -17,7 +17,7 @@ void N2CompSharedPatch::StoreToBin(const std::string& dir, bs::ExportStream& es)
 	// todo
 }
 
-void N2CompSharedPatch::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompSharedPatch::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }

@@ -15,18 +15,20 @@ namespace ns
 
 size_t N3CompModel::GetBinSize(const std::string& dir) const
 {
-	// todo
-	return 0;
+	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	return bs::pack_size(relative);
 }
 
 void N3CompModel::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	es.Write(relative);
 }
 
-void N3CompModel::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N3CompModel::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	auto relative = is.String();
+	m_filepath = boost::filesystem::absolute(relative, dir).string();
 }
 
 void N3CompModel::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const

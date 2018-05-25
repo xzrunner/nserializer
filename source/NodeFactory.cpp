@@ -31,7 +31,7 @@ namespace ns
 n0::SceneNodePtr NodeFactory::Create(const std::string& dir, const rapidjson::Value& val)
 {
 	auto node = std::make_shared<n0::SceneNode>();
-	ns::NodeSerializer::LoadNodeFromJson(node, dir, val);
+	ns::NodeSerializer::LoadFromJson(node, dir, val);
 	return node;
 }
 

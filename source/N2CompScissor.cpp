@@ -1,5 +1,7 @@
 #include "ns/N2CompScissor.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <node2/CompScissor.h>
 
 namespace ns
@@ -7,19 +9,23 @@ namespace ns
 
 size_t N2CompScissor::GetBinSize(const std::string& dir) const
 {
-	// todo
-	size_t sz = 0;
-	return sz;
+	return sizeof(float) * 4;
 }
 
 void N2CompScissor::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	es.Write(static_cast<float>(m_rect.xmin));
+	es.Write(static_cast<float>(m_rect.ymin));
+	es.Write(static_cast<float>(m_rect.xmax));
+	es.Write(static_cast<float>(m_rect.ymax));
 }
 
-void N2CompScissor::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompScissor::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	m_rect.xmin = is.Float();
+	m_rect.ymin = is.Float();
+	m_rect.xmax = is.Float();
+	m_rect.ymax = is.Float();
 }
 
 void N2CompScissor::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const

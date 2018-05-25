@@ -1,4 +1,7 @@
-#include <ns/N0CompFlags.h>
+#include "ns/N0CompFlags.h"
+
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <node0/CompFlags.h>
 #include <node0/NodeFlags.h>
 
@@ -15,18 +18,22 @@ N0CompFlags::N0CompFlags()
 
 size_t N0CompFlags::GetBinSize(const std::string& dir) const
 {
-	// tood
-	return 0;
+	size_t sz = 0;
+	sz += sizeof(uint8_t);		// visible
+	sz += sizeof(uint8_t);		// editable
+	return sz;
 }
 
 void N0CompFlags::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	es.Write(static_cast<uint8_t>(m_visible));
+	es.Write(static_cast<uint8_t>(m_editable));
 }
 
-void N0CompFlags::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N0CompFlags::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	m_visible  = static_cast<bool>(is.UInt8());
+	m_editable = static_cast<bool>(is.UInt8());
 }
 
 void N0CompFlags::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const

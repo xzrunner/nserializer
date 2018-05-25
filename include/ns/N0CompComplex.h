@@ -19,7 +19,7 @@ public:
 	//
 	virtual size_t GetBinSize(const std::string& dir) const override;
 	virtual void   StoreToBin(const std::string& dir, bs::ExportStream& es) const override;
-	virtual void   LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is) override;
+	virtual void   LoadFromBin(const std::string& dir, bs::ImportStream& is) override;
 
 	//
 	// json
@@ -32,6 +32,9 @@ public:
 	//
 	void StoreToMem(n0::CompComplex& comp) const;
 	void LoadFromMem(const n0::CompComplex& comp);
+
+private:
+	void AddNode(const n0::SceneNodePtr& node);
 
 private:
 	std::vector<n0::SceneNodePtr> m_nodes;

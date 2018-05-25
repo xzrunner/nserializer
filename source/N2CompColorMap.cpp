@@ -38,7 +38,7 @@ void N2CompColorMap::StoreToBin(const std::string& dir, bs::ExportStream& es) co
 	es.Write(static_cast<uint32_t>(m_bmap));        // bmap
 }
 
-void N2CompColorMap::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompColorMap::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
 	m_rmap = is.UInt32();
 	m_gmap = is.UInt32();

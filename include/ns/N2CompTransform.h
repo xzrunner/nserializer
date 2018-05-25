@@ -2,6 +2,7 @@
 
 #include "ns/NodeComponent.h"
 
+#include <SM_Vector.h>
 #include <node0/typedef.h>
 
 namespace n2 { class CompTransform; }
@@ -19,7 +20,7 @@ public:
 	//
 	virtual size_t GetBinSize(const std::string& dir) const override;
 	virtual void   StoreToBin(const std::string& dir, bs::ExportStream& es) const override;
-	virtual void   LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is) override;
+	virtual void   LoadFromBin(const std::string& dir, bs::ImportStream& is) override;
 
 	//
 	// json
@@ -34,10 +35,10 @@ public:
 	void LoadFromMem(const n2::CompTransform& comp);
 
 private:
-	float m_pos_x, m_pos_y;
-	float m_angle;
-	float m_scale_x, m_scale_y;
-	float m_shear_x, m_shear_y;
+	sm::vec2 m_pos;
+	float    m_angle;
+	sm::vec2 m_scale;
+	sm::vec2 m_shear;
 
 }; // N2CompTransform
 

@@ -22,7 +22,7 @@ public:
 	//
 	virtual size_t GetBinSize(const std::string& dir) const = 0;
 	virtual void   StoreToBin(const std::string& dir, bs::ExportStream& es) const = 0;
-	virtual void   LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is) = 0;
+	virtual void   LoadFromBin(const std::string& dir, bs::ImportStream& is) = 0;
 
 	//
 	// json

@@ -1,6 +1,9 @@
 #include "ns/N2CompText.h"
 #include "ns/CompType.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
+#include <bs/FixedPointNum.h>
 #include <node2/CompText.h>
 
 #include <boost/filesystem.hpp>
@@ -10,18 +13,22 @@ namespace ns
 
 size_t N2CompText::GetBinSize(const std::string& dir) const
 {
-	// tood
-	return 0;
+	size_t sz = 0;
+	sz += GetTextboxBinSize(m_text.tb);
+	sz += bs::pack_size(m_text.text);
+	return sz;
 }
 
 void N2CompText::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	StoreTextboxToBin(m_text.tb, es);
+	es.Write(m_text.text);
 }
 
-void N2CompText::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompText::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	LoadTextboxFromBin(m_text.tb, is);
+	m_text.text = is.String();
 }
 
 void N2CompText::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
@@ -29,7 +36,7 @@ void N2CompText::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.SetObject();
 
 	rapidjson::Value tb_val;
-	StoreTBToJson(m_text.tb, tb_val, alloc);
+	StoreTextboxToJson(m_text.tb, tb_val, alloc);
 	val.AddMember("textbox", tb_val, alloc);
 
 	val.AddMember("text", rapidjson::Value(m_text.text.c_str(), alloc), alloc);
@@ -37,7 +44,7 @@ void N2CompText::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 
 void N2CompText::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
-	LoadTBFromJson(m_text.tb, alloc, val["textbox"]);
+	LoadTextboxFromJson(m_text.tb, alloc, val["textbox"]);
 	m_text.text = val["text"].GetString();
 }
 
@@ -51,7 +58,83 @@ void N2CompText::LoadFromMem(const n2::CompText& comp)
 	m_text = comp.GetText();
 }
 
-void N2CompText::StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
+size_t N2CompText::GetTextboxBinSize(const pt2::Textbox& tb)
+{
+	size_t sz = 0;
+
+	sz += sizeof(uint16_t);		// width
+	sz += sizeof(uint16_t);		// height
+
+	sz += sizeof(uint8_t);		// font_type
+	sz += sizeof(uint8_t);		// font_size
+	sz += GetColorBinSize(tb.font_color);
+
+	sz += sizeof(uint8_t);		// has_edge
+	sz += sizeof(uint16_t);		// edge_size
+	sz += GetColorBinSize(tb.edge_color);
+
+	sz += sizeof(uint8_t);		// align_hori
+	sz += sizeof(uint8_t);		// align_vert
+
+	sz += sizeof(uint16_t);		// space_hori
+	sz += sizeof(uint16_t);		// space_vert
+
+	sz += sizeof(uint8_t);		// overlabel
+
+	sz += sizeof(uint8_t);		// richtext
+
+	return sz;
+}
+
+void N2CompText::StoreTextboxToBin(const pt2::Textbox& tb, bs::ExportStream& es)
+{
+	es.Write(static_cast<uint16_t>(tb.width));
+	es.Write(static_cast<uint16_t>(tb.height));
+
+	es.Write(static_cast<uint8_t>(tb.font_type));
+	es.Write(static_cast<uint8_t>(tb.font_size));
+	StoreColorToBin(tb.font_color, es);
+
+	es.Write(static_cast<uint8_t>(tb.has_edge));
+	es.Write(static_cast<uint16_t>(bs::float2int(tb.edge_size, 1000)));
+	StoreColorToBin(tb.edge_color, es);
+
+	es.Write(static_cast<uint8_t>(tb.align_hori));
+	es.Write(static_cast<uint8_t>(tb.align_vert));
+
+	es.Write(static_cast<uint16_t>(bs::float2int(tb.space_hori, 1000)));
+	es.Write(static_cast<uint16_t>(bs::float2int(tb.space_vert, 1000)));
+
+	es.Write(static_cast<uint8_t>(tb.overlabel));
+
+	es.Write(static_cast<uint8_t>(tb.richtext));
+}
+
+void N2CompText::LoadTextboxFromBin(pt2::Textbox& tb, bs::ImportStream& is)
+{
+	tb.width  = is.UInt16();
+	tb.height = is.UInt16();
+
+	tb.font_type = is.UInt8();
+	tb.font_size = is.UInt8();
+	LoadColorFromBin(tb.font_color, is);
+
+	tb.has_edge = is.UInt8();
+	tb.edge_size = bs::int2float(is.UInt16(), 1000);
+	LoadColorFromBin(tb.edge_color, is);
+
+	tb.align_hori = static_cast<pt2::Textbox::HoriAlign>(is.UInt8());
+	tb.align_vert = static_cast<pt2::Textbox::VertAlign>(is.UInt8());
+
+	tb.space_hori = bs::int2float(is.UInt16(), 1000);
+	tb.space_vert = bs::int2float(is.UInt16(), 1000);
+
+	tb.overlabel = static_cast<pt2::Textbox::OverLabel>(is.UInt8());
+
+	tb.richtext = is.UInt8();
+}
+
+void N2CompText::StoreTextboxToJson(const pt2::Textbox& tb, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
 {
 	val.SetObject();
 
@@ -81,7 +164,7 @@ void N2CompText::StoreTBToJson(const pt2::Textbox& tb, rapidjson::Value& val, ra
 	val.AddMember("richtext", tb.richtext, alloc);
 }
 
-void N2CompText::LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, const rapidjson::Value& val)
+void N2CompText::LoadTextboxFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, const rapidjson::Value& val)
 {
 	tb.width  = val["width"].GetInt();
 	tb.height = val["height"].GetInt();
@@ -105,6 +188,49 @@ void N2CompText::LoadTBFromJson(pt2::Textbox& tb, mm::LinearAllocator& alloc, co
 	tb.richtext = val["richtext"].GetBool();
 }
 
+size_t N2CompText::GetColorBinSize(const pt2::GradientColor& col)
+{
+	size_t sz = 0;
+	sz += sizeof(uint8_t);		// items num
+	sz += sizeof(float);		// angle
+	sz += (sizeof(uint32_t) + sizeof(float)) * col.items.size();
+	return sz;
+}
+
+void N2CompText::StoreColorToBin(const pt2::GradientColor& col, bs::ExportStream& es)
+{
+	GD_ASSERT(col.items.size() < std::numeric_limits<uint8_t>::max(), "overoflow");
+	uint8_t num = static_cast<uint8_t>(col.items.size());
+	es.Write(num);
+
+	float angle = col.angle;
+	es.Write(angle);
+
+	for (auto& item : col.items)
+	{
+		uint32_t col = item.col.ToRGBA();
+		es.Write(col);
+
+		float pos = item.pos;
+		es.Write(pos);
+	}
+}
+
+void N2CompText::LoadColorFromBin(pt2::GradientColor& col, bs::ImportStream& is)
+{
+	size_t num = is.UInt8();
+	col.items.resize(num);
+
+	col.angle = is.Float();
+
+	for (size_t i = 0; i < num; ++i)
+	{
+		auto& item = col.items[i];
+		item.col.FromRGBA(is.UInt32());
+		item.pos = is.Float();
+	}
+}
+
 void N2CompText::StoreColorToJson(const pt2::GradientColor& col, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
 {
 	val.SetObject();
@@ -112,7 +238,7 @@ void N2CompText::StoreColorToJson(const pt2::GradientColor& col, rapidjson::Valu
 	val.AddMember("angle", col.angle, alloc);
 	rapidjson::Value val_items;
 	val_items.SetArray();
-	for (auto& item : col.items) 
+	for (auto& item : col.items)
 	{
 		rapidjson::Value ival;
 		ival.SetObject();

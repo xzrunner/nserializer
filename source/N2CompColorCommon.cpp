@@ -35,7 +35,7 @@ void N2CompColorCommon::StoreToBin(const std::string& dir, bs::ExportStream& es)
 	es.Write(static_cast<uint32_t>(m_add));            // add
 }
 
-void N2CompColorCommon::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompColorCommon::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
 	m_mul = is.UInt32();
 	m_add = is.UInt32();

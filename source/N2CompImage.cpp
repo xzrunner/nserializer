@@ -1,6 +1,8 @@
 #include "ns/N2CompImage.h"
 #include "ns/CompType.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <node2/CompImage.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
@@ -13,18 +15,20 @@ namespace ns
 
 size_t N2CompImage::GetBinSize(const std::string& dir) const
 {
-	// tood
-	return 0;
+	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	return bs::pack_size(relative);
 }
 
 void N2CompImage::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	es.Write(relative);
 }
 
-void N2CompImage::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompImage::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	auto relative = is.String();
+	m_filepath = boost::filesystem::absolute(relative, dir).string();
 }
 
 void N2CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
@@ -37,8 +41,8 @@ void N2CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 
 void N2CompImage::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
-	auto filepath = val["filepath"].GetString();
-	m_filepath = boost::filesystem::absolute(filepath, dir).string();
+	auto relative = val["filepath"].GetString();
+	m_filepath = boost::filesystem::absolute(relative, dir).string();
 }
 
 void N2CompImage::StoreToMem(n2::CompImage& comp) const

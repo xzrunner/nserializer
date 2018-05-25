@@ -3,6 +3,8 @@
 #include "ns/NodeFactory.h"
 #include "ns/NodeSerializer.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <node0/SceneNode.h>
 #include <node2/CompScale9.h>
 #include <node2/CompBoundingBox.h>
@@ -22,18 +24,49 @@ N2CompScale9::N2CompScale9()
 
 size_t N2CompScale9::GetBinSize(const std::string& dir) const
 {
-	// tood
-	return 0;
+	size_t sz = 0;
+
+	sz += sizeof(uint8_t);		// type
+
+	sz += sizeof(uint8_t);		// grid num
+	for (auto& grid : m_grids) {
+		sz += NodeSerializer::GetBinSize(grid, dir);
+	}
+
+	sz += sizeof(uint16_t);		// width
+	sz += sizeof(uint16_t);		// height
+
+	return sz;
 }
 
 void N2CompScale9::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	// todo
+	es.Write(static_cast<uint8_t>(m_type));
+
+	es.Write(static_cast<uint8_t>(m_grids.size()));
+	for (auto& grid : m_grids) {
+		NodeSerializer::StoreToBin(grid, dir, es);
+	}
+
+	es.Write(static_cast<uint16_t>(m_width));
+	es.Write(static_cast<uint16_t>(m_height));
 }
 
-void N2CompScale9::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void N2CompScale9::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
-	// todo
+	m_type = is.UInt8();
+
+	size_t num = is.UInt16();
+	m_grids.resize(num);
+	for (size_t i = 0; i < num; ++i)
+	{
+		auto node = std::make_shared<n0::SceneNode>();
+		NodeSerializer::LoadFromBin(node, dir, is);
+		m_grids[i] = node;
+	}
+
+	m_width = is.UInt16();
+	m_height = is.UInt16();
 }
 
 void N2CompScale9::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const
@@ -47,7 +80,7 @@ void N2CompScale9::StoreToJson(const std::string& dir, rapidjson::Value& val, ra
 	for (auto& node : m_grids)
 	{
 		rapidjson::Value node_val;
-		NodeSerializer::StoreNodeToJson(node, dir, node_val, alloc);
+		NodeSerializer::StoreToJson(node, dir, node_val, alloc);
 		grids_val.PushBack(node_val, alloc);
 	}
 	val.AddMember("grids", grids_val, alloc);
@@ -64,7 +97,7 @@ void N2CompScale9::LoadFromJson(mm::LinearAllocator& alloc, const std::string& d
 	for (auto itr = grids_val.Begin(); itr != grids_val.End(); ++itr)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
-		NodeSerializer::LoadNodeFromJson(node, dir, *itr);
+		NodeSerializer::LoadFromJson(node, dir, *itr);
 		m_grids.push_back(node);
 	}
 
@@ -106,7 +139,7 @@ void N2CompScale9::StoreToMem(n2::CompScale9& comp) const
 		break;
 	}
 
-	comp.Build(static_cast<n2::CompScale9::Scale9Type>(m_type), 
+	comp.Build(static_cast<n2::CompScale9::Scale9Type>(m_type),
 		m_width, m_height, grids, 0, 0, 0, 0);
 	comp.SetSize(m_width, m_height);
 }
@@ -119,7 +152,7 @@ void N2CompScale9::LoadFromMem(const n2::CompScale9& comp)
 		m_grids.push_back(node);
 		return true;
 	});
-	
+
 	m_width = comp.GetWidth();
 	m_height = comp.GetHeight();
 }
