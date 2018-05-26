@@ -58,6 +58,48 @@ public:
 	void FromBin(n0::SceneNodePtr& node, const std::string& dir, bs::ImportStream& is) const;
 	n0::CompAssetPtr AssetFromBin(const std::string& dir, bs::ImportStream& is) const;
 
+	void AddExtTypeToIndex(const std::string& type, uint32_t index) {
+		m_ext_type_to_index.insert({type, index});
+	}
+
+public:
+	enum CompIndex
+	{
+		COMP_INVALID = 0,
+
+		COMP_N0_COMPLEX,
+		COMP_N2_ANIM,
+		COMP_N2_IMAGE,
+		COMP_N2_MASK,
+		COMP_N2_SCALE9,
+		COMP_N2_TEXT,
+		COMP_N3_MODEL,
+		COMP_N3_MODEL_INST,
+
+		COMP_N0_FLAGS,
+		COMP_N0_ID,
+
+		COMP_N2_COL_COMMON,
+		COMP_N2_COL_MAP,
+
+		COMP_N2_BOUNDING_BOX,
+		COMP_N2_TRANSFORM,
+		COMP_N3_AABB,
+		COMP_N3_TRANSFORM,
+
+		COMP_N2_SHARED_PATCH,
+		COMP_N2_UNIQUE_PATCH,
+
+		COMP_N2_SCISSOR,
+
+		COMP_N2_SCRIPT,
+
+		COMP_MAX,
+	};
+
+private:
+	CompIndex GetTypeIndex(const std::string& type) const;
+
 private:
 	std::map<std::string, UniqueToJsonFunc>  m_unique_to_json;
 	std::map<std::string, SharedToJsonFunc>  m_shared_to_json;
@@ -71,6 +113,8 @@ private:
 	std::array<SharedToBinFunc, MAX_CB_NUM>      m_shared_to_bin;
 	std::array<FromBinFunc, MAX_CB_NUM>          m_from_bin;
 	std::array<AssetFromBinFunc, MAX_CB_NUM>     m_asset_from_bin;
+
+	std::map<std::string, uint32_t> m_ext_type_to_index;
 
 	CU_SINGLETON_DECLARATION(CompSerializer);
 

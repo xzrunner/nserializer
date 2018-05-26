@@ -31,93 +31,6 @@
 
 #include <boost/filesystem.hpp>
 
-namespace
-{
-
-enum CompIndex
-{
-	COMP_INVALID = 0,
-
-	COMP_N0_COMPLEX,
-	COMP_N2_ANIM,
-	COMP_N2_IMAGE,
-	COMP_N2_MASK,
-	COMP_N2_SCALE9,
-	COMP_N2_TEXT,
-	COMP_N3_MODEL,
-	COMP_N3_MODEL_INST,
-
-	COMP_N0_FLAGS,
-	COMP_N0_ID,
-
-	COMP_N2_COL_COMMON,
-	COMP_N2_COL_MAP,
-
-	COMP_N2_BOUNDING_BOX,
-	COMP_N2_TRANSFORM,
-	COMP_N3_AABB,
-	COMP_N3_TRANSFORM,
-
-	COMP_N2_SHARED_PATCH,
-	COMP_N2_UNIQUE_PATCH,
-
-	COMP_N2_SCISSOR,
-
-	COMP_N2_SCRIPT,
-
-	COMP_MAX,
-};
-
-CompIndex get_comp_idx(const std::string& name)
-{
-	if (name == n0::CompComplex::TYPE_NAME) {
-		return COMP_N0_COMPLEX;
-	} else if (name == n2::CompAnim::TYPE_NAME) {
-		return COMP_N2_ANIM;
-	} else if (name == n2::CompImage::TYPE_NAME) {
-		return COMP_N2_IMAGE;
-	} else if (name == n2::CompMask::TYPE_NAME) {
-		return COMP_N2_MASK;
-	} else if (name == n2::CompScale9::TYPE_NAME) {
-		return COMP_N2_SCALE9;
-	} else if (name == n2::CompText::TYPE_NAME) {
-		return COMP_N2_TEXT;
-	} else if (name == n3::CompModel::TYPE_NAME) {
-		return COMP_N3_MODEL;
-	} else if (name == n3::CompModelInst::TYPE_NAME) {
-		return COMP_N3_MODEL_INST;
-	} else if (name == n0::CompFlags::TYPE_NAME) {
-		return COMP_N0_FLAGS;
-	} else if (name == n0::CompIdentity::TYPE_NAME) {
-		return COMP_N0_ID;
-	} else if (name == n2::CompColorCommon::TYPE_NAME) {
-		return COMP_N2_COL_COMMON;
-	} else if (name == n2::CompColorMap::TYPE_NAME) {
-		return COMP_N2_COL_MAP;
-	} else if (name == n2::CompBoundingBox::TYPE_NAME) {
-		return COMP_N2_BOUNDING_BOX;
-	} else if (name == n2::CompTransform::TYPE_NAME) {
-		return COMP_N2_TRANSFORM;
-	} else if (name == n3::CompAABB::TYPE_NAME) {
-		return COMP_N3_AABB;
-	} else if (name == n3::CompTransform::TYPE_NAME) {
-		return COMP_N3_TRANSFORM;
-	} else if (name == n2::CompSharedPatch::TYPE_NAME) {
-		return COMP_N2_SHARED_PATCH;
-	} else if (name == n2::CompUniquePatch::TYPE_NAME) {
-		return COMP_N2_UNIQUE_PATCH;
-	} else if (name == n2::CompScissor::TYPE_NAME) {
-		return COMP_N2_SCISSOR;
-	} else if (name == n2::CompScript::TYPE_NAME) {
-		return COMP_N2_SCRIPT;
-	} else {
-		GD_REPORT_ASSERT("unknown type.");
-		return COMP_INVALID;
-	}
-}
-
-}
-
 namespace ns
 {
 
@@ -234,39 +147,39 @@ n0::CompAssetPtr CompSerializer::AssetFromJson(const std::string& dir, const rap
 
 void CompSerializer::AddGetBinSizeFunc(const std::string& name, const UniqueGetBinSizeFunc& func)
 {
-	m_unique_get_bin_sz[get_comp_idx(name)] = func;
+	m_unique_get_bin_sz[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddGetBinSizeFunc(const std::string& name, const SharedGetBinSizeFunc& func)
 {
-	m_shared_get_bin_sz[get_comp_idx(name)] = func;
+	m_shared_get_bin_sz[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddToBinFunc(const std::string& name, const UniqueToBinFunc& func)
 {
-	m_unique_to_bin[get_comp_idx(name)] = func;
+	m_unique_to_bin[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddToBinFunc(const std::string& name, const SharedToBinFunc& func)
 {
-	m_shared_to_bin[get_comp_idx(name)] = func;
+	m_shared_to_bin[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddFromBinFunc(const std::string& name, const FromBinFunc& func)
 {
-	m_from_bin[get_comp_idx(name)] = func;
+	m_from_bin[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddAssetFromBinFunc(const std::string& name, const AssetFromBinFunc& func)
 {
-	m_asset_from_bin[get_comp_idx(name)] = func;
+	m_asset_from_bin[GetTypeIndex(name)] = func;
 }
 
 size_t CompSerializer::GetBinSize(const n0::NodeUniqueComp& comp, const std::string& dir) const
 {
 	size_t sz = 0;
 	sz += sizeof(uint8_t);		// type
-	uint8_t idx = get_comp_idx(comp.Type());
+	uint8_t idx = GetTypeIndex(comp.Type());
 	sz += m_unique_get_bin_sz[idx](comp, dir);
 	return sz;
 }
@@ -275,21 +188,21 @@ size_t CompSerializer::GetBinSize(const n0::NodeSharedComp& comp, const std::str
 {
 	size_t sz = 0;
 	sz += sizeof(uint8_t);		// type
-	uint8_t idx = get_comp_idx(comp.Type());
+	uint8_t idx = GetTypeIndex(comp.Type());
 	sz += m_shared_get_bin_sz[idx](comp, dir);
 	return sz;
 }
 
 void CompSerializer::ToBin(const n0::NodeUniqueComp& comp, const std::string& dir, bs::ExportStream& es) const
 {
-	uint8_t idx = get_comp_idx(comp.Type());
+	uint8_t idx = GetTypeIndex(comp.Type());
 	es.Write(idx);
 	m_unique_to_bin[idx](comp, dir, es);
 }
 
 void CompSerializer::ToBin(const n0::NodeSharedComp& comp, const std::string& dir, bs::ExportStream& es) const
 {
-	uint8_t idx = get_comp_idx(comp.Type());
+	uint8_t idx = GetTypeIndex(comp.Type());
 	es.Write(idx);
 	m_shared_to_bin[idx](comp, dir, es);
 }
@@ -319,6 +232,59 @@ n0::CompAssetPtr CompSerializer::AssetFromBin(const std::string& dir, bs::Import
 
 	CompIndex comp_idx = static_cast<CompIndex>(is.UInt8());
 	return m_asset_from_bin[comp_idx](dir, is);
+}
+
+CompSerializer::CompIndex CompSerializer::GetTypeIndex(const std::string& type) const
+{
+	if (type == n0::CompComplex::TYPE_NAME) {
+		return COMP_N0_COMPLEX;
+	} else if (type == n2::CompAnim::TYPE_NAME) {
+		return COMP_N2_ANIM;
+	} else if (type == n2::CompImage::TYPE_NAME) {
+		return COMP_N2_IMAGE;
+	} else if (type == n2::CompMask::TYPE_NAME) {
+		return COMP_N2_MASK;
+	} else if (type == n2::CompScale9::TYPE_NAME) {
+		return COMP_N2_SCALE9;
+	} else if (type == n2::CompText::TYPE_NAME) {
+		return COMP_N2_TEXT;
+	} else if (type == n3::CompModel::TYPE_NAME) {
+		return COMP_N3_MODEL;
+	} else if (type == n3::CompModelInst::TYPE_NAME) {
+		return COMP_N3_MODEL_INST;
+	} else if (type == n0::CompFlags::TYPE_NAME) {
+		return COMP_N0_FLAGS;
+	} else if (type == n0::CompIdentity::TYPE_NAME) {
+		return COMP_N0_ID;
+	} else if (type == n2::CompColorCommon::TYPE_NAME) {
+		return COMP_N2_COL_COMMON;
+	} else if (type == n2::CompColorMap::TYPE_NAME) {
+		return COMP_N2_COL_MAP;
+	} else if (type == n2::CompBoundingBox::TYPE_NAME) {
+		return COMP_N2_BOUNDING_BOX;
+	} else if (type == n2::CompTransform::TYPE_NAME) {
+		return COMP_N2_TRANSFORM;
+	} else if (type == n3::CompAABB::TYPE_NAME) {
+		return COMP_N3_AABB;
+	} else if (type == n3::CompTransform::TYPE_NAME) {
+		return COMP_N3_TRANSFORM;
+	} else if (type == n2::CompSharedPatch::TYPE_NAME) {
+		return COMP_N2_SHARED_PATCH;
+	} else if (type == n2::CompUniquePatch::TYPE_NAME) {
+		return COMP_N2_UNIQUE_PATCH;
+	} else if (type == n2::CompScissor::TYPE_NAME) {
+		return COMP_N2_SCISSOR;
+	} else if (type == n2::CompScript::TYPE_NAME) {
+		return COMP_N2_SCRIPT;
+	} else {
+		auto itr = m_ext_type_to_index.find(type);
+		if (itr != m_ext_type_to_index.end()) {
+			return static_cast<CompSerializer::CompIndex>(itr->second);
+		} else {
+			GD_REPORT_ASSERT("unknown type.");
+			return COMP_INVALID;
+		}
+	}
 }
 
 }
