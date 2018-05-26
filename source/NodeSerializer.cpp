@@ -7,7 +7,7 @@
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
 #include <node0/CompIdentity.h>
-#include <node0/NodeSharedComp.h>
+#include <node0/NodeComp.h>
 
 #include <boost/filesystem.hpp>
 
@@ -21,9 +21,9 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 
 	val.SetArray();
 
-	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeSharedComp>& comp)->bool
+	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
-		if (comp->TypeID() == n0::GetSharedCompTypeID<n0::CompAsset>())
+		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
 			rapidjson::Value cval;
 			cval.SetObject();
@@ -58,7 +58,7 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 		return true;
 	});
 
-	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeUniqueComp>& comp)->bool
+	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeComp>& comp)->bool
 	{
 		rapidjson::Value cval;
 		if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc))
@@ -87,13 +87,13 @@ size_t NodeSerializer::GetBinSize(const n0::SceneNodePtr& node, const std::strin
 
 	sz += sizeof(uint8_t);		// comp num
 
-	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeSharedComp>& comp)->bool
+	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
 		sz += CompSerializer::Instance()->GetBinSize(*comp, dir);
 		return true;
 	});
 
-	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeUniqueComp>& comp)->bool
+	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeComp>& comp)->bool
 	{
 		sz += CompSerializer::Instance()->GetBinSize(*comp, dir);
 		return true;
@@ -108,9 +108,9 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 	GD_ASSERT(comp_sz < std::numeric_limits<uint8_t>::max(), "overflow");
 	es.Write(static_cast<uint8_t>(comp_sz));
 
-	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeSharedComp>& comp)->bool
+	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
-		if (comp->TypeID() == n0::GetSharedCompTypeID<n0::CompAsset>())
+		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
 			uint8_t type_idx = CompSerializer::Instance()->GetTypeIndex(comp->Type());
 			es.Write(type_idx);
@@ -131,7 +131,7 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 		return true;
 	});
 
-	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeUniqueComp>& comp)->bool
+	node->TraverseUniqueComp([&](const std::unique_ptr<n0::NodeComp>& comp)->bool
 	{
 		CompSerializer::Instance()->ToBin(*comp, dir, es);
 		return true;
@@ -146,7 +146,7 @@ void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir,
 	}
 }
 
-bool NodeSerializer::StoreAssetCompToJson(const n0::NodeSharedComp& comp, const std::string& filepath)
+bool NodeSerializer::StoreAssetCompToJson(const n0::NodeComp& comp, const std::string& filepath)
 {
 	rapidjson::Document doc;
 

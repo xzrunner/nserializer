@@ -22,7 +22,7 @@ void RegistCallback::AddUniqueCB()
 		seri.StoreToMem(comp);
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir,
+		[](const n0::NodeComp& comp, const std::string& dir,
 		   rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
 	{
 		TCompNS seri;
@@ -32,7 +32,7 @@ void RegistCallback::AddUniqueCB()
 	});
 
 	CompSerializer::Instance()->AddGetBinSizeFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir)->size_t
+		[](const n0::NodeComp& comp, const std::string& dir)->size_t
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -48,7 +48,7 @@ void RegistCallback::AddUniqueCB()
 		seri.StoreToMem(comp);
 	});
 	CompSerializer::Instance()->AddToBinFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir, bs::ExportStream& es)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es)->bool
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -71,7 +71,7 @@ void RegistCallback::AddSharedCB()
 		seri.StoreToMem(comp);
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeSharedComp& comp, const std::string& dir,
+		[](const n0::NodeComp& comp, const std::string& dir,
            rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
 	{
 		TCompNS seri;
@@ -81,7 +81,7 @@ void RegistCallback::AddSharedCB()
 	});
 
 	CompSerializer::Instance()->AddGetBinSizeFunc(TComp::TYPE_NAME,
-		[](const n0::NodeSharedComp& comp, const std::string& dir)->size_t
+		[](const n0::NodeComp& comp, const std::string& dir)->size_t
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -97,7 +97,7 @@ void RegistCallback::AddSharedCB()
 		seri.StoreToMem(comp);
 	});
 	CompSerializer::Instance()->AddToBinFunc(TComp::TYPE_NAME,
-		[](const n0::NodeSharedComp& comp, const std::string& dir, bs::ExportStream& es)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es)->bool
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -114,14 +114,14 @@ void RegistCallback::AddUniqueNullCB()
     {
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir,
+		[](const n0::NodeComp& comp, const std::string& dir,
            rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
 	{
 		return false;
 	});
 
 	CompSerializer::Instance()->AddGetBinSizeFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir)->size_t
+		[](const n0::NodeComp& comp, const std::string& dir)->size_t
 	{
 		return 0;
 	});
@@ -130,7 +130,7 @@ void RegistCallback::AddUniqueNullCB()
     {
 	});
 	CompSerializer::Instance()->AddToBinFunc(TComp::TYPE_NAME,
-		[](const n0::NodeUniqueComp& comp, const std::string& dir, bs::ExportStream& es)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es)->bool
 	{
 		return false;
 	});

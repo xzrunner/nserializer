@@ -4,8 +4,7 @@
 #include <guard/check.h>
 #include <bs/ExportStream.h>
 #include <bs/ImportStream.h>
-#include <node0/NodeUniqueComp.h>
-#include <node0/NodeSharedComp.h>
+#include <node0/NodeComp.h>
 
 #include <node0/CompComplex.h>
 #include <node2/CompAnim.h>
@@ -40,15 +39,9 @@ CompSerializer::CompSerializer()
 {
 }
 
-void CompSerializer::AddToJsonFunc(const std::string& name, const UniqueToJsonFunc& func)
+void CompSerializer::AddToJsonFunc(const std::string& name, const ToJsonFunc& func)
 {
-	auto status = m_unique_to_json.insert(std::make_pair(name, func));
-	GD_ASSERT(status.second, "duplicate.");
-}
-
-void CompSerializer::AddToJsonFunc(const std::string& name, const SharedToJsonFunc& func)
-{
-	auto status = m_shared_to_json.insert(std::make_pair(name, func));
+	auto status = m_to_json.insert(std::make_pair(name, func));
 	GD_ASSERT(status.second, "duplicate.");
 }
 
@@ -64,38 +57,19 @@ void CompSerializer::AddAssetFromJsonFunc(const std::string& name, const AssetFr
 	GD_ASSERT(status.second, "duplicate.");
 }
 
-bool CompSerializer::ToJson(const n0::NodeUniqueComp& comp,
+bool CompSerializer::ToJson(const n0::NodeComp& comp,
 	                        const std::string& dir,
 	                        rapidjson::Value& val,
 	                        rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	auto itr = m_unique_to_json.find(comp.Type());
-	if (itr != m_unique_to_json.end())
+	auto itr = m_to_json.find(comp.Type());
+	if (itr != m_to_json.end())
 	{
+		val.SetObject();
 		bool ret = itr->second(comp, dir, val, alloc);
 		if (ret) {
 			val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
 		}
-		return ret;
-	}
-	else
-	{
-		GD_REPORT_ASSERT("no comp creator");
-		return false;
-	}
-}
-
-bool CompSerializer::ToJson(const n0::NodeSharedComp& comp,
-	                        const std::string& dir,
-	                        rapidjson::Value& val,
-	                        rapidjson::MemoryPoolAllocator<>& alloc) const
-{
-	auto itr = m_shared_to_json.find(comp.Type());
-	if (itr != m_shared_to_json.end())
-	{
-		val.SetObject();
-		bool ret = itr->second(comp, dir, val, alloc);
-		val.AddMember("comp_type", rapidjson::StringRef(comp.Type()), alloc);
 		return ret;
 	}
 	else
@@ -145,24 +119,14 @@ n0::CompAssetPtr CompSerializer::AssetFromJson(const std::string& dir, const rap
 	}
 }
 
-void CompSerializer::AddGetBinSizeFunc(const std::string& name, const UniqueGetBinSizeFunc& func)
+void CompSerializer::AddGetBinSizeFunc(const std::string& name, const GetBinSizeFunc& func)
 {
-	m_unique_get_bin_sz[GetTypeIndex(name)] = func;
+	m_get_bin_sz[GetTypeIndex(name)] = func;
 }
 
-void CompSerializer::AddGetBinSizeFunc(const std::string& name, const SharedGetBinSizeFunc& func)
+void CompSerializer::AddToBinFunc(const std::string& name, const ToBinFunc& func)
 {
-	m_shared_get_bin_sz[GetTypeIndex(name)] = func;
-}
-
-void CompSerializer::AddToBinFunc(const std::string& name, const UniqueToBinFunc& func)
-{
-	m_unique_to_bin[GetTypeIndex(name)] = func;
-}
-
-void CompSerializer::AddToBinFunc(const std::string& name, const SharedToBinFunc& func)
-{
-	m_shared_to_bin[GetTypeIndex(name)] = func;
+	m_to_bin[GetTypeIndex(name)] = func;
 }
 
 void CompSerializer::AddFromBinFunc(const std::string& name, const FromBinFunc& func)
@@ -175,36 +139,20 @@ void CompSerializer::AddAssetFromBinFunc(const std::string& name, const AssetFro
 	m_asset_from_bin[GetTypeIndex(name)] = func;
 }
 
-size_t CompSerializer::GetBinSize(const n0::NodeUniqueComp& comp, const std::string& dir) const
+size_t CompSerializer::GetBinSize(const n0::NodeComp& comp, const std::string& dir) const
 {
 	size_t sz = 0;
 	sz += sizeof(uint8_t);		// type
 	uint8_t idx = GetTypeIndex(comp.Type());
-	sz += m_unique_get_bin_sz[idx](comp, dir);
+	sz += m_get_bin_sz[idx](comp, dir);
 	return sz;
 }
 
-size_t CompSerializer::GetBinSize(const n0::NodeSharedComp& comp, const std::string& dir) const
-{
-	size_t sz = 0;
-	sz += sizeof(uint8_t);		// type
-	uint8_t idx = GetTypeIndex(comp.Type());
-	sz += m_shared_get_bin_sz[idx](comp, dir);
-	return sz;
-}
-
-void CompSerializer::ToBin(const n0::NodeUniqueComp& comp, const std::string& dir, bs::ExportStream& es) const
+void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es) const
 {
 	uint8_t idx = GetTypeIndex(comp.Type());
 	es.Write(idx);
-	m_unique_to_bin[idx](comp, dir, es);
-}
-
-void CompSerializer::ToBin(const n0::NodeSharedComp& comp, const std::string& dir, bs::ExportStream& es) const
-{
-	uint8_t idx = GetTypeIndex(comp.Type());
-	es.Write(idx);
-	m_shared_to_bin[idx](comp, dir, es);
+	m_to_bin[idx](comp, dir, es);
 }
 
 void CompSerializer::FromBin(n0::SceneNodePtr& node, const std::string& dir, bs::ImportStream& is) const

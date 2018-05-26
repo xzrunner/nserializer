@@ -5,7 +5,7 @@
 #include <rapidjson/document.h>
 
 namespace bs { class ExportStream; class ImportStream; }
-namespace n0 { class NodeSharedComp; }
+namespace n0 { class NodeComp; }
 
 namespace ns
 {
@@ -25,7 +25,7 @@ public:
 		bs::ImportStream& is);
 
 private:
-	static bool StoreAssetCompToJson(const n0::NodeSharedComp& comp, const std::string& filepath);
+	static bool StoreAssetCompToJson(const n0::NodeComp& comp, const std::string& filepath);
 
 }; // NodeSerializer
 
