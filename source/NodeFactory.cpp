@@ -3,8 +3,9 @@
 #include "ns/CompSerializer.h"
 #include "ns/Blackboard.h"
 
-#include <sx/ResFileHelper.h>
+#include <bs/ImportStream.h>
 #include <js/RapidJsonHelper.h>
+#include <sx/ResFileHelper.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
 #include <node2/CompBoundingBox.h>
@@ -41,11 +42,12 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
+	case sx::RES_FILE_BIN:
+	case sx::RES_FILE_JSON:
+		node = CreateFromCommon(filepath);
+		break;
 	case sx::RES_FILE_IMAGE:
 		node = CreateFromImage(filepath);
-		break;
-	case sx::RES_FILE_JSON:
-		node = CreateFromJson(filepath);
 		break;
 	case sx::RES_FILE_MODEL:
 		node = CreateFromModel(filepath);
@@ -60,45 +62,76 @@ void NodeFactory::CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string&
 	{
 		// fixme: node already has asset
 		node->AddSharedCompNoCreate<n0::CompAsset>(casset);
+		return;
 	}
-	else
-	{
-		auto type = sx::ResFileHelper::Type(filepath);
-		switch (type)
-		{
-		case sx::RES_FILE_JSON:
-			{
-				rapidjson::Document doc;
-				js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
+	auto type = sx::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case sx::RES_FILE_IMAGE:
+		{
+			auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+			if (!node->HasSharedComp<n2::CompImage>()) {
+				node->AddSharedComp<n2::CompImage>();
+			}
+			auto cimage = node->GetSharedCompPtr<n2::CompImage>();
+			cimage->SetFilepath(filepath);
+			cimage->SetTexture(img->GetTexture());
+
+			bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, cimage);
+			GD_ASSERT(succ, "exists");
+		}
+		break;
+	case sx::RES_FILE_JSON:
+		{
+			rapidjson::Document doc;
+			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+			auto dir = boost::filesystem::path(filepath).parent_path().string();
+			ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+
+			auto casset = node->GetSharedCompPtr<n0::CompAsset>();
+			bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
+			GD_ASSERT(succ, "exists");
+		}
+		break;
+	case sx::RES_FILE_BIN:
+		{
+			std::ifstream file(filepath, std::ios::binary | std::ios::ate);
+			size_t size = static_cast<size_t>(file.tellg());
+			file.seekg(0, std::ios::beg);
+
+			std::vector<char> buffer(size);
+			if (file.read(buffer.data(), size))
+			{
 				auto dir = boost::filesystem::path(filepath).parent_path().string();
-				ns::CompSerializer::Instance()->FromJson(node, dir, doc);
+				ns::CompSerializer::Instance()->FromBin(node, dir, bs::ImportStream(&buffer[0], size));
 
 				auto casset = node->GetSharedCompPtr<n0::CompAsset>();
 				bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, casset);
 				GD_ASSERT(succ, "exists");
 			}
-			break;
-		case sx::RES_FILE_MODEL:
-			{
-				auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
-				if (!node->HasSharedComp<n3::CompModel>()) {
-					node->AddSharedComp<n3::CompModel>();
-				}
-				auto cmodel = node->GetSharedCompPtr<n3::CompModel>();
-				cmodel->SetFilepath(filepath);
-				cmodel->SetModel(model);
-				if (node->HasUniqueComp<n3::CompModelInst>()) {
-					auto& inst = node->GetUniqueComp<n3::CompModelInst>();
-					inst.SetModel(model, 0);
-				} else {
-					node->AddUniqueComp<n3::CompModelInst>(model, 0);
-				}
-				bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, cmodel);
-				GD_ASSERT(succ, "exists");
-			}
-			break;
 		}
+		break;
+	case sx::RES_FILE_MODEL:
+		{
+			auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
+			if (!node->HasSharedComp<n3::CompModel>()) {
+				node->AddSharedComp<n3::CompModel>();
+			}
+			auto cmodel = node->GetSharedCompPtr<n3::CompModel>();
+			cmodel->SetFilepath(filepath);
+			cmodel->SetModel(model);
+			if (node->HasUniqueComp<n3::CompModelInst>()) {
+				auto& inst = node->GetUniqueComp<n3::CompModelInst>();
+				inst.SetModel(model, 0);
+			} else {
+				node->AddUniqueComp<n3::CompModelInst>(model, 0);
+			}
+			bool succ = facade::ResPool::Instance().Insert<n0::CompAsset>(filepath, cmodel);
+			GD_ASSERT(succ, "exists");
+		}
+		break;
 	}
 }
 
@@ -130,6 +163,20 @@ n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
 			casset = ns::CompSerializer::Instance()->AssetFromJson(dir, doc);
 		}
 		break;
+	case sx::RES_FILE_BIN:
+		{
+			std::ifstream file(filepath, std::ios::binary | std::ios::ate);
+			size_t size = static_cast<size_t>(file.tellg());
+			file.seekg(0, std::ios::beg);
+
+			std::vector<char> buffer(size);
+			if (file.read(buffer.data(), size))
+			{
+				auto dir = boost::filesystem::path(filepath).parent_path().string();
+				casset = ns::CompSerializer::Instance()->AssetFromBin(dir, bs::ImportStream(&buffer[0], size));
+			}
+		}
+		break;
 	case sx::RES_FILE_MODEL:
 		{
 			auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
@@ -148,6 +195,28 @@ n0::CompAssetPtr NodeFactory::CreateAssetComp(const std::string& filepath)
 	return casset;
 }
 
+n0::SceneNodePtr NodeFactory::CreateFromCommon(const std::string& filepath)
+{
+	auto node = std::make_shared<n0::SceneNode>();
+
+	// asset
+	CreateNodeAssetComp(node, filepath);
+	auto& casset = node->GetSharedComp<n0::CompAsset>();
+
+	// transform
+	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
+
+	// aabb
+	auto aabb = n2::AABBSystem::GetBounding(casset);
+	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
+
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
+
+	return node;
+}
+
 n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
@@ -164,28 +233,6 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	// aabb
 	sm::rect sz(img->GetWidth(), img->GetHeight());
 	node->AddUniqueComp<n2::CompBoundingBox>(sz);
-
-	// id
-	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
-	InitCompId(cid, filepath);
-
-	return node;
-}
-
-n0::SceneNodePtr NodeFactory::CreateFromJson(const std::string& filepath)
-{
-	auto node = std::make_shared<n0::SceneNode>();
-
-	// asset
-	CreateNodeAssetComp(node, filepath);
-	auto& casset = node->GetSharedComp<n0::CompAsset>();
-
-	// transform
-	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
-
-	// aabb
-	auto aabb = n2::AABBSystem::GetBounding(casset);
-	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();

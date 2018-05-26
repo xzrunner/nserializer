@@ -97,7 +97,6 @@ public:
 		COMP_MAX,
 	};
 
-private:
 	CompIndex GetTypeIndex(const std::string& type) const;
 
 private:

@@ -15,7 +15,7 @@ namespace ns
 {
 
 bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string& dir,
-                                     rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
+                                 rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
 {
 	bool ret = false;
 
@@ -31,18 +31,18 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 			auto& filepath = cid.GetFilepath();
 			if (!filepath.empty())
 			{
+				// store ref
+				std::string relative = boost::filesystem::relative(filepath, dir).string();
+				cval.AddMember("comp_type", rapidjson::StringRef(comp->Type()), alloc);
+				cval.AddMember("comp_path", rapidjson::Value(relative.c_str(), alloc), alloc);
+				val.PushBack(cval, alloc);
+				ret = true;
+
 				auto ext = boost::filesystem::extension(filepath);
 				if (ext == ".json")
 				{
-					// store ref
-					std::string relative = boost::filesystem::relative(cid.GetFilepath(), dir).string();
-					cval.AddMember("comp_type", rapidjson::StringRef(comp->Type()), alloc);
-					cval.AddMember("comp_path", rapidjson::Value(relative.c_str(), alloc), alloc);
-					val.PushBack(cval, alloc);
-					ret = true;
-
 					// store to child file
-					StoreAssetCompToJson(*comp, cid.GetFilepath());
+					StoreAssetCompToJson(*comp, filepath);
 				}
 			}
 		}
@@ -72,9 +72,8 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 	return ret;
 }
 
-bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node,
-	                                  const std::string& dir,
-	                                  const rapidjson::Value& val)
+bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir,
+	                              const rapidjson::Value& val)
 {
 	for (auto itr = val.Begin(); itr != val.End(); ++itr) {
 		CompSerializer::Instance()->FromJson(node, dir, *itr);
@@ -113,19 +112,17 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 	{
 		if (comp->TypeID() == n0::GetSharedCompTypeID<n0::CompAsset>())
 		{
-			rapidjson::Value cval;
-			cval.SetObject();
+			uint8_t type_idx = CompSerializer::Instance()->GetTypeIndex(comp->Type());
+			es.Write(type_idx);
+
+			// store ref
+			std::string relative;
 			auto& cid = node->GetUniqueComp<n0::CompIdentity>();
 			auto& filepath = cid.GetFilepath();
-			if (!filepath.empty())
-			{
-				auto ext = boost::filesystem::extension(filepath);
-				if (ext == ".json")
-				{
-					std::string relative = boost::filesystem::relative(cid.GetFilepath(), dir).string();
-					es.Write(relative);
-				}
+			if (!filepath.empty()) {
+				relative = boost::filesystem::relative(filepath, dir).string();
 			}
+			es.Write(relative);
 		}
 		else
 		{

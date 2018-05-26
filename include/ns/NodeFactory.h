@@ -19,8 +19,8 @@ public:
 	static n0::CompAssetPtr CreateAssetComp(const std::string& filepath);
 
 private:
+	static n0::SceneNodePtr CreateFromCommon(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromImage(const std::string& filepath);
-	static n0::SceneNodePtr CreateFromJson(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromModel(const std::string& filepath);
 
 	static void InitCompId(n0::CompIdentity& cid, const std::string& filepath);
