@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ns/CompIdx.h"
+
 #include <cu/cu_macro.h>
 #include <node0/typedef.h>
 
@@ -39,7 +41,7 @@ public:
 
 	size_t GetBinSize(const n0::NodeComp& comp, const std::string& dir) const;
 	void ToBin(const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es) const;
-	void FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is) const;
+	void FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is, CompIdx idx = COMP_INVALID) const;
 
 public:
 	static const char* COMP_TYPE_NAME;

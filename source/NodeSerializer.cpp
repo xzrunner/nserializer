@@ -152,7 +152,7 @@ void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir,
 
 		CompIdx idx = static_cast<CompIdx>(type);
 		auto& comp = CompFactory::Instance()->Create(node, idx);
-		CompSerializer::Instance()->FromBin(comp, dir, is);
+		CompSerializer::Instance()->FromBin(comp, dir, is, idx);
 
 		if (idx == CompIdx::COMP_N0_ID)
 		{

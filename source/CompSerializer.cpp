@@ -108,9 +108,14 @@ void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs:
 	}
 }
 
-void CompSerializer::FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is) const
+void CompSerializer::FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is, CompIdx idx) const
 {
-	size_t comp_idx = is.UInt8();
+	size_t comp_idx;
+	if (idx != COMP_INVALID) {
+		comp_idx = idx;
+	} else {
+		comp_idx = is.UInt8();
+	}
 	m_from_bin[comp_idx](comp, dir, is);
 }
 
