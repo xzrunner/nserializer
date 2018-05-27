@@ -18,7 +18,8 @@ size_t N0CompIdentity::GetBinSize(const std::string& dir) const
 {
 	size_t sz = 0;
 
-	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	auto filepath_bin = boost::filesystem::path(m_filepath).replace_extension(".bin");
+	std::string relative = boost::filesystem::relative(filepath_bin, dir).string();
 	sz += bs::pack_size(relative);
 
 	sz += bs::pack_size(m_name);
@@ -30,7 +31,8 @@ size_t N0CompIdentity::GetBinSize(const std::string& dir) const
 
 void N0CompIdentity::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
-	std::string relative = boost::filesystem::relative(m_filepath, dir).string();
+	auto filepath_bin = boost::filesystem::path(m_filepath).replace_extension(".bin");
+	std::string relative = boost::filesystem::relative(filepath_bin, dir).string();
 	es.Write(relative);
 
 	es.Write(m_name);
