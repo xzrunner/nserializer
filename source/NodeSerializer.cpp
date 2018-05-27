@@ -105,7 +105,9 @@ size_t NodeSerializer::GetBinSize(const n0::SceneNodePtr& node, const std::strin
 
 	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
-		sz += CompSerializer::Instance()->GetBinSize(*comp, dir);
+		if (comp->TypeID() != n0::GetCompTypeID<n0::CompAsset>()) {
+			sz += CompSerializer::Instance()->GetBinSize(*comp, dir);
+		}
 		return true;
 	});
 
@@ -122,28 +124,9 @@ size_t NodeSerializer::GetBinSize(const n0::SceneNodePtr& node, const std::strin
 
 void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string& dir, bs::ExportStream& es)
 {
-	size_t comp_sz = node->GetSharedCompCount() + node->GetUniqueCompCount();
-	GD_ASSERT(comp_sz < std::numeric_limits<uint8_t>::max(), "overflow");
-	es.Write(static_cast<uint8_t>(comp_sz));
-
 	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
-		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
-		{
-			auto type_idx = CompIdxMgr::Instance()->CompTypeName2Idx(comp->Type());
-			es.Write(static_cast<uint8_t>(type_idx));
-
-			// store ref
-			std::string relative;
-			auto& cid = node->GetUniqueComp<n0::CompIdentity>();
-			auto& filepath = cid.GetFilepath();
-			if (!filepath.empty()) {
-				relative = boost::filesystem::relative(filepath, dir).string();
-			}
-			es.Write(relative);
-		}
-		else
-		{
+		if (comp->TypeID() != n0::GetCompTypeID<n0::CompAsset>()) {
 			CompSerializer::Instance()->ToBin(*comp, dir, es);
 		}
 		return true;
