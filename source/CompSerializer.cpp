@@ -88,18 +88,24 @@ void CompSerializer::AddFromBinFunc(const std::string& name, const FromBinFunc& 
 
 size_t CompSerializer::GetBinSize(const n0::NodeComp& comp, const std::string& dir) const
 {
-	size_t sz = 0;
-	sz += sizeof(uint8_t);		// type
 	size_t idx = CompIdxMgr::Instance()->CompTypeName2Idx(comp.Type());
-	sz += m_get_bin_sz[idx](comp, dir);
-	return sz;
+	size_t comp_sz = m_get_bin_sz[idx](comp, dir);
+	if (comp_sz == 0) {
+		return 0;
+	} else {
+		// comp type idx
+		return sizeof(uint8_t) + comp_sz;
+	}
 }
 
 void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es) const
 {
 	size_t idx = CompIdxMgr::Instance()->CompTypeName2Idx(comp.Type());
-	es.Write(static_cast<uint8_t>(idx));
-	m_to_bin[idx](comp, dir, es);
+	size_t comp_sz = m_get_bin_sz[idx](comp, dir);
+	if (comp_sz != 0) {
+		es.Write(static_cast<uint8_t>(idx));
+		m_to_bin[idx](comp, dir, es);
+	}
 }
 
 void CompSerializer::FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is) const
