@@ -57,7 +57,9 @@ n0::SceneNodePtr NodeFactory::CreateFromCommon(const std::string& filepath)
 
 	// asset
 	auto casset = CompFactory::Instance()->CreateAsset(filepath);
-	// fixme: node already has asset
+	if (node->HasSharedComp<n0::CompAsset>()) {
+		node->RemoveSharedComp<n0::CompAsset>();
+	}
 	node->AddSharedCompNoCreate<n0::CompAsset>(casset);
 
 	// transform

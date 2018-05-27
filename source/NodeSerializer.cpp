@@ -92,6 +92,7 @@ bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
 			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
 			node->AddSharedCompNoCreate(casset);
 		}
 	}
@@ -174,6 +175,7 @@ void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir,
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
 			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
 			node->AddSharedCompNoCreate(casset);
 		}
 	}
