@@ -1,5 +1,7 @@
 #include "ns/NodeSerializer.h"
 #include "ns/CompSerializer.h"
+#include "ns/CompFactory.h"
+#include "ns/CompIdxMgr.h"
 
 #include <js/RapidJsonHelper.h>
 #include <bs/ExportStream.h>
@@ -10,6 +12,13 @@
 #include <node0/NodeComp.h>
 
 #include <boost/filesystem.hpp>
+
+namespace
+{
+
+static const uint8_t COMP_END_FALG = 0xff;
+
+}
 
 namespace ns
 {
@@ -23,6 +32,8 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 
 	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
+		// skip CompAsset, use CompIdentity to create CompAsset
+		// here only store children recursively
 		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
 			rapidjson::Value cval;
@@ -31,13 +42,6 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 			auto& filepath = cid.GetFilepath();
 			if (!filepath.empty())
 			{
-				// store ref
-				std::string relative = boost::filesystem::relative(filepath, dir).string();
-				cval.AddMember("comp_type", rapidjson::StringRef(comp->Type()), alloc);
-				cval.AddMember("comp_path", rapidjson::Value(relative.c_str(), alloc), alloc);
-				val.PushBack(cval, alloc);
-				ret = true;
-
 				auto ext = boost::filesystem::extension(filepath);
 				if (ext == ".json")
 				{
@@ -75,8 +79,21 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir,
 	                              const rapidjson::Value& val)
 {
-	for (auto itr = val.Begin(); itr != val.End(); ++itr) {
-		CompSerializer::Instance()->FromJson(node, dir, *itr);
+	for (auto itr = val.Begin(); itr != val.End(); ++itr)
+	{
+		auto& cval = *itr;
+
+		auto type_name = cval[CompSerializer::COMP_TYPE_NAME].GetString();
+		auto type_idx = CompIdxMgr::Instance()->CompTypeName2Idx(type_name);
+		auto& comp = CompFactory::Instance()->Create(node, type_idx);
+		CompSerializer::Instance()->FromJson(comp, dir, *itr);
+
+		if (type_idx == CompIdx::COMP_N0_ID)
+		{
+			auto& cid = static_cast<n0::CompIdentity&>(comp);
+			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			node->AddSharedCompNoCreate(casset);
+		}
 	}
 	return !val.Empty();
 }
@@ -84,8 +101,6 @@ bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir
 size_t NodeSerializer::GetBinSize(const n0::SceneNodePtr& node, const std::string& dir)
 {
 	size_t sz = 0;
-
-	sz += sizeof(uint8_t);		// comp num
 
 	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
@@ -98,6 +113,8 @@ size_t NodeSerializer::GetBinSize(const n0::SceneNodePtr& node, const std::strin
 		sz += CompSerializer::Instance()->GetBinSize(*comp, dir);
 		return true;
 	});
+
+	sz += sizeof(uint8_t);		// end flag
 
 	return sz;
 }
@@ -112,8 +129,8 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 	{
 		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
-			uint8_t type_idx = CompSerializer::Instance()->GetTypeIndex(comp->Type());
-			es.Write(type_idx);
+			auto type_idx = CompIdxMgr::Instance()->CompTypeName2Idx(comp->Type());
+			es.Write(static_cast<uint8_t>(type_idx));
 
 			// store ref
 			std::string relative;
@@ -136,13 +153,29 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 		CompSerializer::Instance()->ToBin(*comp, dir, es);
 		return true;
 	});
+
+	es.Write(COMP_END_FALG);
 }
 
 void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir, bs::ImportStream& is)
 {
-	uint8_t sz = is.UInt8();
-	for (size_t i = 0; i < sz; ++i) {
-		CompSerializer::Instance()->FromBin(node, dir, is);
+	while (true)
+	{
+		uint8_t type = is.UInt8();
+		if (type == COMP_END_FALG) {
+			break;
+		}
+
+		CompIdx idx = static_cast<CompIdx>(type);
+		auto& comp = CompFactory::Instance()->Create(node, idx);
+		CompSerializer::Instance()->FromBin(comp, dir, is);
+
+		if (idx == CompIdx::COMP_N0_ID)
+		{
+			auto& cid = static_cast<n0::CompIdentity&>(comp);
+			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			node->AddSharedCompNoCreate(casset);
+		}
 	}
 }
 

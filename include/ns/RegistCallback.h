@@ -17,7 +17,7 @@ public:
 	template <typename TComp, typename TCompNS>
 	static void AddUniqueNullCB();
 
-	template <typename TComp, typename TCompNS>
+	template <typename TComp>
 	static void AddAssetCB();
 
 }; // RegistCallback

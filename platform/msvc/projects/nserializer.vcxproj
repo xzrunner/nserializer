@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\Blackboard.h" />
+    <ClInclude Include="..\..\..\include\ns\CompFactory.h" />
+    <ClInclude Include="..\..\..\include\ns\CompIdx.h" />
+    <ClInclude Include="..\..\..\include\ns\CompIdxMgr.h" />
     <ClInclude Include="..\..\..\include\ns\CompNoSerialize.h" />
     <ClInclude Include="..\..\..\include\ns\CompSerializer.h" />
     <ClInclude Include="..\..\..\include\ns\EditOpSerializer.h" />
@@ -43,6 +46,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\include\ns\N0CompIdentity.cpp" />
     <ClCompile Include="..\..\..\source\Blackboard.cpp" />
+    <ClCompile Include="..\..\..\source\CompFactory.cpp" />
+    <ClCompile Include="..\..\..\source\CompIdxMgr.cpp" />
     <ClCompile Include="..\..\..\source\CompSerializer.cpp" />
     <ClCompile Include="..\..\..\source\EditOpSerializer.cpp" />
     <ClCompile Include="..\..\..\source\N2CompAnim.cpp" />

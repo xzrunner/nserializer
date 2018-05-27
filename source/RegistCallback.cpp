@@ -83,19 +83,19 @@ void RegistCallback::Init()
 	AddSharedCB<n2::CompText, N2CompText>();
 	AddSharedCB<n2::CompScale9, N2CompScale9>();
 
-	AddAssetCB<n0::CompComplex, N0CompComplex>();
-	AddAssetCB<n2::CompAnim, N2CompAnim>();
-	AddAssetCB<n2::CompImage, N2CompImage>();
-	AddAssetCB<n2::CompMask, N2CompMask>();
-	AddAssetCB<n2::CompText, N2CompText>();
-	AddAssetCB<n2::CompScale9, N2CompScale9>();
-
 	AddUniqueCB<n3::CompAABB, N3CompAABB>();
 	AddUniqueCB<n3::CompTransform, N3CompTransform>();
 	AddSharedCB<n3::CompModel, N3CompModel>();
 	AddUniqueCB<n3::CompModelInst, N3CompModelInst>();
 
 	AddUniqueCB<n0::CompFlags, N0CompFlags>();
+
+	AddAssetCB<n0::CompComplex>();
+	AddAssetCB<n2::CompAnim>();
+	AddAssetCB<n2::CompImage>();
+	AddAssetCB<n2::CompMask>();
+	AddAssetCB<n2::CompText>();
+	AddAssetCB<n2::CompScale9>();
 }
 
 }

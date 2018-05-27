@@ -15,9 +15,6 @@ public:
 	static n0::SceneNodePtr Create(const std::string& dir, const rapidjson::Value& val);
 	static n0::SceneNodePtr Create(const std::string& filepath);
 
-	static void CreateNodeAssetComp(n0::SceneNodePtr& node, const std::string& filepath);
-	static n0::CompAssetPtr CreateAssetComp(const std::string& filepath);
-
 private:
 	static n0::SceneNodePtr CreateFromCommon(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromImage(const std::string& filepath);

@@ -109,6 +109,12 @@
     <ClCompile Include="..\..\..\source\N0CompFlags.cpp">
       <Filter>components\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\CompFactory.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\CompIdxMgr.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -188,6 +194,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N0CompFlags.h">
       <Filter>components\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompFactory.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompIdx.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\CompIdxMgr.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
