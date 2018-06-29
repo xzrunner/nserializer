@@ -4,6 +4,7 @@
 #include <bs/ExportStream.h>
 #include <bs/ImportStream.h>
 #include <model/Model.h>
+#include <model/SkeletalAnim.h>
 #include <node3/CompModelInst.h>
 #include <facade/ResPool.h>
 
@@ -76,10 +77,14 @@ void N3CompModelInst::LoadFromMem(const n3::CompModelInst& comp)
 
 	m_filepath = facade::ResPool::Instance().QueryFilepath<model::Model>(model);
 
-	int idx = model_inst->curr_anim_index;
-	auto& anims = model->sk_anim.GetAllAnims();
-	if (idx >= 0 && idx < static_cast<int>(anims.size())) {
-		m_anim_name = anims[idx]->name;
+	auto& anim = model->anim;
+	if (anim && anim->Type() == model::ANIM_SKELETAL)
+	{
+		int idx = model_inst->curr_anim_index;
+		auto& anims = static_cast<model::SkeletalAnim*>(model->anim.get())->GetAllAnims();
+		if (idx >= 0 && idx < static_cast<int>(anims.size())) {
+			m_anim_name = anims[idx]->name;
+		}
 	}
 }
 
