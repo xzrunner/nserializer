@@ -77,11 +77,11 @@ void N3CompModelInst::LoadFromMem(const n3::CompModelInst& comp)
 
 	m_filepath = facade::ResPool::Instance().QueryFilepath<model::Model>(model);
 
-	auto& anim = model->anim;
-	if (anim && anim->Type() == model::ANIM_SKELETAL)
+	auto& ext = model->ext;
+	if (ext && ext->Type() == model::EXT_SKELETAL)
 	{
 		int idx = model_inst->curr_anim_index;
-		auto& anims = static_cast<model::SkeletalAnim*>(model->anim.get())->GetAllAnims();
+		auto& anims = static_cast<model::SkeletalAnim*>(model->ext.get())->GetAllAnims();
 		if (idx >= 0 && idx < static_cast<int>(anims.size())) {
 			m_anim_name = anims[idx]->name;
 		}
