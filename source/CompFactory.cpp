@@ -5,6 +5,7 @@
 #include <bs/ImportStream.h>
 #include <js/RapidJsonHelper.h>
 #include <sx/ResFileHelper.h>
+#include <node0/CompComplex.h>
 #include <node2/CompImage.h>
 #include <node3/CompModel.h>
 #include <model/Model.h>
@@ -99,6 +100,11 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath)
 			cmodel->SetFilepath(filepath);
 			cmodel->SetModel(model);
 			casset = cmodel;
+		}
+		break;
+	case sx::RES_FILE_MAP:
+		{
+			casset = std::make_shared<n0::CompComplex>();
 		}
 		break;
 	}
