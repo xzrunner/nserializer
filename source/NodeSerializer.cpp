@@ -43,6 +43,7 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 			if (!filepath.empty())
 			{
 				auto ext = boost::filesystem::extension(filepath);
+				std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
 				if (ext == ".json")
 				{
 					// store to child file
