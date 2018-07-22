@@ -47,6 +47,9 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	case sx::RES_FILE_MODEL:
 		node = CreateFromModel(filepath);
 		break;
+	case sx::RES_FILE_MAP:
+		node = CreateFromModel(filepath);
+		break;
 	}
 	return node;
 }
