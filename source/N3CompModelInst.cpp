@@ -73,14 +73,14 @@ void N3CompModelInst::StoreToMem(n3::CompModelInst& comp) const
 void N3CompModelInst::LoadFromMem(const n3::CompModelInst& comp)
 {
 	auto& model_inst = comp.GetModel();
-	auto& model = model_inst->model;
+	auto& model = model_inst->GetModel();
 
 	m_filepath = facade::ResPool::Instance().QueryFilepath<model::Model>(model);
 
 	auto& ext = model->ext;
 	if (ext && ext->Type() == model::EXT_SKELETAL)
 	{
-		int idx = model_inst->curr_anim_index;
+		int idx = model_inst->GetCurrAnimIndex();
 		auto& anims = static_cast<model::SkeletalAnim*>(model->ext.get())->GetAllAnims();
 		if (idx >= 0 && idx < static_cast<int>(anims.size())) {
 			m_anim_name = anims[idx]->name;
