@@ -11,7 +11,6 @@
 #include <model/Model.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
-#include <facade/Texture.h>
 
 #include <boost/filesystem.hpp>
 
