@@ -68,7 +68,7 @@ n0::SceneNodePtr NodeFactory::CreateFromCommon(const std::string& filepath)
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	auto aabb = n2::AABBSystem::GetBounding(*casset);
+	auto aabb = n2::AABBSystem::Instance()->GetBounding(*node);
 	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
 	// id

@@ -171,7 +171,7 @@ void N2CompAnim::LoadFromMem(const n2::CompAnim& comp)
 
 void N2CompAnim::AddNode(const n0::SceneNodePtr& node, anim::KeyFramePtr& frame)
 {
-	auto aabb = n2::AABBSystem::GetBounding(node->GetSharedComp<n0::CompAsset>());
+	auto aabb = n2::AABBSystem::Instance()->GetBounding(*node);
 	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
 
 	if (node->HasUniqueComp<n2::CompSharedPatch>())
