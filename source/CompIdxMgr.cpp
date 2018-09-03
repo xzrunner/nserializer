@@ -1,4 +1,5 @@
 #include "ns/CompIdxMgr.h"
+#include "ns/CompIdx.h"
 
 #include <node0/CompComplex.h>
 #include <node2/CompAnim.h>
@@ -29,9 +30,10 @@ CU_SINGLETON_DEFINITION(CompIdxMgr);
 
 CompIdxMgr::CompIdxMgr()
 {
+	m_next_idx = COMP_MAX;
 }
 
-CompIdx CompIdxMgr::CompTypeName2Idx(const std::string& name)
+size_t CompIdxMgr::CompTypeName2Idx(const std::string& name)
 {
 	if (name == n0::CompComplex::TYPE_NAME) {
 		return COMP_N0_COMPLEX;
@@ -76,12 +78,20 @@ CompIdx CompIdxMgr::CompTypeName2Idx(const std::string& name)
 	} else {
 		auto itr = m_ext_name2idx.find(name);
 		if (itr != m_ext_name2idx.end()) {
-			return static_cast<CompIdx>(itr->second);
+			return static_cast<size_t>(itr->second);
 		} else {
 			GD_REPORT_ASSERT("unknown type.");
 			return COMP_INVALID;
 		}
 	}
+}
+
+void CompIdxMgr::AddExtTypeToIdx(const std::string& name, size_t idx)
+{
+	if (idx == COMP_INVALID) {
+		idx = m_next_idx++;
+	}
+	m_ext_name2idx.insert({ name, idx });
 }
 
 }

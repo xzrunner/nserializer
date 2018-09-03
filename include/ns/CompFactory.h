@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ns/CompIdx.h"
-
 #include <cu/cu_macro.h>
 #include <node0/typedef.h>
 
@@ -22,8 +20,8 @@ public:
 	void AddCreateFunc(const std::string& name, const CreateFunc& func);
 	void AddCreateAssetFunc(const std::string& name, const CreateAssetFunc& func);
 
-	n0::NodeComp& Create(n0::SceneNodePtr& node, CompIdx comp_idx);
-	n0::CompAssetPtr CreateAsset(CompIdx comp_idx);
+	n0::NodeComp& Create(n0::SceneNodePtr& node, size_t comp_idx);
+	n0::CompAssetPtr CreateAsset(size_t comp_idx);
 
 	n0::CompAssetPtr CreateAsset(const std::string& filepath);
 

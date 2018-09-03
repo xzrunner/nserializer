@@ -35,12 +35,12 @@ void CompFactory::AddCreateAssetFunc(const std::string& name, const CreateAssetF
 	m_create_asset[idx] = func;
 }
 
-n0::NodeComp& CompFactory::Create(n0::SceneNodePtr& node, CompIdx comp_idx)
+n0::NodeComp& CompFactory::Create(n0::SceneNodePtr& node, size_t comp_idx)
 {
 	return m_create[comp_idx](node);
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(CompIdx comp_idx)
+n0::CompAssetPtr CompFactory::CreateAsset(size_t comp_idx)
 {
 	return m_create_asset[comp_idx]();
 }
@@ -85,7 +85,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath)
 			std::vector<char> buffer(size);
 			if (file.read(buffer.data(), size))
 			{
-				casset = CreateAsset(static_cast<CompIdx>(buffer[0]));
+				casset = CreateAsset(buffer[0]);
 
 				auto dir = boost::filesystem::path(filepath).parent_path().string();
 				ns::CompSerializer::Instance()->FromBin(*casset, dir, bs::ImportStream(&buffer[0], size));
