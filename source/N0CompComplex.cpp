@@ -83,9 +83,12 @@ void N0CompComplex::LoadFromMem(const n0::CompComplex& comp)
 
 void N0CompComplex::AddNode(const n0::SceneNodePtr& node)
 {
-	auto& casset = node->GetSharedComp<n0::CompAsset>();
-	auto rect = n2::AABBSystem::GetBounding(casset);
-	node->AddUniqueComp<n2::CompBoundingBox>(rect);
+	if (node->HasSharedComp<n0::CompAsset>())
+	{
+		auto& casset = node->GetSharedComp<n0::CompAsset>();
+		auto rect = n2::AABBSystem::GetBounding(casset);
+		node->AddUniqueComp<n2::CompBoundingBox>(rect);
+	}
 
 	if (node->HasUniqueComp<n2::CompSharedPatch>())
 	{

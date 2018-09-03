@@ -36,8 +36,6 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 		// here only store children recursively
 		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
-			rapidjson::Value cval;
-			cval.SetObject();
 			auto& cid = node->GetUniqueComp<n0::CompIdentity>();
 			auto& filepath = cid.GetFilepath();
 			if (!filepath.empty())
@@ -93,8 +91,10 @@ bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
 			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
-			GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
-			node->AddSharedCompNoCreate(casset);
+			if (casset) {
+				GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
+				node->AddSharedCompNoCreate(casset);
+			}
 		}
 	}
 	return !val.Empty();
