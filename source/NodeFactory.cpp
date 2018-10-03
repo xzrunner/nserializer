@@ -10,6 +10,7 @@
 #include <node2/CompTransform.h>
 #include <node2/CompImage.h>
 #include <node2/AABBSystem.h>
+#include <node2/CompScript.h>
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
 #include <node3/CompTransform.h>
@@ -48,6 +49,9 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 		break;
 	case sx::RES_FILE_MAP:
 		node = CreateFromModel(filepath);
+		break;
+	case sx::RES_FILE_SCRIPT:
+		node = CreateFromScript(filepath);
 		break;
 	}
 	return node;
@@ -122,6 +126,32 @@ n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
 	InitCompId(cid, filepath);
+
+	return node;
+}
+
+n0::SceneNodePtr NodeFactory::CreateFromScript(const std::string& filepath)
+{
+	auto node = std::make_shared<n0::SceneNode>();
+
+	// script
+	auto& cscript = node->AddUniqueComp<n2::CompScript>();
+	cscript.SetFilepath(filepath);
+	cscript.Reload(node);
+
+	// transform
+	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
+
+	// aabb
+	auto aabb = n2::AABBSystem::Instance()->GetBounding(*node);
+	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
+
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
+
+	//
+	cscript.Init();
 
 	return node;
 }
