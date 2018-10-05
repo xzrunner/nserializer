@@ -151,7 +151,7 @@ n0::SceneNodePtr NodeFactory::CreateFromScript(const std::string& filepath)
 	InitCompId(cid, filepath);
 
 	//
-	cscript.Init();
+	cscript.GetImpl().Init();
 
 	return node;
 }
