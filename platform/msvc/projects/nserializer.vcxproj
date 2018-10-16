@@ -28,6 +28,7 @@
     <ClInclude Include="..\..\..\include\ns\N0CompFlags.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScissor.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScript.h" />
+    <ClInclude Include="..\..\..\include\ns\N2CompShape.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompSharedPatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompUniquePatch.h" />
     <ClInclude Include="..\..\..\include\ns\N2CompScale9.h" />
@@ -59,6 +60,7 @@
     <ClCompile Include="..\..\..\source\N0CompFlags.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScissor.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScript.cpp" />
+    <ClCompile Include="..\..\..\source\N2CompShape.cpp" />
     <ClCompile Include="..\..\..\source\N2CompSharedPatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompUniquePatch.cpp" />
     <ClCompile Include="..\..\..\source\N2CompScale9.cpp" />
@@ -118,7 +120,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\model\include;..\..\..\..\unirender\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\model\include;..\..\..\..\unirender\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -133,7 +135,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\model\include;..\..\..\..\unirender\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\sm\src\sm;..\..\..\..\guard\include;..\..\..\..\memmgr\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\model\include;..\..\..\..\unirender\include;..\..\..\..\primitive\include;..\..\..\..\geoshape\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external\boost\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

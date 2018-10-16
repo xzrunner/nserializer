@@ -4,12 +4,12 @@
 
 #include <node0/typedef.h>
 
-namespace n2 { class CompScript; }
+namespace n2 { class CompShape; }
 
 namespace ns
 {
 
-class N2CompScript : public NodeComponent
+class N2CompShape : public NodeComponent
 {
 public:
 	//
@@ -28,12 +28,12 @@ public:
 	//
 	// memory
 	//
-	void StoreToMem(n2::CompScript& comp) const;
-	void LoadFromMem(const n2::CompScript& comp);
+	void StoreToMem(n2::CompShape& comp) const;
+	void LoadFromMem(const n2::CompShape& comp);
 
 private:
-	std::string m_filepath;
+	std::string m_type;
 
-}; // N2CompScript
+}; // N2CompShape
 
 }
