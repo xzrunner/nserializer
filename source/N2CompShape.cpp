@@ -5,7 +5,7 @@
 #include <geoshape/Shape.h>
 
 #include <boost/filesystem.hpp>
-#include <rttr/type.h>
+#include <rttr/type>
 
 namespace ns
 {
