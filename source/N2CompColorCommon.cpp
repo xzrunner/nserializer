@@ -20,7 +20,7 @@ size_t N2CompColorCommon::GetBinSize(const std::string& dir) const
 	size_t sz = 0;
 
 	sz += sizeof(uint8_t);  // type
-	
+
 	sz += sizeof(uint32_t);	// mul
 	sz += sizeof(uint32_t);	// add
 

@@ -21,7 +21,7 @@ size_t N2CompColorMap::GetBinSize(const std::string& dir) const
 	size_t sz = 0;
 
 	sz += sizeof(uint8_t);  // type
-	
+
 	sz += sizeof(uint32_t);	// rmap
 	sz += sizeof(uint32_t);	// gmap
 	sz += sizeof(uint32_t);	// bmap

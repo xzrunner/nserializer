@@ -60,8 +60,8 @@ const char* EditOpSerializer::GetTypeName(const n2::EditOp& op)
 /* SetTransformMat                                                      */
 /************************************************************************/
 
-void EditOpSerializer::ToJsonSetTransformMatOp(const n2::SetTransformMatOp& op, 
-	                                           rapidjson::Value& val, 
+void EditOpSerializer::ToJsonSetTransformMatOp(const n2::SetTransformMatOp& op,
+	                                           rapidjson::Value& val,
 	                                           rapidjson::MemoryPoolAllocator<>& alloc)
 {
 	rapidjson::Value mat_val;
@@ -73,7 +73,7 @@ void EditOpSerializer::ToJsonSetTransformMatOp(const n2::SetTransformMatOp& op,
 	val.AddMember("mat", mat_val, alloc);
 }
 
-std::unique_ptr<n2::EditOp> 
+std::unique_ptr<n2::EditOp>
 EditOpSerializer::FromJsonSetTransformMatOp(const rapidjson::Value& val)
 {
 	sm::Matrix2D mat;
@@ -90,7 +90,7 @@ EditOpSerializer::FromJsonSetTransformMatOp(const rapidjson::Value& val)
 /* SetPosition                                                          */
 /************************************************************************/
 
-void EditOpSerializer::ToJsonSetPositionOp(const n2::SetPositionOp& op, 
+void EditOpSerializer::ToJsonSetPositionOp(const n2::SetPositionOp& op,
 	                                       rapidjson::Value& val,
 	                                       rapidjson::MemoryPoolAllocator<>& alloc)
 {
@@ -116,7 +116,7 @@ EditOpSerializer::FromJsonSetPositionOp(const rapidjson::Value& val)
 /* SetAngle                                                             */
 /************************************************************************/
 
-void EditOpSerializer::ToJsonSetAngleOp(const n2::SetAngleOp& op, 
+void EditOpSerializer::ToJsonSetAngleOp(const n2::SetAngleOp& op,
 	                                    rapidjson::Value& val,
 	                                    rapidjson::MemoryPoolAllocator<>& alloc)
 {
@@ -134,7 +134,7 @@ EditOpSerializer::FromJsonSetAngleOp(const rapidjson::Value& val)
 /* SetScale                                                          */
 /************************************************************************/
 
-void EditOpSerializer::ToJsonSetScaleOp(const n2::SetScaleOp& op, 
+void EditOpSerializer::ToJsonSetScaleOp(const n2::SetScaleOp& op,
 	                                    rapidjson::Value& val,
 	                                    rapidjson::MemoryPoolAllocator<>& alloc)
 {
@@ -160,7 +160,7 @@ EditOpSerializer::FromJsonSetScaleOp(const rapidjson::Value& val)
 /* SetShear                                                          */
 /************************************************************************/
 
-void EditOpSerializer::ToJsonSetShearOp(const n2::SetShearOp& op, 
+void EditOpSerializer::ToJsonSetShearOp(const n2::SetShearOp& op,
 	                                    rapidjson::Value& val,
 	                                    rapidjson::MemoryPoolAllocator<>& alloc)
 {

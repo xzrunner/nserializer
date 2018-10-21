@@ -33,7 +33,7 @@ void N2CompUniquePatch::StoreToJson(const std::string& dir, rapidjson::Value& va
 		rapidjson::Value list_val;
 		list_val.SetObject();
 		list_val.AddMember("node_id", list.GetNodeID(), alloc);
-		
+
 		rapidjson::Value ops_val;
 		ops_val.SetArray();
 		auto& all_edit_op = list.GetAllEditOp();
