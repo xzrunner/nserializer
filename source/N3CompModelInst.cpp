@@ -81,7 +81,7 @@ void N3CompModelInst::LoadFromMem(const n3::CompModelInst& comp)
 	if (ext && ext->Type() == model::EXT_SKELETAL)
 	{
 		int idx = model_inst->GetCurrAnimIndex();
-		auto& anims = static_cast<model::SkeletalAnim*>(model->ext.get())->GetAllAnims();
+		auto& anims = static_cast<model::SkeletalAnim*>(model->ext.get())->GetAnims();
 		if (idx >= 0 && idx < static_cast<int>(anims.size())) {
 			m_anim_name = anims[idx]->name;
 		}
