@@ -14,6 +14,7 @@ class NodeFactory
 public:
 	static n0::SceneNodePtr Create(const std::string& dir, const rapidjson::Value& val);
 	static n0::SceneNodePtr Create(const std::string& filepath);
+	static n0::SceneNodePtr Create();
 
 private:
 	static n0::SceneNodePtr CreateFromCommon(const std::string& filepath);
