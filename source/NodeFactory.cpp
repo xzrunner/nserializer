@@ -143,7 +143,14 @@ n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
 	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
 
 	// aabb
-	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(sm::cube(1, 1, 1)));
+	auto& tex = cimage.GetTexture();
+	float w = tex->Width();
+	float h = tex->Height();
+	float d = tex->Depth();
+	h /= w;
+	d /= w;
+	w = 1.0f;
+	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(sm::cube(w, h, d)));
 
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
