@@ -8,9 +8,11 @@
 #include <node0/CompComplex.h>
 #include <node2/CompImage.h>
 #include <node3/CompModel.h>
+#include <node3/CompImage3D.h>
 #include <model/Model.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
+#include <facade/Image3D.h>
 
 #include <boost/filesystem.hpp>
 
@@ -56,55 +58,62 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath)
 	switch (type)
 	{
 	case sx::RES_FILE_IMAGE:
-		{
-			auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
-			auto cimage = std::make_shared<n2::CompImage>();
-			cimage->SetFilepath(filepath);
-			cimage->SetTexture(img->GetTexture());
-			casset = cimage;
-		}
+	{
+		auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+		auto cimage = std::make_shared<n2::CompImage>();
+		cimage->SetFilepath(filepath);
+		cimage->SetTexture(img->GetTexture());
+		casset = cimage;
+	}
+		break;
+	case sx::RES_FILE_IMAGE3D:
+	{
+		auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath);
+		auto cimage = std::make_shared<n3::CompImage3D>();
+		cimage->SetFilepath(filepath);
+		cimage->SetTexture(img->GetTexture());
+		casset = cimage;
+	}
 		break;
 	case sx::RES_FILE_JSON:
-		{
-			rapidjson::Document doc;
-			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+	{
+		rapidjson::Document doc;
+		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-			auto type = doc[CompSerializer::Instance()->COMP_TYPE_NAME].GetString();
-			casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
+		auto type = doc[CompSerializer::Instance()->COMP_TYPE_NAME].GetString();
+		casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
 
-			auto dir = boost::filesystem::path(filepath).parent_path().string();
-			ns::CompSerializer::Instance()->FromJson(*casset, dir, doc);
-		}
+		auto dir = boost::filesystem::path(filepath).parent_path().string();
+		ns::CompSerializer::Instance()->FromJson(*casset, dir, doc);
+	}
 		break;
 	case sx::RES_FILE_BIN:
+	{
+		std::ifstream file(filepath, std::ios::binary | std::ios::ate);
+		size_t size = static_cast<size_t>(file.tellg());
+		file.seekg(0, std::ios::beg);
+
+		std::vector<char> buffer(size);
+		if (file.read(buffer.data(), size))
 		{
-			std::ifstream file(filepath, std::ios::binary | std::ios::ate);
-			size_t size = static_cast<size_t>(file.tellg());
-			file.seekg(0, std::ios::beg);
+			casset = CreateAsset(buffer[0]);
 
-			std::vector<char> buffer(size);
-			if (file.read(buffer.data(), size))
-			{
-				casset = CreateAsset(buffer[0]);
-
-				auto dir = boost::filesystem::path(filepath).parent_path().string();
-				ns::CompSerializer::Instance()->FromBin(*casset, dir, bs::ImportStream(&buffer[0], size));
-			}
+			auto dir = boost::filesystem::path(filepath).parent_path().string();
+			ns::CompSerializer::Instance()->FromBin(*casset, dir, bs::ImportStream(&buffer[0], size));
 		}
+	}
 		break;
 	case sx::RES_FILE_MODEL:
-		{
-			auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
-			auto cmodel = std::make_shared<n3::CompModel>();
-			cmodel->SetFilepath(filepath);
-			cmodel->SetModel(model);
-			casset = cmodel;
-		}
+	{
+		auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
+		auto cmodel = std::make_shared<n3::CompModel>();
+		cmodel->SetFilepath(filepath);
+		cmodel->SetModel(model);
+		casset = cmodel;
+	}
 		break;
 	case sx::RES_FILE_MAP:
-		{
-			casset = std::make_shared<n0::CompComplex>();
-		}
+		casset = std::make_shared<n0::CompComplex>();
 		break;
 	}
 

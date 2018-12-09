@@ -19,6 +19,7 @@ public:
 private:
 	static n0::SceneNodePtr CreateFromCommon(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromImage(const std::string& filepath);
+	static n0::SceneNodePtr CreateFromImage3D(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromModel(const std::string& filepath);
 	static n0::SceneNodePtr CreateFromScript(const std::string& filepath);
 

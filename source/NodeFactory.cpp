@@ -15,9 +15,11 @@
 #include <node3/CompModelInst.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
+#include <node3/CompImage3D.h>
 #include <model/Model.h>
 #include <facade/ResPool.h>
 #include <facade/Image.h>
+#include <facade/Image3D.h>
 
 #include <string>
 
@@ -43,6 +45,9 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 		break;
 	case sx::RES_FILE_IMAGE:
 		node = CreateFromImage(filepath);
+		break;
+	case sx::RES_FILE_IMAGE3D:
+		node = CreateFromImage3D(filepath);
 		break;
 	case sx::RES_FILE_MODEL:
 		node = CreateFromModel(filepath);
@@ -116,6 +121,29 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	// aabb
 	sm::rect sz(img->GetWidth(), img->GetHeight());
 	node->AddUniqueComp<n2::CompBoundingBox>(sz);
+
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, filepath);
+
+	return node;
+}
+
+n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
+{
+	auto node = std::make_shared<n0::SceneNode>();
+
+	// image
+	auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath);
+	auto& cimage = node->AddSharedComp<n3::CompImage3D>();
+	cimage.SetFilepath(filepath);
+	cimage.SetTexture(img->GetTexture());
+
+	// transform
+	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
+
+	// aabb
+	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(sm::cube(1, 1, 1)));
 
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
