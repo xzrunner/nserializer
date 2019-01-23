@@ -144,9 +144,9 @@ n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
 
 	// aabb
 	auto& tex = cimage.GetTexture();
-	float w = tex->Width();
-	float h = tex->Height();
-	float d = tex->Depth();
+	float w = static_cast<float>(tex->Width());
+	float h = static_cast<float>(tex->Height());
+	float d = static_cast<float>(tex->Depth());
 	h /= w;
 	d /= w;
 	w = 1.0f;
