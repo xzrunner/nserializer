@@ -47,12 +47,15 @@ n0::CompAssetPtr CompFactory::CreateAsset(size_t comp_idx)
 	return m_create_asset[comp_idx]();
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath)
+n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool force_reload)
 {
-	auto casset = facade::ResPool::Instance().Query<n0::CompAsset>(filepath);
-	if (casset) {
-		return casset;
-	}
+    n0::CompAssetPtr casset = nullptr;
+    if (!force_reload) {
+        casset = facade::ResPool::Instance().Query<n0::CompAsset>(filepath);
+        if (casset) {
+            return casset;
+        }
+    }
 
 	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)

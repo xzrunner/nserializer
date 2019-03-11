@@ -23,7 +23,7 @@ public:
 	n0::NodeComp& Create(n0::SceneNodePtr& node, size_t comp_idx);
 	n0::CompAssetPtr CreateAsset(size_t comp_idx);
 
-	n0::CompAssetPtr CreateAsset(const std::string& filepath);
+	n0::CompAssetPtr CreateAsset(const std::string& filepath, bool force_reload = false);
 
 private:
 	static const int MAX_COMP_NUM = 64;
