@@ -115,6 +115,10 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 		casset = cmodel;
 	}
 		break;
+    case sx::RES_FILE_SHADER:
+        break;
+    case sx::RES_FILE_ASSET:
+        break;
 	case sx::RES_FILE_MAP:
 		casset = std::make_shared<n0::CompComplex>();
 		break;
