@@ -3,6 +3,8 @@
 #include <cu/cu_macro.h>
 #include <node0/typedef.h>
 
+#include <rapidjson/document.h>
+
 #include <functional>
 #include <array>
 
@@ -24,6 +26,7 @@ public:
 	n0::CompAssetPtr CreateAsset(size_t comp_idx);
 
 	n0::CompAssetPtr CreateAsset(const std::string& filepath, bool force_reload = false);
+    n0::CompAssetPtr CreateAsset(const rapidjson::Value& val, const std::string& dir);
 
 private:
 	static const int MAX_COMP_NUM = 64;

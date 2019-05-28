@@ -131,4 +131,15 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 	return casset;
 }
 
+n0::CompAssetPtr CompFactory::CreateAsset(const rapidjson::Value& val,
+                                          const std::string& dir)
+{
+	auto type = val[CompSerializer::Instance()->COMP_TYPE_NAME].GetString();
+    n0::CompAssetPtr casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
+
+	ns::CompSerializer::Instance()->FromJson(*casset, dir, val);
+
+	return casset;
+}
+
 }
