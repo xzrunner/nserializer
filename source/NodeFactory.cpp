@@ -62,7 +62,7 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::Create()
+n0::SceneNodePtr NodeFactory::Create2D()
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
@@ -72,6 +72,23 @@ n0::SceneNodePtr NodeFactory::Create()
 	// aabb
 	auto aabb = n2::AABBSystem::Instance()->GetBounding(*node);
 	node->AddUniqueComp<n2::CompBoundingBox>(aabb);
+
+	// id
+	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
+	InitCompId(cid, "");
+
+	return node;
+}
+
+n0::SceneNodePtr NodeFactory::Create3D()
+{
+	auto node = std::make_shared<n0::SceneNode>();
+
+	// transform
+	node->AddUniqueComp<n3::CompTransform>();
+
+	// aabb
+	node->AddUniqueComp<n3::CompAABB>();
 
 	// id
 	auto& cid = node->AddUniqueComp<n0::CompIdentity>();
