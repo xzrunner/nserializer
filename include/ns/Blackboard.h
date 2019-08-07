@@ -14,10 +14,10 @@ public:
 		m_gen_node_id_func = func;
 	}
 
-	uint32_t GenNodeId() const { return m_gen_node_id_func(); }
+    uint32_t GenNodeId() const;
 
 private:
-	std::function<uint32_t()> m_gen_node_id_func;
+	std::function<uint32_t()> m_gen_node_id_func = nullptr;
 
 	CU_SINGLETON_DECLARATION(Blackboard);
 
