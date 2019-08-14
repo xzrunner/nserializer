@@ -2,7 +2,7 @@
 #include "ns/CompType.h"
 
 #include <node2/CompShape.h>
-#include <geoshape/Shape.h>
+#include <geoshape/Shape2D.h>
 
 #include <boost/filesystem.hpp>
 #include <rttr/type>
@@ -42,7 +42,7 @@ void N2CompShape::StoreToMem(n2::CompShape& comp) const
 {
 	auto type = rttr::type::get_by_name(m_type).create();
 	if (type.is_valid()) {
-		auto shape = type.get_value<std::shared_ptr<gs::Shape>>();
+		auto shape = type.get_value<std::shared_ptr<gs::Shape2D>>();
 		comp.SetShape(shape);
 	}
 }
