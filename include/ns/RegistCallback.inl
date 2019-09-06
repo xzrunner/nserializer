@@ -28,8 +28,8 @@ void RegistCallback::AddUniqueCB()
 		seri.StoreToMem(static_cast<TComp&>(comp));
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeComp& comp, const std::string& dir,
-		   rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val, 
+           rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset)->bool
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -80,8 +80,8 @@ void RegistCallback::AddSharedCB()
 		seri.StoreToMem(static_cast<TComp&>(comp));
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeComp& comp, const std::string& dir,
-           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val, 
+           rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset)->bool
 	{
 		TCompNS seri;
 		seri.LoadFromMem(static_cast<const TComp&>(comp));
@@ -128,8 +128,8 @@ void RegistCallback::AddUniqueNullCB()
     {
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
-		[](const n0::NodeComp& comp, const std::string& dir,
-           rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)->bool
+		[](const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val, 
+           rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset)->bool
 	{
 		return false;
 	});

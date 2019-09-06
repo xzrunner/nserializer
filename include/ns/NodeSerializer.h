@@ -14,7 +14,7 @@ class NodeSerializer
 {
 public:
 	static bool StoreToJson(const n0::SceneNodePtr& node, const std::string& dir,
-		rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc);
+		rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset = true);
 	static bool LoadFromJson(n0::SceneNodePtr& node, const std::string& dir,
 		const rapidjson::Value& val);
 

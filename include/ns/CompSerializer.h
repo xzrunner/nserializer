@@ -21,14 +21,14 @@ class CompSerializer
 {
 public:
 	using ToJsonFunc = std::function<bool(const n0::NodeComp&, const std::string&,
-		rapidjson::Value&, rapidjson::MemoryPoolAllocator<>&)>;
+		rapidjson::Value&, rapidjson::MemoryPoolAllocator<>&, bool)>;
 	using FromJsonFunc = std::function<void(n0::NodeComp&, const std::string&, const rapidjson::Value&)>;
 
 	void AddToJsonFunc(const std::string& name, const ToJsonFunc& func, bool replace = false);
 	void AddFromJsonFunc(const std::string& name, const FromJsonFunc& func, bool replace = false);
 
 	bool ToJson(const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const;
+		rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset = true) const;
 	void FromJson(n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val) const;
 
 	using GetBinSizeFunc = std::function<size_t(const n0::NodeComp&, const std::string&)>;

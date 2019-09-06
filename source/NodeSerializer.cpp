@@ -23,8 +23,8 @@ static const uint8_t COMP_END_FALG = 0xff;
 namespace ns
 {
 
-bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string& dir,
-                                 rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc)
+bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string& dir, rapidjson::Value& val, 
+                                 rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset)
 {
 	bool ret = false;
 
@@ -34,7 +34,7 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 	{
 		// skip CompAsset, use CompIdentity to create CompAsset
 		// here only store children recursively
-		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
+		if (!skip_asset && comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
 		{
 			auto& cid = node->GetUniqueComp<n0::CompIdentity>();
 			auto& filepath = cid.GetFilepath();
@@ -52,8 +52,8 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 		else
 		{
 			rapidjson::Value cval;
-			if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc))
-			{
+			if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc)) 
+            {
 				val.PushBack(cval, alloc);
 				ret = true;
 			}

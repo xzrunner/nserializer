@@ -39,13 +39,14 @@ void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc
 bool CompSerializer::ToJson(const n0::NodeComp& comp,
 	                        const std::string& dir,
 	                        rapidjson::Value& val,
-	                        rapidjson::MemoryPoolAllocator<>& alloc) const
+	                        rapidjson::MemoryPoolAllocator<>& alloc,
+                            bool skip_asset) const
 {
 	auto itr = m_to_json.find(comp.Type());
 	if (itr != m_to_json.end())
 	{
 		val.SetObject();
-		bool ret = itr->second(comp, dir, val, alloc);
+		bool ret = itr->second(comp, dir, val, alloc, skip_asset);
 		if (ret) {
 			val.AddMember(rapidjson::StringRef(COMP_TYPE_NAME),
 				rapidjson::StringRef(comp.Type()), alloc);
