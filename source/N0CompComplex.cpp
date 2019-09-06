@@ -84,6 +84,7 @@ void N0CompComplex::LoadFromMem(const n0::CompComplex& comp)
 void N0CompComplex::AddNode(const n0::SceneNodePtr& node)
 {
 	auto rect = n2::AABBSystem::Instance()->GetBounding(*node);
+    assert(rect.IsValid());
 	node->AddUniqueComp<n2::CompBoundingBox>(rect);
 
 	if (node->HasUniqueComp<n2::CompSharedPatch>())
