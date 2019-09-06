@@ -24,8 +24,8 @@ public:
 		rapidjson::Value&, rapidjson::MemoryPoolAllocator<>&)>;
 	using FromJsonFunc = std::function<void(n0::NodeComp&, const std::string&, const rapidjson::Value&)>;
 
-	void AddToJsonFunc(const std::string& name, const ToJsonFunc& func);
-	void AddFromJsonFunc(const std::string& name, const FromJsonFunc& func);
+	void AddToJsonFunc(const std::string& name, const ToJsonFunc& func, bool replace = false);
+	void AddFromJsonFunc(const std::string& name, const FromJsonFunc& func, bool replace = false);
 
 	bool ToJson(const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;

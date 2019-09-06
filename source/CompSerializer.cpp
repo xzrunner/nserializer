@@ -20,16 +20,20 @@ CompSerializer::CompSerializer()
 {
 }
 
-void CompSerializer::AddToJsonFunc(const std::string& name, const ToJsonFunc& func)
+void CompSerializer::AddToJsonFunc(const std::string& name, const ToJsonFunc& func, bool replace)
 {
-	auto status = m_to_json.insert(std::make_pair(name, func));
-	GD_ASSERT(status.second, "duplicate.");
+    if (!replace && m_to_json.find(name) != m_to_json.end()) {
+        return;
+    }
+	m_to_json.insert(std::make_pair(name, func));
 }
 
-void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc& func)
+void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc& func, bool replace)
 {
-	auto status = m_from_json.insert(std::make_pair(name, func));
-	GD_ASSERT(status.second, "duplicate.");
+    if (!replace && m_from_json.find(name) != m_from_json.end()) {
+        return;
+    }
+	m_from_json.insert(std::make_pair(name, func));
 }
 
 bool CompSerializer::ToJson(const n0::NodeComp& comp,
