@@ -42,6 +42,10 @@ bool CompSerializer::ToJson(const n0::NodeComp& comp,
 	                        rapidjson::MemoryPoolAllocator<>& alloc,
                             bool skip_asset) const
 {
+    if (!comp.IsSerializeEnable()) {
+        return false;
+    }
+
 	auto itr = m_to_json.find(comp.Type());
 	if (itr != m_to_json.end())
 	{
@@ -105,6 +109,10 @@ size_t CompSerializer::GetBinSize(const n0::NodeComp& comp, const std::string& d
 
 void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es) const
 {
+    if (!comp.IsSerializeEnable()) {
+        return;
+    }
+
 	size_t idx = CompIdxMgr::Instance()->CompTypeName2Idx(comp.Type());
 	size_t comp_sz = m_get_bin_sz[idx](comp, dir);
 	if (comp_sz != 0) {
