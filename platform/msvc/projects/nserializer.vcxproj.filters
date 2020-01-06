@@ -118,6 +118,9 @@
     <ClCompile Include="..\..\..\source\N2CompShape.cpp">
       <Filter>components\asset</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\N3CompShape.cpp">
+      <Filter>components\asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
@@ -208,6 +211,9 @@
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ns\N2CompShape.h">
+      <Filter>components\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ns\N3CompShape.h">
       <Filter>components\asset</Filter>
     </ClInclude>
   </ItemGroup>

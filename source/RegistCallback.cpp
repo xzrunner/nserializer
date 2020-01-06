@@ -41,6 +41,8 @@
 #include <node2/CompText.h>
 #include "ns/N2CompScale9.h"
 #include <node2/CompScale9.h>
+#include "ns/N2CompShape.h"
+#include <node2/CompShape.h>
 
 #include "ns/N3CompAABB.h"
 #include <node3/CompAABB.h>
@@ -50,6 +52,8 @@
 #include <node3/CompModel.h>
 #include "ns/N3CompModelInst.h"
 #include <node3/CompModelInst.h>
+#include "ns/N3CompShape.h"
+#include <node3/CompShape.h>
 
 #include "ns/N0CompFlags.h"
 #include <node0/CompFlags.h>
@@ -82,11 +86,13 @@ void RegistCallback::Init()
 	AddSharedCB<n2::CompMask, N2CompMask>();
 	AddSharedCB<n2::CompText, N2CompText>();
 	AddSharedCB<n2::CompScale9, N2CompScale9>();
+    //AddSharedCB<n2::CompShape, N2CompShape>();
 
 	AddUniqueCB<n3::CompAABB, N3CompAABB>();
 	AddUniqueCB<n3::CompTransform, N3CompTransform>();
 	AddSharedCB<n3::CompModel, N3CompModel>();
 	AddUniqueCB<n3::CompModelInst, N3CompModelInst>();
+    AddUniqueCB<n3::CompShape, N3CompShape>();
 
 	AddUniqueCB<n0::CompFlags, N0CompFlags>();
 

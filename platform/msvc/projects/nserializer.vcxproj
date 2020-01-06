@@ -38,6 +38,7 @@
     <ClInclude Include="..\..\..\include\ns\N3CompAABB.h" />
     <ClInclude Include="..\..\..\include\ns\N3CompModel.h" />
     <ClInclude Include="..\..\..\include\ns\N3CompModelInst.h" />
+    <ClInclude Include="..\..\..\include\ns\N3CompShape.h" />
     <ClInclude Include="..\..\..\include\ns\N3CompTransform.h" />
     <ClInclude Include="..\..\..\include\ns\NodeComponent.h" />
     <ClInclude Include="..\..\..\include\ns\NodeSerializer.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="..\..\..\source\N3CompAABB.cpp" />
     <ClCompile Include="..\..\..\source\N3CompModel.cpp" />
     <ClCompile Include="..\..\..\source\N3CompModelInst.cpp" />
+    <ClCompile Include="..\..\..\source\N3CompShape.cpp" />
     <ClCompile Include="..\..\..\source\N3CompTransform.cpp" />
     <ClCompile Include="..\..\..\source\NodeSerializer.cpp" />
     <ClCompile Include="..\..\..\source\RegistCallback.cpp" />

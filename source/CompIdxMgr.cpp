@@ -22,6 +22,7 @@
 #include <node3/CompAABB.h>
 #include <node3/CompTransform.h>
 #include <node3/CompModelInst.h>
+#include <node3/CompShape.h>
 
 namespace ns
 {
@@ -67,6 +68,8 @@ size_t CompIdxMgr::CompTypeName2Idx(const std::string& name)
 		return COMP_N3_AABB;
 	} else if (name == n3::CompTransform::TYPE_NAME) {
 		return COMP_N3_TRANSFORM;
+    } else if (name == n3::CompShape::TYPE_NAME) {
+        return COMP_N3_SHAPE;
 	} else if (name == n2::CompSharedPatch::TYPE_NAME) {
 		return COMP_N2_SHARED_PATCH;
 	} else if (name == n2::CompUniquePatch::TYPE_NAME) {
