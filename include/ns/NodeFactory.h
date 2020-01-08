@@ -12,7 +12,6 @@ namespace ns
 class NodeFactory
 {
 public:
-	static n0::SceneNodePtr Create(const std::string& dir, const rapidjson::Value& val);
 	static n0::SceneNodePtr Create(const std::string& filepath);
 	static n0::SceneNodePtr Create2D();
     static n0::SceneNodePtr Create3D();
