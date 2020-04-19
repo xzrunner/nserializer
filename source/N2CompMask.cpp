@@ -32,7 +32,7 @@ void N2CompMask::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	es.Write(mask_relative);
 }
 
-void N2CompMask::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompMask::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	auto base_filepath = is.String();
 	m_base_path = boost::filesystem::absolute(base_filepath, dir).string();
@@ -52,7 +52,7 @@ void N2CompMask::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.AddMember("mask_filepath", rapidjson::Value(mask_relative.c_str(), alloc), alloc);
 }
 
-void N2CompMask::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompMask::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto base_filepath = val["base_filepath"].GetString();
 	m_base_path = boost::filesystem::absolute(base_filepath, dir).string();
@@ -61,10 +61,10 @@ void N2CompMask::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	m_mask_path = boost::filesystem::absolute(mask_filepath, dir).string();
 }
 
-void N2CompMask::StoreToMem(n2::CompMask& comp) const
+void N2CompMask::StoreToMem(const ur2::Device& dev, n2::CompMask& comp) const
 {
-	comp.SetBaseNode(NodeFactory::Create(m_base_path));
-	comp.SetMaskNode(NodeFactory::Create(m_mask_path));
+	comp.SetBaseNode(NodeFactory::Create(dev, m_base_path));
+	comp.SetMaskNode(NodeFactory::Create(dev, m_mask_path));
 }
 
 void N2CompMask::LoadFromMem(const n2::CompMask& comp)

@@ -23,7 +23,7 @@ static const uint8_t COMP_END_FALG = 0xff;
 namespace ns
 {
 
-bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string& dir, rapidjson::Value& val, 
+bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset)
 {
 	bool ret = false;
@@ -52,7 +52,7 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 		else
 		{
 			rapidjson::Value cval;
-			if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc)) 
+			if (CompSerializer::Instance()->ToJson(*comp, dir, cval, alloc))
             {
 				val.PushBack(cval, alloc);
 				ret = true;
@@ -75,8 +75,8 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 	return ret;
 }
 
-bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir,
-	                              const rapidjson::Value& val)
+bool NodeSerializer::LoadFromJson(const ur2::Device& dev, n0::SceneNodePtr& node,
+                                  const std::string& dir, const rapidjson::Value& val)
 {
 	for (auto itr = val.Begin(); itr != val.End(); ++itr)
 	{
@@ -85,12 +85,12 @@ bool NodeSerializer::LoadFromJson(n0::SceneNodePtr& node, const std::string& dir
 		auto type_name = cval[CompSerializer::COMP_TYPE_NAME].GetString();
 		auto type_idx = CompIdxMgr::Instance()->CompTypeName2Idx(type_name);
 		auto& comp = CompFactory::Instance()->Create(node, type_idx);
-		CompSerializer::Instance()->FromJson(comp, dir, *itr);
+		CompSerializer::Instance()->FromJson(dev, comp, dir, *itr);
 
 		if (type_idx == CompIdx::COMP_N0_ID)
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
-			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			auto casset = CompFactory::Instance()->CreateAsset(dev, cid.GetFilepath());
 			if (casset) {
 				GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
 				node->AddSharedCompNoCreate(casset);
@@ -142,7 +142,8 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 	es.Write(COMP_END_FALG);
 }
 
-void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir, bs::ImportStream& is)
+void NodeSerializer::LoadFromBin(const ur2::Device& dev, n0::SceneNodePtr& node,
+                                 const std::string& dir, bs::ImportStream& is)
 {
 	while (true)
 	{
@@ -153,12 +154,12 @@ void NodeSerializer::LoadFromBin(n0::SceneNodePtr& node, const std::string& dir,
 
 		CompIdx idx = static_cast<CompIdx>(type);
 		auto& comp = CompFactory::Instance()->Create(node, idx);
-		CompSerializer::Instance()->FromBin(comp, dir, is, idx);
+		CompSerializer::Instance()->FromBin(dev, comp, dir, is, idx);
 
 		if (idx == CompIdx::COMP_N0_ID)
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
-			auto casset = CompFactory::Instance()->CreateAsset(cid.GetFilepath());
+			auto casset = CompFactory::Instance()->CreateAsset(dev, cid.GetFilepath());
 			GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
 			node->AddSharedCompNoCreate(casset);
 		}

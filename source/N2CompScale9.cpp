@@ -52,7 +52,7 @@ void N2CompScale9::StoreToBin(const std::string& dir, bs::ExportStream& es) cons
 	es.Write(static_cast<uint16_t>(m_height));
 }
 
-void N2CompScale9::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompScale9::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_type = is.UInt8();
 
@@ -61,7 +61,7 @@ void N2CompScale9::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 	for (size_t i = 0; i < num; ++i)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
-		NodeSerializer::LoadFromBin(node, dir, is);
+		NodeSerializer::LoadFromBin(dev, node, dir, is);
 		m_grids[i] = node;
 	}
 
@@ -89,7 +89,7 @@ void N2CompScale9::StoreToJson(const std::string& dir, rapidjson::Value& val, ra
 	val.AddMember("height", m_height, alloc);
 }
 
-void N2CompScale9::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompScale9::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_type = val["s9_type"].GetInt();
 
@@ -97,7 +97,7 @@ void N2CompScale9::LoadFromJson(mm::LinearAllocator& alloc, const std::string& d
 	for (auto itr = grids_val.Begin(); itr != grids_val.End(); ++itr)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
-		NodeSerializer::LoadFromJson(node, dir, *itr);
+		NodeSerializer::LoadFromJson(dev, node, dir, *itr);
 		m_grids.push_back(node);
 	}
 
@@ -105,7 +105,7 @@ void N2CompScale9::LoadFromJson(mm::LinearAllocator& alloc, const std::string& d
 	m_height = val["height"].GetFloat();
 }
 
-void N2CompScale9::StoreToMem(n2::CompScale9& comp) const
+void N2CompScale9::StoreToMem(const ur2::Device& dev, n2::CompScale9& comp) const
 {
 	n0::SceneNodePtr grids[9];
 

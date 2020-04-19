@@ -3,6 +3,8 @@
 #include "ns/Blackboard.h"
 #include "ns/CompFactory.h"
 
+#include <unirender2/Texture.h>
+#include <unirender2/Device.h>
 #include <sx/ResFileHelper.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -26,7 +28,7 @@
 namespace ns
 {
 
-n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::Create(const ur2::Device& dev, const std::string& filepath)
 {
 	n0::SceneNodePtr node = nullptr;
 	auto type = sx::ResFileHelper::Type(filepath);
@@ -34,19 +36,19 @@ n0::SceneNodePtr NodeFactory::Create(const std::string& filepath)
 	{
 	case sx::RES_FILE_BIN:
 	case sx::RES_FILE_JSON:
-		node = CreateFromCommon(filepath);
+		node = CreateFromCommon(dev, filepath);
 		break;
 	case sx::RES_FILE_IMAGE:
-		node = CreateFromImage(filepath);
+		node = CreateFromImage(dev, filepath);
 		break;
 	case sx::RES_FILE_IMAGE3D:
-		node = CreateFromImage3D(filepath);
+		node = CreateFromImage3D(dev, filepath);
 		break;
 	case sx::RES_FILE_MODEL:
-		node = CreateFromModel(filepath);
+		node = CreateFromModel(dev, filepath);
 		break;
 	case sx::RES_FILE_MAP:
-		node = CreateFromModel(filepath);
+		node = CreateFromModel(dev, filepath);
 		break;
 	case sx::RES_FILE_SCRIPT:
 		node = CreateFromScript(filepath);
@@ -90,12 +92,12 @@ n0::SceneNodePtr NodeFactory::Create3D()
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromCommon(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromCommon(const ur2::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// asset
-	auto casset = CompFactory::Instance()->CreateAsset(filepath);
+	auto casset = CompFactory::Instance()->CreateAsset(dev, filepath);
 	if (node->HasSharedComp<n0::CompAsset>()) {
 		node->RemoveSharedComp<n0::CompAsset>();
 	}
@@ -115,12 +117,12 @@ n0::SceneNodePtr NodeFactory::CreateFromCommon(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromImage(const ur2::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// image
-	auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+	auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath, &dev);
 	auto& cimage = node->AddSharedComp<n2::CompImage>();
 	cimage.SetFilepath(filepath);
 	cimage.SetTexture(img->GetTexture());
@@ -139,12 +141,12 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromImage3D(const ur2::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// image
-	auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath);
+	auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath, &dev);
 	auto& cimage = node->AddSharedComp<n3::CompImage3D>();
 	cimage.SetFilepath(filepath);
 	cimage.SetTexture(img->GetTexture());
@@ -154,9 +156,9 @@ n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
 
 	// aabb
 	auto& tex = cimage.GetTexture();
-	float w = static_cast<float>(tex->Width());
-	float h = static_cast<float>(tex->Height());
-	float d = static_cast<float>(tex->Depth());
+	float w = static_cast<float>(tex->GetWidth());
+	float h = static_cast<float>(tex->GetHeight());
+	float d = static_cast<float>(tex->GetDepth());
 	h /= w;
 	d /= w;
 	w = 1.0f;
@@ -169,19 +171,17 @@ n0::SceneNodePtr NodeFactory::CreateFromImage3D(const std::string& filepath)
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromModel(const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromModel(const ur2::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
 	// model
 	auto& cmodel = node->AddSharedComp<n3::CompModel>();
-	auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
-	cmodel.SetModel(model);
-	cmodel.SetFilepath(filepath);
+	auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath, &dev);
+	cmodel.SetModel(model);cmodel.SetFilepath(filepath);
 	node->AddUniqueComp<n3::CompModelInst>(model, 0);
 
-	// transform
-	auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
+	// transformauto& ctrans = node->AddUniqueComp<n3::CompTransform>();
 
 	// aabb
 	node->AddUniqueComp<n3::CompAABB>(pt3::AABB(model->aabb));

@@ -47,7 +47,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(size_t comp_idx)
 	return m_create_asset[comp_idx]();
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool force_reload)
+n0::CompAssetPtr CompFactory::CreateAsset(const ur2::Device& dev, const std::string& filepath, bool force_reload)
 {
     n0::CompAssetPtr casset = nullptr;
     if (!force_reload) {
@@ -62,7 +62,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 	{
 	case sx::RES_FILE_IMAGE:
 	{
-		auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath);
+		auto img = facade::ResPool::Instance().Fetch<facade::Image>(filepath, &dev);
 		auto cimage = std::make_shared<n2::CompImage>();
 		cimage->SetFilepath(filepath);
 		cimage->SetTexture(img->GetTexture());
@@ -71,7 +71,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 		break;
 	case sx::RES_FILE_IMAGE3D:
 	{
-		auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath);
+		auto img = facade::ResPool::Instance().Fetch<facade::Image3D>(filepath, &dev);
 		auto cimage = std::make_shared<n3::CompImage3D>();
 		cimage->SetFilepath(filepath);
 		cimage->SetTexture(img->GetTexture());
@@ -87,7 +87,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 		casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
 
 		auto dir = boost::filesystem::path(filepath).parent_path().string();
-		ns::CompSerializer::Instance()->FromJson(*casset, dir, doc);
+		ns::CompSerializer::Instance()->FromJson(dev, *casset, dir, doc);
 	}
 		break;
 	case sx::RES_FILE_BIN:
@@ -102,13 +102,13 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 			casset = CreateAsset(buffer[0]);
 
 			auto dir = boost::filesystem::path(filepath).parent_path().string();
-			ns::CompSerializer::Instance()->FromBin(*casset, dir, bs::ImportStream(&buffer[0], size));
+			ns::CompSerializer::Instance()->FromBin(dev, *casset, dir, bs::ImportStream(&buffer[0], size));
 		}
 	}
 		break;
 	case sx::RES_FILE_MODEL:
 	{
-		auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath);
+		auto model = facade::ResPool::Instance().Fetch<model::Model>(filepath, &dev);
 		auto cmodel = std::make_shared<n3::CompModel>();
 		cmodel->SetFilepath(filepath);
 		cmodel->SetModel(model);
@@ -131,13 +131,14 @@ n0::CompAssetPtr CompFactory::CreateAsset(const std::string& filepath, bool forc
 	return casset;
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(const rapidjson::Value& val,
+n0::CompAssetPtr CompFactory::CreateAsset(const ur2::Device& dev,
+                                          const rapidjson::Value& val,
                                           const std::string& dir)
 {
 	auto type = val[CompSerializer::Instance()->COMP_TYPE_NAME].GetString();
     n0::CompAssetPtr casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
 
-	ns::CompSerializer::Instance()->FromJson(*casset, dir, val);
+	ns::CompSerializer::Instance()->FromJson(dev, *casset, dir, val);
 
 	return casset;
 }

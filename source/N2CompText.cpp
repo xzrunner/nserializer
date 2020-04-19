@@ -25,7 +25,7 @@ void N2CompText::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	es.Write(m_text.text);
 }
 
-void N2CompText::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompText::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	LoadTextboxFromBin(m_text.tb, is);
 	m_text.text = is.String();
@@ -42,13 +42,13 @@ void N2CompText::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.AddMember("text", rapidjson::Value(m_text.text.c_str(), alloc), alloc);
 }
 
-void N2CompText::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompText::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	LoadTextboxFromJson(m_text.tb, alloc, val["textbox"]);
 	m_text.text = val["text"].GetString();
 }
 
-void N2CompText::StoreToMem(n2::CompText& comp) const
+void N2CompText::StoreToMem(const ur2::Device& dev, n2::CompText& comp) const
 {
 	comp.SetText(m_text);
 }

@@ -24,7 +24,7 @@ void N3CompAABB::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	}
 }
 
-void N3CompAABB::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N3CompAABB::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	sm::vec3 min, max;
 	for (int i = 0; i < 3; ++i) {
@@ -57,7 +57,7 @@ void N3CompAABB::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.AddMember("max", val_max, alloc);
 }
 
-void N3CompAABB::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N3CompAABB::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	sm::vec3 min, max;
 	min.x = val["min"][0].GetFloat();
@@ -70,7 +70,7 @@ void N3CompAABB::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	m_aabb.Combine(max);
 }
 
-void N3CompAABB::StoreToMem(n3::CompAABB& comp) const
+void N3CompAABB::StoreToMem(const ur2::Device& dev, n3::CompAABB& comp) const
 {
 	comp.SetAABB(m_aabb);
 }

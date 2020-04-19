@@ -40,7 +40,7 @@ void N0CompIdentity::StoreToBin(const std::string& dir, bs::ExportStream& es) co
 	es.Write(static_cast<uint32_t>(m_id));
 }
 
-void N0CompIdentity::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N0CompIdentity::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	auto relative = is.String();
 	m_filepath = boost::filesystem::absolute(relative, dir).string();
@@ -61,7 +61,7 @@ void N0CompIdentity::StoreToJson(const std::string& dir, rapidjson::Value& val, 
 	val.AddMember("id", m_id, alloc);
 }
 
-void N0CompIdentity::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N0CompIdentity::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto filepath = val["filepath"].GetString();
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
@@ -70,7 +70,7 @@ void N0CompIdentity::LoadFromJson(mm::LinearAllocator& alloc, const std::string&
 	m_id   = val["id"].GetUint();
 }
 
-void N0CompIdentity::StoreToMem(n0::CompIdentity& comp) const
+void N0CompIdentity::StoreToMem(const ur2::Device& dev, n0::CompIdentity& comp) const
 {
 	comp.SetFilepath(m_filepath);
 	comp.SetName(m_name);

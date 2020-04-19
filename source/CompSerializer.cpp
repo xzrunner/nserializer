@@ -64,14 +64,15 @@ bool CompSerializer::ToJson(const n0::NodeComp& comp,
 	}
 }
 
-void CompSerializer::FromJson(n0::NodeComp& comp,
+void CompSerializer::FromJson(const ur2::Device& dev,
+                              n0::NodeComp& comp,
 	                          const std::string& dir,
 	                          const rapidjson::Value& val) const
 {
 	auto type = val[COMP_TYPE_NAME].GetString();
 	auto itr = m_from_json.find(type);
 	if (itr != m_from_json.end()) {
-		itr->second(comp, dir, val);
+		itr->second(dev, comp, dir, val);
 	} else {
 		GD_REPORT_ASSERT("no comp creator");
 	}
@@ -121,7 +122,8 @@ void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs:
 	}
 }
 
-void CompSerializer::FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is, CompIdx idx) const
+void CompSerializer::FromBin(const ur2::Device& dev, n0::NodeComp& comp, 
+                             const std::string& dir, bs::ImportStream& is, CompIdx idx) const
 {
 	size_t comp_idx;
 	if (idx != COMP_INVALID) {
@@ -129,7 +131,7 @@ void CompSerializer::FromBin(n0::NodeComp& comp, const std::string& dir, bs::Imp
 	} else {
 		comp_idx = is.UInt8();
 	}
-	m_from_bin[comp_idx](comp, dir, is);
+	m_from_bin[comp_idx](dev, comp, dir, is);
 }
 
 }

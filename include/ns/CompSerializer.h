@@ -11,6 +11,7 @@
 #include <map>
 #include <array>
 
+namespace ur2 { class Device; }
 namespace n0 { class NodeComp; }
 namespace bs { class ExportStream; class ImportStream; }
 
@@ -22,18 +23,19 @@ class CompSerializer
 public:
 	using ToJsonFunc = std::function<bool(const n0::NodeComp&, const std::string&,
 		rapidjson::Value&, rapidjson::MemoryPoolAllocator<>&, bool)>;
-	using FromJsonFunc = std::function<void(n0::NodeComp&, const std::string&, const rapidjson::Value&)>;
+	using FromJsonFunc = std::function<void(const ur2::Device&, n0::NodeComp&, const std::string&, const rapidjson::Value&)>;
 
 	void AddToJsonFunc(const std::string& name, const ToJsonFunc& func, bool replace = false);
 	void AddFromJsonFunc(const std::string& name, const FromJsonFunc& func, bool replace = false);
 
 	bool ToJson(const n0::NodeComp& comp, const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc, bool skip_asset = true) const;
-	void FromJson(n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val) const;
+	void FromJson(const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir,
+        const rapidjson::Value& val) const;
 
 	using GetBinSizeFunc = std::function<size_t(const n0::NodeComp&, const std::string&)>;
 	using ToBinFunc = std::function<void(const n0::NodeComp&, const std::string&, bs::ExportStream&)>;
-	using FromBinFunc = std::function<void(n0::NodeComp&, const std::string&, bs::ImportStream& is)>;
+	using FromBinFunc = std::function<void(const ur2::Device&, n0::NodeComp&, const std::string&, bs::ImportStream& is)>;
 
 	void AddGetBinSizeFunc(const std::string& name, const GetBinSizeFunc& func);
 	void AddToBinFunc(const std::string& name, const ToBinFunc& func);
@@ -41,7 +43,8 @@ public:
 
 	size_t GetBinSize(const n0::NodeComp& comp, const std::string& dir) const;
 	void ToBin(const n0::NodeComp& comp, const std::string& dir, bs::ExportStream& es) const;
-	void FromBin(n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is, CompIdx idx = COMP_INVALID) const;
+	void FromBin(const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir,
+        bs::ImportStream& is, CompIdx idx = COMP_INVALID) const;
 
 public:
 	static const char* COMP_TYPE_NAME;

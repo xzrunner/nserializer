@@ -62,7 +62,7 @@ void N2CompAnim::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	}
 }
 
-void N2CompAnim::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompAnim::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	size_t layer_n = is.UInt16();
 	for (size_t layer_i = 0; layer_i < layer_n; ++layer_i)
@@ -81,7 +81,7 @@ void N2CompAnim::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 			for (size_t node_i = 0; node_i < node_n; ++node_i)
 			{
 				auto node = std::make_shared<n0::SceneNode>();
-				NodeSerializer::LoadFromBin(node, dir, is);
+				NodeSerializer::LoadFromBin(dev, node, dir, is);
 				AddNode(node, dst_frame);
 			}
 
@@ -131,7 +131,7 @@ void N2CompAnim::StoreToJson(const std::string& dir, rapidjson::Value& val, rapi
 	val.AddMember("layers", layers_val, alloc);
 }
 
-void N2CompAnim::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompAnim::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& layers_val = val["layers"];
 	for (auto& src_layer : layers_val.GetArray())
@@ -144,7 +144,7 @@ void N2CompAnim::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 			for (auto& src_node : src_frame["nodes"].GetArray())
 			{
 				auto node = std::make_shared<n0::SceneNode>();
-				NodeSerializer::LoadFromJson(node, dir, src_node);
+				NodeSerializer::LoadFromJson(dev, node, dir, src_node);
 				AddNode(node, dst_frame);
 			}
 			dst_frame->SetTween(src_frame["tween"].GetBool());
@@ -154,7 +154,7 @@ void N2CompAnim::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir
 	}
 }
 
-void N2CompAnim::StoreToMem(n2::CompAnim& comp) const
+void N2CompAnim::StoreToMem(const ur2::Device& dev, n2::CompAnim& comp) const
 {
 	for (auto& layer : m_layers) {
 		comp.AddLayer(std::make_unique<anim::Layer>(*layer));

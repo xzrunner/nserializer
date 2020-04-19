@@ -17,7 +17,7 @@ void N2CompSharedPatch::StoreToBin(const std::string& dir, bs::ExportStream& es)
 	// todo
 }
 
-void N2CompSharedPatch::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompSharedPatch::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
@@ -51,7 +51,7 @@ void N2CompSharedPatch::StoreToJson(const std::string& dir, rapidjson::Value& va
 	val.AddMember("operators", unique_val, alloc);
 }
 
-void N2CompSharedPatch::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompSharedPatch::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& op_array = val["operators"].GetArray();
 	m_operators.reserve(op_array.Size());
@@ -69,7 +69,7 @@ void N2CompSharedPatch::LoadFromJson(mm::LinearAllocator& alloc, const std::stri
 	}
 }
 
-void N2CompSharedPatch::StoreToMem(n2::CompSharedPatch& comp) const
+void N2CompSharedPatch::StoreToMem(const ur2::Device& dev, n2::CompSharedPatch& comp) const
 {
 	comp.SetAllEditOp(m_operators);
 }

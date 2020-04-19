@@ -38,7 +38,7 @@ void N2CompColorMap::StoreToBin(const std::string& dir, bs::ExportStream& es) co
 	es.Write(static_cast<uint32_t>(m_bmap));        // bmap
 }
 
-void N2CompColorMap::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompColorMap::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_rmap = is.UInt32();
 	m_gmap = is.UInt32();
@@ -54,14 +54,14 @@ void N2CompColorMap::StoreToJson(const std::string& dir, rapidjson::Value& val, 
 	val.AddMember("bmap", m_bmap, alloc);
 }
 
-void N2CompColorMap::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompColorMap::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_rmap = val["rmap"].GetUint();
 	m_gmap = val["gmap"].GetUint();
 	m_bmap = val["bmap"].GetUint();
 }
 
-void N2CompColorMap::StoreToMem(n2::CompColorMap& comp) const
+void N2CompColorMap::StoreToMem(const ur2::Device& dev, n2::CompColorMap& comp) const
 {
 	pt2::RenderColorMap col;
 	col.rmap.FromRGBA(m_rmap);

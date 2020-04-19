@@ -33,13 +33,14 @@ void N0CompComplex::StoreToBin(const std::string& dir, bs::ExportStream& es) con
 	}
 }
 
-void N0CompComplex::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N0CompComplex::LoadFromBin(const ur2::Device& dev, const std::string& dir,
+                                bs::ImportStream& is)
 {
 	uint16_t sz = is.UInt16();
 	for (size_t i = 0; i < sz; ++i)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
-		NodeSerializer::LoadFromBin(node, dir, is);
+		NodeSerializer::LoadFromBin(dev, node, dir, is);
 		AddNode(node);
 	}
 }
@@ -60,18 +61,18 @@ void N0CompComplex::StoreToJson(const std::string& dir, rapidjson::Value& val, r
 	val.AddMember("nodes", nodes_val, alloc);
 }
 
-void N0CompComplex::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N0CompComplex::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& nodes_val = val["nodes"];
 	for (auto itr = nodes_val.Begin(); itr != nodes_val.End(); ++itr)
 	{
 		auto node = std::make_shared<n0::SceneNode>();
-		NodeSerializer::LoadFromJson(node, dir, *itr);
+		NodeSerializer::LoadFromJson(dev, node, dir, *itr);
 		AddNode(node);
 	}
 }
 
-void N0CompComplex::StoreToMem(n0::CompComplex& comp) const
+void N0CompComplex::StoreToMem(const ur2::Device& dev, n0::CompComplex& comp) const
 {
 	comp.SetChildren(m_nodes);
 }

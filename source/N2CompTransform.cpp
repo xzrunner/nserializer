@@ -85,7 +85,7 @@ void N2CompTransform::StoreToBin(const std::string& dir, bs::ExportStream& es) c
 	}
 }
 
-void N2CompTransform::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompTransform::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	size_t type = is.UInt8();
 	if (type & POSITION_MASK)
@@ -142,7 +142,7 @@ void N2CompTransform::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	}
 }
 
-void N2CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompTransform::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	if (val.HasMember("position"))
 	{
@@ -165,7 +165,7 @@ void N2CompTransform::LoadFromJson(mm::LinearAllocator& alloc, const std::string
 	}
 }
 
-void N2CompTransform::StoreToMem(n2::CompTransform& comp) const
+void N2CompTransform::StoreToMem(const ur2::Device& dev, n2::CompTransform& comp) const
 {
 	pt2::SRT srt;
 	srt.position = m_pos;

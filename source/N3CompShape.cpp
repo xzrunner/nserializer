@@ -30,7 +30,7 @@ void N3CompShape::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	// todo
 }
 
-void N3CompShape::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N3CompShape::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
@@ -58,7 +58,7 @@ void N3CompShape::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
     val.AddMember("shapes", shapes_val, alloc);
 }
 
-void N3CompShape::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N3CompShape::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
     m_shapes.clear();
 
@@ -84,7 +84,7 @@ void N3CompShape::LoadFromJson(mm::LinearAllocator& alloc, const std::string& di
     }
 }
 
-void N3CompShape::StoreToMem(n3::CompShape& comp) const
+void N3CompShape::StoreToMem(const ur2::Device& dev, n3::CompShape& comp) const
 {
     comp.SetShapes(m_shapes);
 }

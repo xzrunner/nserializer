@@ -21,7 +21,7 @@ void N2CompShape::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	// todo
 }
 
-void N2CompShape::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N2CompShape::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	// todo
 }
@@ -33,12 +33,12 @@ void N2CompShape::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 	val.AddMember("type", rapidjson::Value(m_type.c_str(), alloc), alloc);
 }
 
-void N2CompShape::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompShape::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_type = val["type"].GetString();
 }
 
-void N2CompShape::StoreToMem(n2::CompShape& comp) const
+void N2CompShape::StoreToMem(const ur2::Device& dev, n2::CompShape& comp) const
 {
 	auto type = rttr::type::get_by_name(m_type).create();
 	if (type.is_valid()) {

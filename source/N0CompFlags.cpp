@@ -30,7 +30,7 @@ void N0CompFlags::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	es.Write(static_cast<uint8_t>(m_editable));
 }
 
-void N0CompFlags::LoadFromBin(const std::string& dir, bs::ImportStream& is)
+void N0CompFlags::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_visible  = static_cast<bool>(is.UInt8());
 	m_editable = static_cast<bool>(is.UInt8());
@@ -44,13 +44,13 @@ void N0CompFlags::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 	val.AddMember("editable", m_editable, alloc);
 }
 
-void N0CompFlags::LoadFromJson(mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N0CompFlags::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_visible  = val["visible"].GetBool();
 	m_editable = val["editable"].GetBool();
 }
 
-void N0CompFlags::StoreToMem(n0::CompFlags& comp) const
+void N0CompFlags::StoreToMem(const ur2::Device& dev, n0::CompFlags& comp) const
 {
 	comp.SetFlag<n0::NodeNotVisible>(!m_visible);
 	comp.SetFlag<n0::NodeNotEditable>(!m_editable);
