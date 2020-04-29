@@ -64,7 +64,7 @@ bool CompSerializer::ToJson(const n0::NodeComp& comp,
 	}
 }
 
-void CompSerializer::FromJson(const ur2::Device& dev,
+void CompSerializer::FromJson(const ur::Device& dev,
                               n0::NodeComp& comp,
 	                          const std::string& dir,
 	                          const rapidjson::Value& val) const
@@ -122,7 +122,7 @@ void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs:
 	}
 }
 
-void CompSerializer::FromBin(const ur2::Device& dev, n0::NodeComp& comp, 
+void CompSerializer::FromBin(const ur::Device& dev, n0::NodeComp& comp, 
                              const std::string& dir, bs::ImportStream& is, CompIdx idx) const
 {
 	size_t comp_idx;

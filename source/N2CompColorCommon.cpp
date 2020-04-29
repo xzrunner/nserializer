@@ -35,7 +35,7 @@ void N2CompColorCommon::StoreToBin(const std::string& dir, bs::ExportStream& es)
 	es.Write(static_cast<uint32_t>(m_add));            // add
 }
 
-void N2CompColorCommon::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N2CompColorCommon::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_mul = is.UInt32();
 	m_add = is.UInt32();
@@ -49,13 +49,13 @@ void N2CompColorCommon::StoreToJson(const std::string& dir, rapidjson::Value& va
 	val.AddMember("add", m_add, alloc);
 }
 
-void N2CompColorCommon::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompColorCommon::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_mul = val["mul"].GetUint();
 	m_add = val["add"].GetUint();
 }
 
-void N2CompColorCommon::StoreToMem(const ur2::Device& dev, n2::CompColorCommon& comp) const
+void N2CompColorCommon::StoreToMem(const ur::Device& dev, n2::CompColorCommon& comp) const
 {
 	pt2::RenderColorCommon col;
 	col.mul.FromRGBA(m_mul);

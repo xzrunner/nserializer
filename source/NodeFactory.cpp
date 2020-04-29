@@ -3,8 +3,8 @@
 #include "ns/Blackboard.h"
 #include "ns/CompFactory.h"
 
-#include <unirender2/Texture.h>
-#include <unirender2/Device.h>
+#include <unirender/Texture.h>
+#include <unirender/Device.h>
 #include <sx/ResFileHelper.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
@@ -28,7 +28,7 @@
 namespace ns
 {
 
-n0::SceneNodePtr NodeFactory::Create(const ur2::Device& dev, const std::string& filepath)
+n0::SceneNodePtr NodeFactory::Create(const ur::Device& dev, const std::string& filepath)
 {
 	n0::SceneNodePtr node = nullptr;
 	auto type = sx::ResFileHelper::Type(filepath);
@@ -92,7 +92,7 @@ n0::SceneNodePtr NodeFactory::Create3D()
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromCommon(const ur2::Device& dev, const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromCommon(const ur::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
@@ -117,7 +117,7 @@ n0::SceneNodePtr NodeFactory::CreateFromCommon(const ur2::Device& dev, const std
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromImage(const ur2::Device& dev, const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromImage(const ur::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
@@ -141,7 +141,7 @@ n0::SceneNodePtr NodeFactory::CreateFromImage(const ur2::Device& dev, const std:
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromImage3D(const ur2::Device& dev, const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromImage3D(const ur::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 
@@ -171,7 +171,7 @@ n0::SceneNodePtr NodeFactory::CreateFromImage3D(const ur2::Device& dev, const st
 	return node;
 }
 
-n0::SceneNodePtr NodeFactory::CreateFromModel(const ur2::Device& dev, const std::string& filepath)
+n0::SceneNodePtr NodeFactory::CreateFromModel(const ur::Device& dev, const std::string& filepath)
 {
 	auto node = std::make_shared<n0::SceneNode>();
 

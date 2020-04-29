@@ -20,7 +20,7 @@ void N2CompScissor::StoreToBin(const std::string& dir, bs::ExportStream& es) con
 	es.Write(static_cast<float>(m_rect.ymax));
 }
 
-void N2CompScissor::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N2CompScissor::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_rect.xmin = is.Float();
 	m_rect.ymin = is.Float();
@@ -38,7 +38,7 @@ void N2CompScissor::StoreToJson(const std::string& dir, rapidjson::Value& val, r
 	val.AddMember("ymax", m_rect.ymax, alloc);
 }
 
-void N2CompScissor::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompScissor::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_rect.xmin = val["xmin"].GetFloat();
 	m_rect.ymin = val["ymin"].GetFloat();
@@ -46,7 +46,7 @@ void N2CompScissor::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& al
 	m_rect.ymax = val["ymax"].GetFloat();
 }
 
-void N2CompScissor::StoreToMem(const ur2::Device& dev, n2::CompScissor& comp) const
+void N2CompScissor::StoreToMem(const ur::Device& dev, n2::CompScissor& comp) const
 {
 	comp.SetRect(m_rect);
 }

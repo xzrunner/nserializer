@@ -33,7 +33,7 @@ void N0CompComplex::StoreToBin(const std::string& dir, bs::ExportStream& es) con
 	}
 }
 
-void N0CompComplex::LoadFromBin(const ur2::Device& dev, const std::string& dir,
+void N0CompComplex::LoadFromBin(const ur::Device& dev, const std::string& dir,
                                 bs::ImportStream& is)
 {
 	uint16_t sz = is.UInt16();
@@ -61,7 +61,7 @@ void N0CompComplex::StoreToJson(const std::string& dir, rapidjson::Value& val, r
 	val.AddMember("nodes", nodes_val, alloc);
 }
 
-void N0CompComplex::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N0CompComplex::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto& nodes_val = val["nodes"];
 	for (auto itr = nodes_val.Begin(); itr != nodes_val.End(); ++itr)
@@ -72,7 +72,7 @@ void N0CompComplex::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& al
 	}
 }
 
-void N0CompComplex::StoreToMem(const ur2::Device& dev, n0::CompComplex& comp) const
+void N0CompComplex::StoreToMem(const ur::Device& dev, n0::CompComplex& comp) const
 {
 	comp.SetChildren(m_nodes);
 }

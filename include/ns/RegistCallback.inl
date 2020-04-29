@@ -20,7 +20,7 @@ void RegistCallback::AddUniqueCB()
 	});
 
 	CompSerializer::Instance()->AddFromJsonFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
 	{
 		TCompNS seri;
 		mm::LinearAllocator alloc;
@@ -45,7 +45,7 @@ void RegistCallback::AddUniqueCB()
 		return seri.GetBinSize(dir);
 	});
 	CompSerializer::Instance()->AddFromBinFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
 	{
 		TCompNS seri;
 		seri.LoadFromBin(dev, dir, is);
@@ -72,7 +72,7 @@ void RegistCallback::AddSharedCB()
 	});
 
 	CompSerializer::Instance()->AddFromJsonFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
 	{
 		TCompNS seri;
 		mm::LinearAllocator alloc;
@@ -97,7 +97,7 @@ void RegistCallback::AddSharedCB()
 		return seri.GetBinSize(dir);
 	});
 	CompSerializer::Instance()->AddFromBinFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
 	{
 		TCompNS seri;
 		seri.LoadFromBin(dev, dir, is);
@@ -124,7 +124,7 @@ void RegistCallback::AddUniqueNullCB()
 	});
 
 	CompSerializer::Instance()->AddFromJsonFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, const rapidjson::Value& val)
     {
 	});
 	CompSerializer::Instance()->AddToJsonFunc(TComp::TYPE_NAME,
@@ -140,7 +140,7 @@ void RegistCallback::AddUniqueNullCB()
 		return 0;
 	});
 	CompSerializer::Instance()->AddFromBinFunc(TComp::TYPE_NAME,
-		[](const ur2::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
+		[](const ur::Device& dev, n0::NodeComp& comp, const std::string& dir, bs::ImportStream& is)
     {
 	});
 	CompSerializer::Instance()->AddToBinFunc(TComp::TYPE_NAME,

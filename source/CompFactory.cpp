@@ -47,7 +47,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(size_t comp_idx)
 	return m_create_asset[comp_idx]();
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(const ur2::Device& dev, const std::string& filepath, bool force_reload)
+n0::CompAssetPtr CompFactory::CreateAsset(const ur::Device& dev, const std::string& filepath, bool force_reload)
 {
     n0::CompAssetPtr casset = nullptr;
     if (!force_reload) {
@@ -131,7 +131,7 @@ n0::CompAssetPtr CompFactory::CreateAsset(const ur2::Device& dev, const std::str
 	return casset;
 }
 
-n0::CompAssetPtr CompFactory::CreateAsset(const ur2::Device& dev,
+n0::CompAssetPtr CompFactory::CreateAsset(const ur::Device& dev,
                                           const rapidjson::Value& val,
                                           const std::string& dir)
 {

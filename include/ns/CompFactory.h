@@ -8,7 +8,7 @@
 #include <functional>
 #include <array>
 
-namespace ur2{ class Device; }
+namespace ur{ class Device; }
 namespace n0 { class NodeComp; }
 
 namespace ns
@@ -26,9 +26,9 @@ public:
 	n0::NodeComp& Create(n0::SceneNodePtr& node, size_t comp_idx);
 	n0::CompAssetPtr CreateAsset(size_t comp_idx);
 
-	n0::CompAssetPtr CreateAsset(const ur2::Device& dev,
+	n0::CompAssetPtr CreateAsset(const ur::Device& dev,
         const std::string& filepath, bool force_reload = false);
-    n0::CompAssetPtr CreateAsset(const ur2::Device& dev,
+    n0::CompAssetPtr CreateAsset(const ur::Device& dev,
         const rapidjson::Value& val, const std::string& dir);
 
 private:

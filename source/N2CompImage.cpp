@@ -24,7 +24,7 @@ void N2CompImage::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	es.Write(relative);
 }
 
-void N2CompImage::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N2CompImage::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	auto relative = is.String();
 	m_filepath = boost::filesystem::absolute(relative, dir).string();
@@ -38,13 +38,13 @@ void N2CompImage::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 	val.AddMember("filepath", rapidjson::Value(relative.c_str(), alloc), alloc);
 }
 
-void N2CompImage::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompImage::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto relative = val["filepath"].GetString();
 	m_filepath = boost::filesystem::absolute(relative, dir).string();
 }
 
-void N2CompImage::StoreToMem(const ur2::Device& dev, n2::CompImage& comp) const
+void N2CompImage::StoreToMem(const ur::Device& dev, n2::CompImage& comp) const
 {
 	comp.SetFilepath(m_filepath);
 

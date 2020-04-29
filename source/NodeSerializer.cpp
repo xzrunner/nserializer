@@ -75,7 +75,7 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 	return ret;
 }
 
-bool NodeSerializer::LoadFromJson(const ur2::Device& dev, n0::SceneNodePtr& node,
+bool NodeSerializer::LoadFromJson(const ur::Device& dev, n0::SceneNodePtr& node,
                                   const std::string& dir, const rapidjson::Value& val)
 {
 	for (auto itr = val.Begin(); itr != val.End(); ++itr)
@@ -142,7 +142,7 @@ void NodeSerializer::StoreToBin(const n0::SceneNodePtr& node, const std::string&
 	es.Write(COMP_END_FALG);
 }
 
-void NodeSerializer::LoadFromBin(const ur2::Device& dev, n0::SceneNodePtr& node,
+void NodeSerializer::LoadFromBin(const ur::Device& dev, n0::SceneNodePtr& node,
                                  const std::string& dir, bs::ImportStream& is)
 {
 	while (true)

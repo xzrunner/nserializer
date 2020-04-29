@@ -52,7 +52,7 @@ void N2CompScale9::StoreToBin(const std::string& dir, bs::ExportStream& es) cons
 	es.Write(static_cast<uint16_t>(m_height));
 }
 
-void N2CompScale9::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N2CompScale9::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	m_type = is.UInt8();
 
@@ -89,7 +89,7 @@ void N2CompScale9::StoreToJson(const std::string& dir, rapidjson::Value& val, ra
 	val.AddMember("height", m_height, alloc);
 }
 
-void N2CompScale9::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N2CompScale9::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	m_type = val["s9_type"].GetInt();
 
@@ -105,7 +105,7 @@ void N2CompScale9::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& all
 	m_height = val["height"].GetFloat();
 }
 
-void N2CompScale9::StoreToMem(const ur2::Device& dev, n2::CompScale9& comp) const
+void N2CompScale9::StoreToMem(const ur::Device& dev, n2::CompScale9& comp) const
 {
 	n0::SceneNodePtr grids[9];
 

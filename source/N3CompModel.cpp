@@ -25,7 +25,7 @@ void N3CompModel::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 	es.Write(relative);
 }
 
-void N3CompModel::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N3CompModel::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	auto relative = is.String();
 	m_filepath = boost::filesystem::absolute(relative, dir).string();
@@ -43,13 +43,13 @@ void N3CompModel::StoreToJson(const std::string& dir, rapidjson::Value& val, rap
 	}
 }
 
-void N3CompModel::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N3CompModel::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	auto filepath = val["filepath"].GetString();
 	m_filepath = boost::filesystem::absolute(filepath, dir).string();
 }
 
-void N3CompModel::StoreToMem(const ur2::Device& dev, n3::CompModel& comp) const
+void N3CompModel::StoreToMem(const ur::Device& dev, n3::CompModel& comp) const
 {
 	auto model = facade::ResPool::Instance().Fetch<model::Model>(m_filepath, &dev);
 	comp.SetModel(model);

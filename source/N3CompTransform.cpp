@@ -78,7 +78,7 @@ void N3CompTransform::StoreToBin(const std::string& dir, bs::ExportStream& es) c
 	}
 }
 
-void N3CompTransform::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void N3CompTransform::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	size_t type = is.UInt8();
 	if (type & POSITION_MASK)
@@ -139,7 +139,7 @@ void N3CompTransform::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	}
 }
 
-void N3CompTransform::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void N3CompTransform::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	if (val.HasMember("position"))
 	{
@@ -164,7 +164,7 @@ void N3CompTransform::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& 
 	}
 }
 
-void N3CompTransform::StoreToMem(const ur2::Device& dev, n3::CompTransform& comp) const
+void N3CompTransform::StoreToMem(const ur::Device& dev, n3::CompTransform& comp) const
 {
 	comp.SetPosition(m_position);
 	comp.SetAngle(m_angle);
