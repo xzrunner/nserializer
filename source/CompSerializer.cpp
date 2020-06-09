@@ -25,7 +25,10 @@ void CompSerializer::AddToJsonFunc(const std::string& name, const ToJsonFunc& fu
     if (!replace && m_to_json.find(name) != m_to_json.end()) {
         return;
     }
-	m_to_json.insert(std::make_pair(name, func));
+    auto itr = m_to_json.insert(std::make_pair(name, func));
+    if (!itr.second) {
+        itr.first->second = func;
+    }
 }
 
 void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc& func, bool replace)
@@ -33,7 +36,11 @@ void CompSerializer::AddFromJsonFunc(const std::string& name, const FromJsonFunc
     if (!replace && m_from_json.find(name) != m_from_json.end()) {
         return;
     }
-	m_from_json.insert(std::make_pair(name, func));
+
+    auto itr = m_from_json.insert(std::make_pair(name, func));
+    if (!itr.second) {
+        itr.first->second = func;
+    }
 }
 
 bool CompSerializer::ToJson(const n0::NodeComp& comp,
@@ -122,7 +129,7 @@ void CompSerializer::ToBin(const n0::NodeComp& comp, const std::string& dir, bs:
 	}
 }
 
-void CompSerializer::FromBin(const ur::Device& dev, n0::NodeComp& comp, 
+void CompSerializer::FromBin(const ur::Device& dev, n0::NodeComp& comp,
                              const std::string& dir, bs::ImportStream& is, CompIdx idx) const
 {
 	size_t comp_idx;
