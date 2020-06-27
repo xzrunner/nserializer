@@ -63,8 +63,12 @@ void N0CompIdentity::StoreToJson(const std::string& dir, rapidjson::Value& val, 
 
 void N0CompIdentity::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
-	auto filepath = val["filepath"].GetString();
-	m_filepath = boost::filesystem::absolute(filepath, dir).string();
+	auto filepath = boost::filesystem::absolute(val["filepath"].GetString(), dir);
+	if (boost::filesystem::is_regular_file(filepath)) {
+		m_filepath = filepath.string();
+	} else {
+		m_filepath.clear();
+	}
 
 	m_name = val["name"].GetString();
 	m_id   = val["id"].GetUint();

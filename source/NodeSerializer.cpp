@@ -32,6 +32,11 @@ bool NodeSerializer::StoreToJson(const n0::SceneNodePtr& node, const std::string
 
 	node->TraverseSharedComp([&](const std::shared_ptr<n0::NodeComp>& comp)->bool
 	{
+		if (comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>() &&
+			!node->GetUniqueComp<n0::CompIdentity>().GetFilepath().empty()) {
+			return true;
+		}
+
 		// skip CompAsset, use CompIdentity to create CompAsset
 		// here only store children recursively
 		if (!skip_asset && comp->TypeID() == n0::GetCompTypeID<n0::CompAsset>())
@@ -90,6 +95,9 @@ bool NodeSerializer::LoadFromJson(const ur::Device& dev, n0::SceneNodePtr& node,
 		if (type_idx == CompIdx::COMP_N0_ID)
 		{
 			auto& cid = static_cast<n0::CompIdentity&>(comp);
+			if (cid.GetFilepath().empty()) {
+				continue;
+			}
 			auto casset = CompFactory::Instance()->CreateAsset(dev, cid.GetFilepath());
 			if (casset) {
 				GD_ASSERT(!node->HasSharedComp<n0::CompAsset>(), "already has asset");
