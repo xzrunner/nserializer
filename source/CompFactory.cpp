@@ -135,6 +135,10 @@ n0::CompAssetPtr CompFactory::CreateAsset(const ur::Device& dev,
                                           const rapidjson::Value& val,
                                           const std::string& dir)
 {
+	if (val.IsNull()) {
+		return nullptr;
+	}
+
 	auto type = val[CompSerializer::Instance()->COMP_TYPE_NAME].GetString();
     n0::CompAssetPtr casset = CreateAsset(CompIdxMgr::Instance()->CompTypeName2Idx(type));
 
